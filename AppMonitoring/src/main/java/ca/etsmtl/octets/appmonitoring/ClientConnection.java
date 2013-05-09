@@ -11,8 +11,6 @@ import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientConnection implements Runnable {
-   static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
-   
    final String cPath = "PATH:";
    
    String mName;

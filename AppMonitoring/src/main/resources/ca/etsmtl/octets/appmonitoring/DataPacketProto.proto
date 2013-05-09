@@ -1,0 +1,35 @@
+package appmonitoring;
+
+option java_package = "ca.etsmtl.octets.appmonitoring";
+option java_outer_classname = "DataPacketProto";
+
+message FrameDate {
+
+    message Type {
+
+        enum ObjectType {
+            CLASS = 1;
+            ENUM = 2;
+            INTERFACE = 3;
+            ANNOTATION = 4;
+        }
+
+        required string  name = 1;
+        optional string classPath = 2;
+        optional ObjectType objectType = 3;
+    }
+
+    message Value {
+        required string value = 1;
+        optional Type type = 2;
+    }
+
+    message VarData {
+        required string path = 1;
+        optional Value data = 2;
+        optional Type type = 3;
+    }
+
+    repeated VarData varData = 1;
+
+}
