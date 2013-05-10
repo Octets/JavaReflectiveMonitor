@@ -48,16 +48,8 @@ public class ClientManager implements Runnable, IConnectionHolder {
       mToBeWatch.put(name, new MonitoredObject(object,name,"","NONE",null));
    }
 
-   public boolean nameExist(String name) {
+   public boolean containsName(String name) {
       return mToBeWatch.containsKey(name);
-   }
-
-   public List<String> getWatchList() {
-      List<String> names = new ArrayList<String>();
-      Enumeration<String> enumeration = mToBeWatch.keys();
-      while(enumeration.hasMoreElements()) names.add(enumeration.nextElement());
-
-      return names;
    }
    
    public void close() {

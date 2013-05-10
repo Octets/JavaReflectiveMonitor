@@ -33,7 +33,7 @@ class MonitoredObject {
       
       mObject = iWatched;
       
-      List<Field> wFieldList = gatherFields(mClass);
+      List<Field> wFieldList = listFields(mClass);
       {
          for (Field field : wFieldList) {
             mFields.put(field.getName(), field);
@@ -45,19 +45,30 @@ class MonitoredObject {
    public String getTypeName() {
       return mClass.getName();
    }
+
+   public String getStringValue() {
+      String wReturn = "";
+      try {
+         wReturn = mObject.toString();
+      }
+      catch (ConcurrentModificationException e) {
+         LOGGER.debug("ConcurrentModificationException",e);
+      }
+      return wReturn;
+   }
    
-   public Object getFieldObject(String iName)
+   public Object getFieldObject(String fieldName)
    {
       try {
-         mFields.get(iName).setAccessible(true);
-         return mFields.get(iName).get(mObject);
+         Field field = mFields.get(fieldName);
+         field.setAccessible(true);
+         return field.get(mObject);
       } catch (NullPointerException e) {
-         LOGGER.debug(iName + " invalid var",e);
-      }
-      catch (IllegalArgumentException e) {
-         LOGGER.debug(iName + " invalid var", e);
+         LOGGER.debug(fieldName + " invalid pointer",e);
+      } catch (IllegalArgumentException e) {
+         LOGGER.debug(fieldName + " invalid argument", e);
       } catch (IllegalAccessException e) {
-         LOGGER.debug(iName + " invalid var", e);
+         LOGGER.debug(fieldName + " invalid access", e);
       }
       return null;
    }
@@ -77,11 +88,11 @@ class MonitoredObject {
       return wReturn;
    }
    
-   private List<Field> gatherFields(Class<?> input)
+   private List<Field> listFields(Class<?> input)
    {
-      List<Field> wFields = new Vector<Field>();
-      if(input.getSuperclass() != null) {
-         wFields.addAll(gatherFields(input.getSuperclass()));
+      List<Field> wFields = new ArrayList<Field>();
+      if(input.getSuperclass() != null && input.equals(Object.class)) {
+         wFields.addAll(listFields(input.getSuperclass()));
       }
       for (Field field : input.getDeclaredFields()) {
          wFields.add(field);
@@ -102,7 +113,7 @@ class MonitoredObject {
       iUpdater.requestUpdate(this);
    }
    
-   public static MonitoredObject SpyNavigation(Hashtable<String, MonitoredObject> iDict, String iPath, MonitoredObject iSender) {
+   public static MonitoredObject ObjectNavigation(Hashtable<String, MonitoredObject> iDict, String iPath, MonitoredObject iSender) {
       String[] wList = iPath.split("\\.");
       if(iPath.isEmpty() || iPath == null)
          throw new InvalidParameterException("Path invalid");
@@ -110,8 +121,8 @@ class MonitoredObject {
       if(wList.length >1) {
          String wNextPath = iPath.substring(wList[0].length() +1);
          
-         MonitoredObject wTemp = SpyNavigation(iDict, wList[0],iSender);
-         return SpyNavigation(wTemp.mChildren, wNextPath,wTemp);
+         MonitoredObject wTemp = ObjectNavigation(iDict, wList[0], iSender);
+         return ObjectNavigation(wTemp.mChildren, wNextPath, wTemp);
       }
       else if(iDict.containsKey(iPath)) {
          return iDict.get(iPath);
@@ -148,7 +159,12 @@ class MonitoredObject {
       
       public List<MonitoredObject> mObjectList = new Vector<MonitoredObject>();
       
-      private final static ObjectSorter mSorter = new ObjectSorter();
+      private final static Comparator<MonitoredObject> mSorter = new Comparator<MonitoredObject>() {
+         @Override
+         public int compare(MonitoredObject o1, MonitoredObject o2) {
+            return o1.mPath.compareTo(o2.mPath);
+         }
+      };
       
       void requestUpdate(MonitoredObject iObject) {
          if(!mObjectList.contains(iObject)) {
@@ -165,18 +181,6 @@ class MonitoredObject {
             mObjectList.get(i).updateFromParent();
          }
          mObjectList.clear();
-      }
-      
-      private static class ObjectSorter implements Comparator<MonitoredObject> {
-
-         public ObjectSorter() {
-         }
-         
-         @Override
-         public int compare(MonitoredObject o1, MonitoredObject o2) {
-            return o1.mPath.compareTo(o2.mPath);
-         }
-         
       }
    }
 }

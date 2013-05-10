@@ -149,12 +149,12 @@ class ClientConnection implements Runnable, IClientConnection {
                {
                   String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
                   
-                  MonitoredObject wObj = MonitoredObject.SpyNavigation(mRootList, wPath, null);
+                  MonitoredObject wObj = MonitoredObject.ObjectNavigation(mRootList, wPath, null);
                   if(wObj != null)
                   {
                      UpdateObject(wObj);
                      for (String wField : wObj.mFieldNames) {
-                        MonitoredObject wTemp = MonitoredObject.SpyNavigation(wObj.mChildren, wField, wObj);
+                        MonitoredObject wTemp = MonitoredObject.ObjectNavigation(wObj.mChildren, wField, wObj);
                         if(wTemp != null)
                         UpdateObject(wTemp);
                      }
@@ -164,7 +164,7 @@ class ClientConnection implements Runnable, IClientConnection {
                   String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
                   mMonitorListMutex.lock();
                   if(!mMonitorObject.containsKey(wPath)) {
-                    MonitoredObject wObj = MonitoredObject.SpyNavigation(mRootList, wPath, null);
+                    MonitoredObject wObj = MonitoredObject.ObjectNavigation(mRootList, wPath, null);
                     if(wObj != null) {
                        mMonitorObject.put(wPath, new ObjectHolder(wObj));
                     }
