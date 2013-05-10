@@ -1,26 +1,30 @@
 package ca.etsmtl.octets.appmonitoring;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.InvalidParameterException;
 import java.util.*;
 
-public class ObjectSpy {
+class MonitoredObject {
+   private final static Logger LOGGER = Logger.getLogger(MonitoredObject.class);
+
    protected Class<?> mClass = null;
    protected Object mObject = null;
    
    protected final Hashtable<String, Field> mFields = new Hashtable<String, Field>();
    
-   protected final Hashtable<String, ObjectSpy> mChildren = new Hashtable<String, ObjectSpy>();
+   protected final Hashtable<String, MonitoredObject> mChildren = new Hashtable<String, MonitoredObject>();
    
    protected Vector<String> mFieldNames = new Vector<String>();
    
    protected String mPath;
    protected String mName;
    
-   protected ObjectSpy mParent;
+   protected MonitoredObject mParent;
    
-   public ObjectSpy(Object iWatched, String iName, String iPath, String iVisibility, ObjectSpy iParent)
+   public MonitoredObject(Object iWatched, String iName, String iPath, String iVisibility, MonitoredObject iParent)
    {
       mParent = iParent;
       mName = iName;
@@ -31,7 +35,6 @@ public class ObjectSpy {
       
       List<Field> wFieldList = gatherFields(mClass);
       {
-         int itt = 0;
          for (Field field : wFieldList) {
             mFields.put(field.getName(), field);
             mFieldNames.add(field.getName());
@@ -49,14 +52,12 @@ public class ObjectSpy {
          mFields.get(iName).setAccessible(true);
          return mFields.get(iName).get(mObject);
       } catch (NullPointerException e) {
-         System.out.println(iName + " invalid var");
+         LOGGER.debug(iName + " invalid var",e);
       }
       catch (IllegalArgumentException e) {
-         //e.printStackTrace();
-         System.out.println(iName + " invalid var");
+         LOGGER.debug(iName + " invalid var", e);
       } catch (IllegalAccessException e) {
-         //e.printStackTrace();
-         System.out.println(iName + " invalid var");
+         LOGGER.debug(iName + " invalid var", e);
       }
       return null;
    }
@@ -101,7 +102,7 @@ public class ObjectSpy {
       iUpdater.requestUpdate(this);
    }
    
-   public static ObjectSpy SpyNavigation(Hashtable<String, ObjectSpy> iDict, String iPath, ObjectSpy iSender) {
+   public static MonitoredObject SpyNavigation(Hashtable<String, MonitoredObject> iDict, String iPath, MonitoredObject iSender) {
       String[] wList = iPath.split("\\.");
       if(iPath.isEmpty() || iPath == null)
          throw new InvalidParameterException("Path invalid");
@@ -109,14 +110,14 @@ public class ObjectSpy {
       if(wList.length >1) {
          String wNextPath = iPath.substring(wList[0].length() +1);
          
-         ObjectSpy wTemp = SpyNavigation(iDict, wList[0],iSender);
+         MonitoredObject wTemp = SpyNavigation(iDict, wList[0],iSender);
          return SpyNavigation(wTemp.mChildren, wNextPath,wTemp);
       }
       else if(iDict.containsKey(iPath)) {
          return iDict.get(iPath);
       }
       else if(iSender != null && iSender.mFieldNames.contains(iPath)) {
-         String wPath = null;
+         String wPath;
          
          if(iSender.mPath.isEmpty())
             wPath = iSender.mName;
@@ -134,7 +135,7 @@ public class ObjectSpy {
             else if(Modifier.isProtected(iSender.mFields.get(iPath).getModifiers()))
                wModif = "PROTECTED";
             
-            ObjectSpy wTemp = new ObjectSpy(iSender.getFieldObject(iPath),iPath,wPath, wModif,iSender);
+            MonitoredObject wTemp = new MonitoredObject(iSender.getFieldObject(iPath),iPath,wPath, wModif,iSender);
             iSender.mChildren.put(iPath, wTemp);
             return wTemp;
          }
@@ -145,11 +146,11 @@ public class ObjectSpy {
    
    public static class WizeUpdater {
       
-      public List<ObjectSpy> mObjectList = new Vector<ObjectSpy>();
+      public List<MonitoredObject> mObjectList = new Vector<MonitoredObject>();
       
       private final static ObjectSorter mSorter = new ObjectSorter();
       
-      void requestUpdate(ObjectSpy iObject) {
+      void requestUpdate(MonitoredObject iObject) {
          if(!mObjectList.contains(iObject)) {
             mObjectList.add(iObject);
          }
@@ -166,13 +167,13 @@ public class ObjectSpy {
          mObjectList.clear();
       }
       
-      private static class ObjectSorter implements Comparator<ObjectSpy> {
+      private static class ObjectSorter implements Comparator<MonitoredObject> {
 
          public ObjectSorter() {
          }
          
          @Override
-         public int compare(ObjectSpy o1, ObjectSpy o2) {
+         public int compare(MonitoredObject o1, MonitoredObject o2) {
             return o1.mPath.compareTo(o2.mPath);
          }
          

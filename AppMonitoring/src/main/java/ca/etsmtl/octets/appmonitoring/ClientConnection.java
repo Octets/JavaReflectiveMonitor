@@ -2,7 +2,6 @@ package ca.etsmtl.octets.appmonitoring;
 
 import org.apache.log4j.Logger;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.net.Socket;
 import java.net.URLEncoder;
@@ -10,39 +9,40 @@ import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ClientConnection implements Runnable {
+class ClientConnection implements Runnable, IClientConnection {
+   private static final Logger LOGGER = Logger.getLogger(ClientConnection.class);
+
+   private IConnectionHolder connectionHolder;
+
    final String cPath = "PATH:";
+
+   private Socket mClient;
+
+   private BufferedReader mReader;
+   private BufferedWriter mWriter;
    
-   String mName;
+   private Hashtable<String, ObjectHolder> mMonitorObject = new Hashtable<String, ObjectHolder>();
+   private Hashtable<String, MonitoredObject> mRootList;
+
+   private Thread mThread;
+   private Thread mUpdater;
+   private Boolean mCanRun = true;
+
+   private ReentrantLock mWriterMutex = new ReentrantLock();
+   private ReentrantLock mMonitorListMutex = new ReentrantLock();
+
+   private MonitoredObject.WizeUpdater mWizeUpdater = new MonitoredObject.WizeUpdater();
    
-   Socket mClient;
-   
-   BufferedReader mReader;
-   BufferedWriter mWriter;
-   
-   Hashtable<String, ObjectHolder> mMonitorObject = new Hashtable<String, ObjectHolder>();
-   
-   Hashtable<String, ObjectSpy> mRootList;
-   
-   Thread mThread;
-   Thread mUpdater;
-   Boolean mCanRun = true;
-   
-   ReentrantLock mWriterMutex = new ReentrantLock();
-   ReentrantLock mMonitorListMutex = new ReentrantLock();
-   
-   ObjectSpy.WizeUpdater mWizeUpdater = new ObjectSpy.WizeUpdater();
-   
-   final int mWaitTime = 50; // pms
-   
-   Logger log = Logger.getLogger(getClass());
-   
-   public ClientConnection(Socket iClient, Hashtable<String, ObjectSpy> iRootList) throws IOException {
+   private int refreshRate = 50; // pms
+
+   public ClientConnection(IConnectionHolder connectionHolder, Socket iClient, Hashtable<String, MonitoredObject> iRootList) throws IOException {
+      LOGGER.info(iClient.getInetAddress().getHostName() +  " : Initialing connection");
+
+      this.connectionHolder = connectionHolder;
+
       mClient = iClient;
-      
       mRootList = iRootList;
-      mName = iClient.getInetAddress().getHostAddress() +":"+ iClient.getPort();
-      
+
       mReader = new BufferedReader(new InputStreamReader(mClient.getInputStream()));
       mWriter = new BufferedWriter(new OutputStreamWriter(mClient.getOutputStream()));
       
@@ -55,23 +55,26 @@ public class ClientConnection implements Runnable {
             while(mCanRun) {
                UpdateClient();
                try {
-                  Thread.sleep(mWaitTime);
+                  Thread.sleep(refreshRate);
                } catch (InterruptedException e) {
                   e.printStackTrace();
                }
             }
          }
       });
-      mUpdater.setName(mName + " object monitor.");
+      mUpdater.setName(iClient.getInetAddress().getHostName() + " object monitor.");
       mUpdater.start();
-      
-      log.info(mName + " - is connected to remote Network Monitor");
-      for (ObjectSpy wObj : mRootList.values()) {
+
+      LOGGER.info(iClient.getInetAddress().getHostName() + " : connection initialized.");
+
+      for (MonitoredObject wObj : mRootList.values()) {
          UpdateObject(wObj);
       }
+
+
    }
 
-   //>ObjectData:Path:[content]:Type:[content]:Value:[content]:Visibility:[content]:
+   //>ObjectData:Path:[content]:Type:[content]:Value:[content]:Visibility:[content]
    public void UpdateClient() {
       mWriterMutex.lock();
       mMonitorListMutex.lock();
@@ -92,7 +95,7 @@ public class ClientConnection implements Runnable {
                
                wData += ":Type:" + wHolder.getType();
                wData += ":Value:"+ URLEncoder.encode(wHolder.toString(), "UTF-8");
-               wData += ":Visibility:" + wHolder.getVisibility();
+               wData += ":Visibility:"; //+ wHolder.getVisibility();
                
                mWriter.write(wData);
                mWriter.newLine();
@@ -101,6 +104,7 @@ public class ClientConnection implements Runnable {
             }
          }
          catch(ConcurrentModificationException e) {
+            LOGGER.debug("ConcurrentModificationException",e);
          }
          catch(IOException e){
             close();
@@ -109,7 +113,7 @@ public class ClientConnection implements Runnable {
       mMonitorListMutex.unlock();
       mWriterMutex.unlock();
    }
-   private void UpdateObject(ObjectSpy wObj) {
+   private void UpdateObject(MonitoredObject wObj) {
       mWriterMutex.lock();
       try
       {
@@ -145,12 +149,12 @@ public class ClientConnection implements Runnable {
                {
                   String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
                   
-                  ObjectSpy wObj = ObjectSpy.SpyNavigation(mRootList, wPath, null);
+                  MonitoredObject wObj = MonitoredObject.SpyNavigation(mRootList, wPath, null);
                   if(wObj != null)
                   {
                      UpdateObject(wObj);
                      for (String wField : wObj.mFieldNames) {
-                        ObjectSpy wTemp = ObjectSpy.SpyNavigation(wObj.mChildren, wField, wObj);
+                        MonitoredObject wTemp = MonitoredObject.SpyNavigation(wObj.mChildren, wField, wObj);
                         if(wTemp != null)
                         UpdateObject(wTemp);
                      }
@@ -160,7 +164,7 @@ public class ClientConnection implements Runnable {
                   String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
                   mMonitorListMutex.lock();
                   if(!mMonitorObject.containsKey(wPath)) {
-                    ObjectSpy wObj = ObjectSpy.SpyNavigation(mRootList, wPath, null);
+                    MonitoredObject wObj = MonitoredObject.SpyNavigation(mRootList, wPath, null);
                     if(wObj != null) {
                        mMonitorObject.put(wPath, new ObjectHolder(wObj));
                     }
@@ -177,7 +181,7 @@ public class ClientConnection implements Runnable {
                UpdateClient();
             }
             else {
-               Thread.sleep(mWaitTime);
+               Thread.sleep(refreshRate);
             }   
          }
          catch(InterruptedException e) {
@@ -195,9 +199,21 @@ public class ClientConnection implements Runnable {
             mReader.close();
          if(mWriter != null)
             mWriter.close();
-      } catch (IOException e) {
-      }
-      log.info(mName + " - disconnected from remote Network Monitor.");
+      } catch (IOException e) { }
+
+      if(connectionHolder != null) connectionHolder.unRegisterClient(this);
+
+      LOGGER.info(mClient.getInetAddress().getHostName() + " : disconnected.");
+   }
+
+   @Override
+   public int getRefreshRate() {
+      return refreshRate;
+   }
+
+   @Override
+   public void setRefreshRate(int refreshRate) {
+      this.refreshRate = refreshRate;
    }
 
    public void close() {

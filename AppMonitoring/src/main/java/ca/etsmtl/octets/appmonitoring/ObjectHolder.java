@@ -2,19 +2,14 @@ package ca.etsmtl.octets.appmonitoring;
 
 import java.util.ConcurrentModificationException;
 
-public class ObjectHolder {
-   public static final String XMLNAME = "ObjectData";
-   
-   //private Hashtable<String, ObjectHolder> mRegisteredTable = new Hashtable<String, ObjectHolder>();
+class ObjectHolder {
 
-   private String mVisibility;
-   
    private String mLastValue = "";
    private Boolean mRequestUpdate;
    
-   private ObjectSpy mSource;
+   private MonitoredObject mSource;
    
-   public ObjectHolder(ObjectSpy iSource) {
+   public ObjectHolder(MonitoredObject iSource) {
       mSource = iSource;
       try
       {
@@ -50,13 +45,10 @@ public class ObjectHolder {
    public String getName() {
       return mSource.mName;
    }
-   public String getVisibility() {
-      return mVisibility;
-   }
    public String getType() {
       return mSource.getTypeName();
    }
-   public ObjectSpy getObjectSpy() {
+   public MonitoredObject getObjectSpy() {
       return mSource;
    }
    
