@@ -50,7 +50,6 @@ class ClientData implements Runnable, IClientConnection {
       mThread = new Thread(this);
       mThread.start();
 
-
       mUpdater = new Thread(new Runnable() {
          @Override
          public void run() {
@@ -77,7 +76,8 @@ class ClientData implements Runnable, IClientConnection {
    }
 
    //>ObjectData:Path:[content]:Type:[content]:Value:[content]:Visibility:[content]
-   public void UpdateClient() {
+   @Override
+   public void triggerUpdate() {
 
       mWriterMutex.lock();
       mMonitorListMutex.lock();
