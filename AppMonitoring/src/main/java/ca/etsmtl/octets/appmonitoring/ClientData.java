@@ -9,23 +9,20 @@ import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
-class ClientConnection implements Runnable, IClientConnection {
-   private static final Logger LOGGER = Logger.getLogger(ClientConnection.class);
+class ClientData implements Runnable, IClientConnection {
+   private static final Logger LOGGER = Logger.getLogger(ClientData.class);
 
    private IConnectionHolder connectionHolder;
-
-   final String cPath = "PATH:";
 
    private Socket mClient;
 
    private BufferedReader mReader;
-   private BufferedWriter mWriter;
+   private OutputStream mWriter;
    
    private Hashtable<String, ObjectHolder> mMonitorObject = new Hashtable<String, ObjectHolder>();
    private Hashtable<String, MonitoredObject> mRootList;
 
    private Thread mThread;
-   private Thread mUpdater;
    private Boolean mCanRun = true;
 
    private ReentrantLock mWriterMutex = new ReentrantLock();
@@ -35,7 +32,11 @@ class ClientConnection implements Runnable, IClientConnection {
    
    private int refreshRate = 50; // pms
 
-   public ClientConnection(IConnectionHolder connectionHolder, Socket iClient, Hashtable<String, MonitoredObject> iRootList) throws IOException {
+   private final DataPacketProto.FrameData.VarData.Builder varDataBuilder = DataPacketProto.FrameData.VarData.newBuilder();
+   private final DataPacketProto.FrameData.Type.Builder typeBuilder = DataPacketProto.FrameData.Type.newBuilder();
+   private final DataPacketProto.FrameData.Value.Builder valueBuilder = DataPacketProto.FrameData.Value.newBuilder();
+
+   public ClientData(IConnectionHolder connectionHolder, Socket iClient, Hashtable<String, MonitoredObject> iRootList) throws IOException {
       LOGGER.info(iClient.getInetAddress().getHostName() +  " : Initialing connection");
 
       this.connectionHolder = connectionHolder;
@@ -44,11 +45,12 @@ class ClientConnection implements Runnable, IClientConnection {
       mRootList = iRootList;
 
       mReader = new BufferedReader(new InputStreamReader(mClient.getInputStream()));
-      mWriter = new BufferedWriter(new OutputStreamWriter(mClient.getOutputStream()));
-      
+      mWriter = mClient.getOutputStream();
+
       mThread = new Thread(this);
       mThread.start();
-      
+
+
       mUpdater = new Thread(new Runnable() {
          @Override
          public void run() {
@@ -76,6 +78,7 @@ class ClientConnection implements Runnable, IClientConnection {
 
    //>ObjectData:Path:[content]:Type:[content]:Value:[content]:Visibility:[content]
    public void UpdateClient() {
+
       mWriterMutex.lock();
       mMonitorListMutex.lock();
       for (ObjectHolder wHolder : mMonitorObject.values()) {
@@ -90,16 +93,28 @@ class ClientConnection implements Runnable, IClientConnection {
                String wPath = wHolder.getName();
                if(!wHolder.getPath().isEmpty())
                   wPath = wHolder.getPath() + "." + wPath;
-               
-               String wData = ">ObjectData:Path:" + wPath;
-               
-               wData += ":Type:" + wHolder.getType();
-               wData += ":Value:"+ URLEncoder.encode(wHolder.toString(), "UTF-8");
-               wData += ":Visibility:"; //+ wHolder.getVisibility();
-               
-               mWriter.write(wData);
-               mWriter.newLine();
-               mWriter.flush();
+
+               typeBuilder.clear();
+               typeBuilder.setName(wHolder.getType());
+
+               varDataBuilder.clear();
+               varDataBuilder.setPath(wPath);
+               varDataBuilder.setType(typeBuilder.build());
+
+               String value = wHolder.getStringValue();
+
+               if(value == null) {
+                  varDataBuilder.setIsNull(true);
+               } else {
+                  varDataBuilder.setIsNull(false);
+
+                  valueBuilder.clear();
+                  valueBuilder.setValue(value);
+                  varDataBuilder.setData(valueBuilder.build());
+               }
+
+               varDataBuilder.build().writeTo(mWriter);
+
                wHolder.setRequestUpdate(false);  
             }
          }
@@ -125,8 +140,8 @@ class ClientConnection implements Runnable, IClientConnection {
          wData += ":Type:" + wObj.getTypeName();
          wData += ":Value:"+ URLEncoder.encode(wObj.toString(), "UTF-8");
          //wData += ":Visibility:" + wObj.getVisibility();
-         mWriter.write(wData);
-         mWriter.newLine();
+         //mWriter.write(wData);
+         //mWriter.newLine();
          mWriter.flush();   
       }
       catch(IOException e) {

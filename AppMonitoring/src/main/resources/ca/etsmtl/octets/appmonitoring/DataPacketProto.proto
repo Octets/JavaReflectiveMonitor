@@ -3,18 +3,18 @@ package appmonitoring;
 option java_package = "ca.etsmtl.octets.appmonitoring";
 option java_outer_classname = "DataPacketProto";
 
-message FrameDate {
+message FrameData {
 
    message Type {
 
-   enum ObjectType {
-      CLASS = 1;
-      ENUM = 2;
-      INTERFACE = 3;
-      ANNOTATION = 4;
-   }
+      enum ObjectType {
+         CLASS = 1;
+         ENUM = 2;
+         INTERFACE = 3;
+         ANNOTATION = 4;
+      }
 
-      required string  name = 1;
+      required string name = 1;
       optional string classPath = 2;
       optional ObjectType objectType = 3;
    }
@@ -37,8 +37,14 @@ message FrameDate {
       optional Type type = 3;
       optional bool isNull = 4;
       optional VarScope varScope = 5;
+      optional bool asError = 6;
+   }
+
+   message RequestData {
+      required string path;
    }
 
    repeated VarData varData = 1;
+   repeated RequestData requestedData = 2;
 
 }

@@ -1,22 +1,36 @@
 package ca.etsmtl.octets.appmonitoring;
 
 import java.util.ConcurrentModificationException;
+import java.util.concurrent.locks.ReentrantLock;
 
 class ObjectHolder {
+
+   private final ReentrantLock valueLock = new ReentrantLock();
+   private final ReentrantLock errorLock = new ReentrantLock();
 
    private String mLastValue = "";
    private Boolean mRequestUpdate;
    
    private MonitoredObject mSource;
+
+   private boolean containError;
    
    public ObjectHolder(MonitoredObject iSource) {
       mSource = iSource;
+      errorLock.lock();
+      containError = false;
+      errorLock.unlock();
       try
       {
-         mLastValue = mSource.toString();   
+         valueLock.lock();
+         mLastValue = mSource.getStringValue();
+         valueLock.unlock();
       }
       catch(ConcurrentModificationException e) {
-         mLastValue = "";
+         mLastValue = null;
+         errorLock.lock();
+         containError = true;
+         errorLock.unlock();
       }
       mRequestUpdate = true;
    }
@@ -24,11 +38,21 @@ class ObjectHolder {
    public Boolean CheckForUpdate() {
       try
       {
-         mRequestUpdate = mRequestUpdate | !mLastValue.equals(mSource.toString());
+         valueLock.lock();
+         String stringValue = mSource.getStringValue();
+         valueLock.unlock();
+
+         mRequestUpdate = mRequestUpdate | ( stringValue != null && !stringValue.equals(mLastValue) );
          if(mRequestUpdate)
-            mLastValue = mSource.toString();   
+            mLastValue = stringValue;
+         errorLock.lock();
+         containError = false;
+         errorLock.unlock();
       }
       catch(ConcurrentModificationException e) {
+         errorLock.lock();
+         containError = true;
+         errorLock.unlock();
       }
       
       return mRequestUpdate;
@@ -41,7 +65,6 @@ class ObjectHolder {
    public String getPath() {
       return mSource.mPath;
    }
-
    public String getName() {
       return mSource.mName;
    }
@@ -51,9 +74,21 @@ class ObjectHolder {
    public MonitoredObject getObjectSpy() {
       return mSource;
    }
-   
-   @Override
-   public String toString() {
-      return mLastValue;
+
+   public String getStringValue() {
+      valueLock.lock();
+      String value = mLastValue;
+      valueLock.unlock();
+
+      return value;
    }
+
+   public boolean isContainError() {
+      errorLock.lock();
+      boolean value = containError;
+      errorLock.unlock();
+
+      return value;
+   }
+
 }

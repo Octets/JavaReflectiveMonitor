@@ -29,7 +29,7 @@ public class ClientManager implements Runnable, IConnectionHolder {
             mServerSocket.setSoTimeout(WAIT_TIME);
             Socket wClient = mServerSocket.accept();
             
-            ClientConnection client = new ClientConnection(this, wClient, mToBeWatch);
+            ClientData client = new ClientData(this, wClient, mToBeWatch);
             connectedClients.add(client);
          } catch (SocketTimeoutException e) {
             try {
