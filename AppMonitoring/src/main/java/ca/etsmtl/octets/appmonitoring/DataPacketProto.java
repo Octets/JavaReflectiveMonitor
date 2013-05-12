@@ -10,61 +10,212 @@ public final class DataPacketProto {
   }
   public interface FrameDataOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // repeated .appmonitoring.FrameData.VarData varData = 1;
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> 
         getVarDataList();
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData getVarData(int index);
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     int getVarDataCount();
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder> 
         getVarDataOrBuilderList();
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder getVarDataOrBuilder(
         int index);
+
+    // repeated .appmonitoring.FrameData.RequestData requestedData = 2;
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> 
+        getRequestedDataList();
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData getRequestedData(int index);
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    int getRequestedDataCount();
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder> 
+        getRequestedDataOrBuilderList();
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder getRequestedDataOrBuilder(
+        int index);
   }
+  /**
+   * Protobuf type {@code appmonitoring.FrameData}
+   */
   public static final class FrameData extends
       com.google.protobuf.GeneratedMessage
       implements FrameDataOrBuilder {
     // Use FrameData.newBuilder() to construct.
-    private FrameData(Builder builder) {
+    private FrameData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private FrameData(boolean noInit) {}
-    
+    private FrameData(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final FrameData defaultInstance;
     public static FrameData getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public FrameData getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private FrameData(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                varData_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              varData_.add(input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.PARSER, extensionRegistry));
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                requestedData_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              requestedData_.add(input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          varData_ = java.util.Collections.unmodifiableList(varData_);
+        }
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          requestedData_ = java.util.Collections.unmodifiableList(requestedData_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_fieldAccessorTable;
+      return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<FrameData> PARSER =
+        new com.google.protobuf.AbstractParser<FrameData>() {
+      public FrameData parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new FrameData(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<FrameData> getParserForType() {
+      return PARSER;
+    }
+
+    /**
+     * Protobuf enum {@code appmonitoring.FrameData.VarScope}
+     */
     public enum VarScope
         implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>PUBLIC = 1;</code>
+       */
       PUBLIC(0, 1),
+      /**
+       * <code>PROTECTED = 2;</code>
+       */
       PROTECTED(1, 2),
+      /**
+       * <code>PRIVATE = 3;</code>
+       */
       PRIVATE(2, 3),
+      /**
+       * <code>PACKAGE_LOCAL = 4;</code>
+       */
       PACKAGE_LOCAL(3, 4),
       ;
-      
+
+      /**
+       * <code>PUBLIC = 1;</code>
+       */
       public static final int PUBLIC_VALUE = 1;
+      /**
+       * <code>PROTECTED = 2;</code>
+       */
       public static final int PROTECTED_VALUE = 2;
+      /**
+       * <code>PRIVATE = 3;</code>
+       */
       public static final int PRIVATE_VALUE = 3;
+      /**
+       * <code>PACKAGE_LOCAL = 4;</code>
+       */
       public static final int PACKAGE_LOCAL_VALUE = 4;
-      
-      
+
+
       public final int getNumber() { return value; }
-      
+
       public static VarScope valueOf(int value) {
         switch (value) {
           case 1: return PUBLIC;
@@ -74,7 +225,7 @@ public final class DataPacketProto {
           default: return null;
         }
       }
-      
+
       public static com.google.protobuf.Internal.EnumLiteMap<VarScope>
           internalGetValueMap() {
         return internalValueMap;
@@ -86,7 +237,7 @@ public final class DataPacketProto {
                 return VarScope.valueOf(number);
               }
             };
-      
+
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
         return getDescriptor().getValues().get(index);
@@ -99,11 +250,9 @@ public final class DataPacketProto {
           getDescriptor() {
         return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.getDescriptor().getEnumTypes().get(0);
       }
-      
-      private static final VarScope[] VALUES = {
-        PUBLIC, PROTECTED, PRIVATE, PACKAGE_LOCAL, 
-      };
-      
+
+      private static final VarScope[] VALUES = values();
+
       public static VarScope valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
@@ -112,499 +261,200 @@ public final class DataPacketProto {
         }
         return VALUES[desc.getIndex()];
       }
-      
+
       private final int index;
       private final int value;
-      
+
       private VarScope(int index, int value) {
         this.index = index;
         this.value = value;
       }
-      
+
       // @@protoc_insertion_point(enum_scope:appmonitoring.FrameData.VarScope)
     }
-    
+
+    /**
+     * Protobuf enum {@code appmonitoring.FrameData.Mode}
+     */
+    public enum Mode
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>QUERY = 1;</code>
+       */
+      QUERY(0, 1),
+      /**
+       * <code>REGISTER = 2;</code>
+       */
+      REGISTER(1, 2),
+      /**
+       * <code>UNREGISTER = 3;</code>
+       */
+      UNREGISTER(2, 3),
+      ;
+
+      /**
+       * <code>QUERY = 1;</code>
+       */
+      public static final int QUERY_VALUE = 1;
+      /**
+       * <code>REGISTER = 2;</code>
+       */
+      public static final int REGISTER_VALUE = 2;
+      /**
+       * <code>UNREGISTER = 3;</code>
+       */
+      public static final int UNREGISTER_VALUE = 3;
+
+
+      public final int getNumber() { return value; }
+
+      public static Mode valueOf(int value) {
+        switch (value) {
+          case 1: return QUERY;
+          case 2: return REGISTER;
+          case 3: return UNREGISTER;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Mode>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<Mode>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Mode>() {
+              public Mode findValueByNumber(int number) {
+                return Mode.valueOf(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.getDescriptor().getEnumTypes().get(1);
+      }
+
+      private static final Mode[] VALUES = values();
+
+      public static Mode valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int index;
+      private final int value;
+
+      private Mode(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:appmonitoring.FrameData.Mode)
+    }
+
     public interface TypeOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
-      
+
       // required string name = 1;
+      /**
+       * <code>required string name = 1;</code>
+       */
       boolean hasName();
-      String getName();
-      
+      /**
+       * <code>required string name = 1;</code>
+       */
+      java.lang.String getName();
+      /**
+       * <code>required string name = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getNameBytes();
+
       // optional string classPath = 2;
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
       boolean hasClassPath();
-      String getClassPath();
-      
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
+      java.lang.String getClassPath();
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
+      com.google.protobuf.ByteString
+          getClassPathBytes();
+
       // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       */
       boolean hasObjectType();
+      /**
+       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType();
     }
+    /**
+     * Protobuf type {@code appmonitoring.FrameData.Type}
+     */
     public static final class Type extends
         com.google.protobuf.GeneratedMessage
         implements TypeOrBuilder {
       // Use Type.newBuilder() to construct.
-      private Type(Builder builder) {
+      private Type(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
+        this.unknownFields = builder.getUnknownFields();
       }
-      private Type(boolean noInit) {}
-      
+      private Type(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
       private static final Type defaultInstance;
       public static Type getDefaultInstance() {
         return defaultInstance;
       }
-      
+
       public Type getDefaultInstanceForType() {
         return defaultInstance;
       }
-      
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_fieldAccessorTable;
-      }
-      
-      public enum ObjectType
-          implements com.google.protobuf.ProtocolMessageEnum {
-        CLASS(0, 1),
-        ENUM(1, 2),
-        INTERFACE(2, 3),
-        ANNOTATION(3, 4),
-        ;
-        
-        public static final int CLASS_VALUE = 1;
-        public static final int ENUM_VALUE = 2;
-        public static final int INTERFACE_VALUE = 3;
-        public static final int ANNOTATION_VALUE = 4;
-        
-        
-        public final int getNumber() { return value; }
-        
-        public static ObjectType valueOf(int value) {
-          switch (value) {
-            case 1: return CLASS;
-            case 2: return ENUM;
-            case 3: return INTERFACE;
-            case 4: return ANNOTATION;
-            default: return null;
-          }
-        }
-        
-        public static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
-            internalGetValueMap() {
-          return internalValueMap;
-        }
-        private static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
-            internalValueMap =
-              new com.google.protobuf.Internal.EnumLiteMap<ObjectType>() {
-                public ObjectType findValueByNumber(int number) {
-                  return ObjectType.valueOf(number);
-                }
-              };
-        
-        public final com.google.protobuf.Descriptors.EnumValueDescriptor
-            getValueDescriptor() {
-          return getDescriptor().getValues().get(index);
-        }
-        public final com.google.protobuf.Descriptors.EnumDescriptor
-            getDescriptorForType() {
-          return getDescriptor();
-        }
-        public static final com.google.protobuf.Descriptors.EnumDescriptor
-            getDescriptor() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDescriptor().getEnumTypes().get(0);
-        }
-        
-        private static final ObjectType[] VALUES = {
-          CLASS, ENUM, INTERFACE, ANNOTATION, 
-        };
-        
-        public static ObjectType valueOf(
-            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-          if (desc.getType() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException(
-              "EnumValueDescriptor is not for this type.");
-          }
-          return VALUES[desc.getIndex()];
-        }
-        
-        private final int index;
-        private final int value;
-        
-        private ObjectType(int index, int value) {
-          this.index = index;
-          this.value = value;
-        }
-        
-        // @@protoc_insertion_point(enum_scope:appmonitoring.FrameData.Type.ObjectType)
-      }
-      
-      private int bitField0_;
-      // required string name = 1;
-      public static final int NAME_FIELD_NUMBER = 1;
-      private java.lang.Object name_;
-      public boolean hasName() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public String getName() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            name_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // optional string classPath = 2;
-      public static final int CLASSPATH_FIELD_NUMBER = 2;
-      private java.lang.Object classPath_;
-      public boolean hasClassPath() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public String getClassPath() {
-        java.lang.Object ref = classPath_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            classPath_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getClassPathBytes() {
-        java.lang.Object ref = classPath_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          classPath_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
-      public static final int OBJECTTYPE_FIELD_NUMBER = 3;
-      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType objectType_;
-      public boolean hasObjectType() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType() {
-        return objectType_;
-      }
-      
-      private void initFields() {
-        name_ = "";
-        classPath_ = "";
-        objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
-      }
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized != -1) return isInitialized == 1;
-        
-        if (!hasName()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        memoizedIsInitialized = 1;
-        return true;
-      }
-      
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        getSerializedSize();
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(1, getNameBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeBytes(2, getClassPathBytes());
-        }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          output.writeEnum(3, objectType_.getNumber());
-        }
-        getUnknownFields().writeTo(output);
-      }
-      
-      private int memoizedSerializedSize = -1;
-      public int getSerializedSize() {
-        int size = memoizedSerializedSize;
-        if (size != -1) return size;
-      
-        size = 0;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(1, getNameBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(2, getClassPathBytes());
-        }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(3, objectType_.getNumber());
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSerializedSize = size;
-        return size;
-      }
-      
-      private static final long serialVersionUID = 0L;
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
       @java.lang.Override
-      protected java.lang.Object writeReplace()
-          throws java.io.ObjectStreamException {
-        return super.writeReplace();
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
       }
-      
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+      private Type(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      
-      public static Builder newBuilder() { return Builder.create(); }
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type prototype) {
-        return newBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() { return newBuilder(this); }
-      
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_descriptor;
-        }
-        
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_fieldAccessorTable;
-        }
-        
-        // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-        
-        private Builder(BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          }
-        }
-        private static Builder create() {
-          return new Builder();
-        }
-        
-        public Builder clear() {
-          super.clear();
-          name_ = "";
-          bitField0_ = (bitField0_ & ~0x00000001);
-          classPath_ = "";
-          bitField0_ = (bitField0_ & ~0x00000002);
-          objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
-          bitField0_ = (bitField0_ & ~0x00000004);
-          return this;
-        }
-        
-        public Builder clone() {
-          return create().mergeFrom(buildPartial());
-        }
-        
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDescriptor();
-        }
-        
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getDefaultInstanceForType() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
-        }
-        
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type build() {
-          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-        
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type buildPartial() {
-          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type(this);
-          int from_bitField0_ = bitField0_;
-          int to_bitField0_ = 0;
-          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-            to_bitField0_ |= 0x00000001;
-          }
-          result.name_ = name_;
-          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-            to_bitField0_ |= 0x00000002;
-          }
-          result.classPath_ = classPath_;
-          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-            to_bitField0_ |= 0x00000004;
-          }
-          result.objectType_ = objectType_;
-          result.bitField0_ = to_bitField0_;
-          onBuilt();
-          return result;
-        }
-        
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type) {
-            return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-        
-        public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type other) {
-          if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance()) return this;
-          if (other.hasName()) {
-            setName(other.getName());
-          }
-          if (other.hasClassPath()) {
-            setClassPath(other.getClassPath());
-          }
-          if (other.hasObjectType()) {
-            setObjectType(other.getObjectType());
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          return this;
-        }
-        
-        public final boolean isInitialized() {
-          if (!hasName()) {
-            
-            return false;
-          }
-          return true;
-        }
-        
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
             int tag = input.readTag();
             switch (tag) {
               case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
+                done = true;
+                break;
               default: {
                 if (!parseUnknownField(input, unknownFields,
                                        extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
+                  done = true;
                 }
                 break;
               }
@@ -631,26 +481,562 @@ public final class DataPacketProto {
               }
             }
           }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
         }
-        
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder.class);
+      }
+
+      public static com.google.protobuf.Parser<Type> PARSER =
+          new com.google.protobuf.AbstractParser<Type>() {
+        public Type parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Type(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Type> getParserForType() {
+        return PARSER;
+      }
+
+      /**
+       * Protobuf enum {@code appmonitoring.FrameData.Type.ObjectType}
+       */
+      public enum ObjectType
+          implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>CLASS = 1;</code>
+         */
+        CLASS(0, 1),
+        /**
+         * <code>ENUM = 2;</code>
+         */
+        ENUM(1, 2),
+        /**
+         * <code>INTERFACE = 3;</code>
+         */
+        INTERFACE(2, 3),
+        /**
+         * <code>ANNOTATION = 4;</code>
+         */
+        ANNOTATION(3, 4),
+        ;
+
+        /**
+         * <code>CLASS = 1;</code>
+         */
+        public static final int CLASS_VALUE = 1;
+        /**
+         * <code>ENUM = 2;</code>
+         */
+        public static final int ENUM_VALUE = 2;
+        /**
+         * <code>INTERFACE = 3;</code>
+         */
+        public static final int INTERFACE_VALUE = 3;
+        /**
+         * <code>ANNOTATION = 4;</code>
+         */
+        public static final int ANNOTATION_VALUE = 4;
+
+
+        public final int getNumber() { return value; }
+
+        public static ObjectType valueOf(int value) {
+          switch (value) {
+            case 1: return CLASS;
+            case 2: return ENUM;
+            case 3: return INTERFACE;
+            case 4: return ANNOTATION;
+            default: return null;
+          }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
+            internalGetValueMap() {
+          return internalValueMap;
+        }
+        private static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
+            internalValueMap =
+              new com.google.protobuf.Internal.EnumLiteMap<ObjectType>() {
+                public ObjectType findValueByNumber(int number) {
+                  return ObjectType.valueOf(number);
+                }
+              };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+            getValueDescriptor() {
+          return getDescriptor().getValues().get(index);
+        }
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptor() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDescriptor().getEnumTypes().get(0);
+        }
+
+        private static final ObjectType[] VALUES = values();
+
+        public static ObjectType valueOf(
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+          if (desc.getType() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "EnumValueDescriptor is not for this type.");
+          }
+          return VALUES[desc.getIndex()];
+        }
+
+        private final int index;
+        private final int value;
+
+        private ObjectType(int index, int value) {
+          this.index = index;
+          this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:appmonitoring.FrameData.Type.ObjectType)
+      }
+
+      private int bitField0_;
+      // required string name = 1;
+      public static final int NAME_FIELD_NUMBER = 1;
+      private java.lang.Object name_;
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      // optional string classPath = 2;
+      public static final int CLASSPATH_FIELD_NUMBER = 2;
+      private java.lang.Object classPath_;
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
+      public boolean hasClassPath() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
+      public java.lang.String getClassPath() {
+        java.lang.Object ref = classPath_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            classPath_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>optional string classPath = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getClassPathBytes() {
+        java.lang.Object ref = classPath_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          classPath_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
+      public static final int OBJECTTYPE_FIELD_NUMBER = 3;
+      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType objectType_;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       */
+      public boolean hasObjectType() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType() {
+        return objectType_;
+      }
+
+      private void initFields() {
+        name_ = "";
+        classPath_ = "";
+        objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+
+        if (!hasName()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeBytes(1, getNameBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeBytes(2, getClassPathBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeEnum(3, objectType_.getNumber());
+        }
+        getUnknownFields().writeTo(output);
+      }
+
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(1, getNameBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(2, getClassPathBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(3, objectType_.getNumber());
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code appmonitoring.FrameData.Type}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder.class);
+        }
+
+        // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+
+        public Builder clear() {
+          super.clear();
+          name_ = "";
+          bitField0_ = (bitField0_ & ~0x00000001);
+          classPath_ = "";
+          bitField0_ = (bitField0_ & ~0x00000002);
+          objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
+          bitField0_ = (bitField0_ & ~0x00000004);
+          return this;
+        }
+
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Type_descriptor;
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getDefaultInstanceForType() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type build() {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type buildPartial() {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.name_ = name_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.classPath_ = classPath_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.objectType_ = objectType_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type) {
+            return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type other) {
+          if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance()) return this;
+          if (other.hasName()) {
+            bitField0_ |= 0x00000001;
+            name_ = other.name_;
+            onChanged();
+          }
+          if (other.hasClassPath()) {
+            bitField0_ |= 0x00000002;
+            classPath_ = other.classPath_;
+            onChanged();
+          }
+          if (other.hasObjectType()) {
+            setObjectType(other.getObjectType());
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          if (!hasName()) {
+            
+            return false;
+          }
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
         private int bitField0_;
-        
+
         // required string name = 1;
         private java.lang.Object name_ = "";
+        /**
+         * <code>required string name = 1;</code>
+         */
         public boolean hasName() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public String getName() {
+        /**
+         * <code>required string name = 1;</code>
+         */
+        public java.lang.String getName() {
           java.lang.Object ref = name_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             name_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setName(String value) {
+        /**
+         * <code>required string name = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getNameBytes() {
+          java.lang.Object ref = name_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            name_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string name = 1;</code>
+         */
+        public Builder setName(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -659,34 +1045,72 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string name = 1;</code>
+         */
         public Builder clearName() {
           bitField0_ = (bitField0_ & ~0x00000001);
           name_ = getDefaultInstance().getName();
           onChanged();
           return this;
         }
-        void setName(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
+        /**
+         * <code>required string name = 1;</code>
+         */
+        public Builder setNameBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
           name_ = value;
           onChanged();
+          return this;
         }
-        
+
         // optional string classPath = 2;
         private java.lang.Object classPath_ = "";
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
         public boolean hasClassPath() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
-        public String getClassPath() {
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
+        public java.lang.String getClassPath() {
           java.lang.Object ref = classPath_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             classPath_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setClassPath(String value) {
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+            getClassPathBytes() {
+          java.lang.Object ref = classPath_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            classPath_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
+        public Builder setClassPath(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -695,26 +1119,46 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
         public Builder clearClassPath() {
           bitField0_ = (bitField0_ & ~0x00000002);
           classPath_ = getDefaultInstance().getClassPath();
           onChanged();
           return this;
         }
-        void setClassPath(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000002;
+        /**
+         * <code>optional string classPath = 2;</code>
+         */
+        public Builder setClassPathBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
           classPath_ = value;
           onChanged();
+          return this;
         }
-        
+
         // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
+        /**
+         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         */
         public boolean hasObjectType() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType() {
           return objectType_;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         */
         public Builder setObjectType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType value) {
           if (value == null) {
             throw new NullPointerException();
@@ -724,110 +1168,233 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         */
         public Builder clearObjectType() {
           bitField0_ = (bitField0_ & ~0x00000004);
           objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
           onChanged();
           return this;
         }
-        
+
         // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData.Type)
       }
-      
+
       static {
         defaultInstance = new Type(true);
         defaultInstance.initFields();
       }
-      
+
       // @@protoc_insertion_point(class_scope:appmonitoring.FrameData.Type)
     }
-    
+
     public interface ValueOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
-      
+
       // required string value = 1;
+      /**
+       * <code>required string value = 1;</code>
+       */
       boolean hasValue();
-      String getValue();
-      
+      /**
+       * <code>required string value = 1;</code>
+       */
+      java.lang.String getValue();
+      /**
+       * <code>required string value = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getValueBytes();
+
       // optional .appmonitoring.FrameData.Type type = 2;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       boolean hasType();
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType();
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder();
     }
+    /**
+     * Protobuf type {@code appmonitoring.FrameData.Value}
+     */
     public static final class Value extends
         com.google.protobuf.GeneratedMessage
         implements ValueOrBuilder {
       // Use Value.newBuilder() to construct.
-      private Value(Builder builder) {
+      private Value(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
+        this.unknownFields = builder.getUnknownFields();
       }
-      private Value(boolean noInit) {}
-      
+      private Value(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
       private static final Value defaultInstance;
       public static Value getDefaultInstance() {
         return defaultInstance;
       }
-      
+
       public Value getDefaultInstanceForType() {
         return defaultInstance;
       }
-      
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Value(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                bitField0_ |= 0x00000001;
+                value_ = input.readBytes();
+                break;
+              }
+              case 18: {
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder subBuilder = null;
+                if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                  subBuilder = type_.toBuilder();
+                }
+                type_ = input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.PARSER, extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(type_);
+                  type_ = subBuilder.buildPartial();
+                }
+                bitField0_ |= 0x00000002;
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_fieldAccessorTable;
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder.class);
       }
-      
+
+      public static com.google.protobuf.Parser<Value> PARSER =
+          new com.google.protobuf.AbstractParser<Value>() {
+        public Value parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Value(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Value> getParserForType() {
+        return PARSER;
+      }
+
       private int bitField0_;
       // required string value = 1;
       public static final int VALUE_FIELD_NUMBER = 1;
       private java.lang.Object value_;
+      /**
+       * <code>required string value = 1;</code>
+       */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getValue() {
+      /**
+       * <code>required string value = 1;</code>
+       */
+      public java.lang.String getValue() {
         java.lang.Object ref = value_;
-        if (ref instanceof String) {
-          return (String) ref;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
         } else {
           com.google.protobuf.ByteString bs = 
               (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
             value_ = s;
           }
           return s;
         }
       }
-      private com.google.protobuf.ByteString getValueBytes() {
+      /**
+       * <code>required string value = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getValueBytes() {
         java.lang.Object ref = value_;
-        if (ref instanceof String) {
+        if (ref instanceof java.lang.String) {
           com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           value_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      
+
       // optional .appmonitoring.FrameData.Type type = 2;
       public static final int TYPE_FIELD_NUMBER = 2;
       private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
         return type_;
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
         return type_;
       }
-      
+
       private void initFields() {
         value_ = "";
         type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
@@ -836,7 +1403,7 @@ public final class DataPacketProto {
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized != -1) return isInitialized == 1;
-        
+
         if (!hasValue()) {
           memoizedIsInitialized = 0;
           return false;
@@ -850,7 +1417,7 @@ public final class DataPacketProto {
         memoizedIsInitialized = 1;
         return true;
       }
-      
+
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         getSerializedSize();
@@ -862,12 +1429,12 @@ public final class DataPacketProto {
         }
         getUnknownFields().writeTo(output);
       }
-      
+
       private int memoizedSerializedSize = -1;
       public int getSerializedSize() {
         int size = memoizedSerializedSize;
         if (size != -1) return size;
-      
+
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
@@ -881,94 +1448,83 @@ public final class DataPacketProto {
         memoizedSerializedSize = size;
         return size;
       }
-      
+
       private static final long serialVersionUID = 0L;
       @java.lang.Override
       protected java.lang.Object writeReplace()
           throws java.io.ObjectStreamException {
         return super.writeReplace();
       }
-      
+
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(java.io.InputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
-      
+
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
-      
+
       @java.lang.Override
       protected Builder newBuilderForType(
           com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
       }
+      /**
+       * Protobuf type {@code appmonitoring.FrameData.Value}
+       */
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
          implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder {
@@ -976,18 +1532,21 @@ public final class DataPacketProto {
             getDescriptor() {
           return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_descriptor;
         }
-        
+
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_fieldAccessorTable;
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder.class);
         }
-        
+
         // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
-        
-        private Builder(BuilderParent parent) {
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
           super(parent);
           maybeForceBuilderInitialization();
         }
@@ -999,7 +1558,7 @@ public final class DataPacketProto {
         private static Builder create() {
           return new Builder();
         }
-        
+
         public Builder clear() {
           super.clear();
           value_ = "";
@@ -1012,20 +1571,20 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
-        
+
         public Builder clone() {
           return create().mergeFrom(buildPartial());
         }
-        
+
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDescriptor();
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_Value_descriptor;
         }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value getDefaultInstanceForType() {
           return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance();
         }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value build() {
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value result = buildPartial();
           if (!result.isInitialized()) {
@@ -1033,17 +1592,7 @@ public final class DataPacketProto {
           }
           return result;
         }
-        
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value buildPartial() {
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value(this);
           int from_bitField0_ = bitField0_;
@@ -1064,7 +1613,7 @@ public final class DataPacketProto {
           onBuilt();
           return result;
         }
-        
+
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value) {
             return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value)other);
@@ -1073,11 +1622,13 @@ public final class DataPacketProto {
             return this;
           }
         }
-        
+
         public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value other) {
           if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance()) return this;
           if (other.hasValue()) {
-            setValue(other.getValue());
+            bitField0_ |= 0x00000001;
+            value_ = other.value_;
+            onChanged();
           }
           if (other.hasType()) {
             mergeType(other.getType());
@@ -1085,7 +1636,7 @@ public final class DataPacketProto {
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
-        
+
         public final boolean isInitialized() {
           if (!hasValue()) {
             
@@ -1099,66 +1650,69 @@ public final class DataPacketProto {
           }
           return true;
         }
-        
+
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              default: {
-                if (!parseUnknownField(input, unknownFields,
-                                       extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                }
-                break;
-              }
-              case 10: {
-                bitField0_ |= 0x00000001;
-                value_ = input.readBytes();
-                break;
-              }
-              case 18: {
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder subBuilder = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.newBuilder();
-                if (hasType()) {
-                  subBuilder.mergeFrom(getType());
-                }
-                input.readMessage(subBuilder, extensionRegistry);
-                setType(subBuilder.buildPartial());
-                break;
-              }
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
             }
           }
+          return this;
         }
-        
         private int bitField0_;
-        
+
         // required string value = 1;
         private java.lang.Object value_ = "";
+        /**
+         * <code>required string value = 1;</code>
+         */
         public boolean hasValue() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public String getValue() {
+        /**
+         * <code>required string value = 1;</code>
+         */
+        public java.lang.String getValue() {
           java.lang.Object ref = value_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             value_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setValue(String value) {
+        /**
+         * <code>required string value = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getValueBytes() {
+          java.lang.Object ref = value_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            value_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string value = 1;</code>
+         */
+        public Builder setValue(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -1167,25 +1721,42 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string value = 1;</code>
+         */
         public Builder clearValue() {
           bitField0_ = (bitField0_ & ~0x00000001);
           value_ = getDefaultInstance().getValue();
           onChanged();
           return this;
         }
-        void setValue(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
+        /**
+         * <code>required string value = 1;</code>
+         */
+        public Builder setValueBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
           value_ = value;
           onChanged();
+          return this;
         }
-        
+
         // optional .appmonitoring.FrameData.Type type = 2;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> typeBuilder_;
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public boolean hasType() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
           if (typeBuilder_ == null) {
             return type_;
@@ -1193,6 +1764,9 @@ public final class DataPacketProto {
             return typeBuilder_.getMessage();
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public Builder setType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
           if (typeBuilder_ == null) {
             if (value == null) {
@@ -1206,6 +1780,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public Builder setType(
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder builderForValue) {
           if (typeBuilder_ == null) {
@@ -1217,6 +1794,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public Builder mergeType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
           if (typeBuilder_ == null) {
             if (((bitField0_ & 0x00000002) == 0x00000002) &&
@@ -1233,6 +1813,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public Builder clearType() {
           if (typeBuilder_ == null) {
             type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
@@ -1243,11 +1826,17 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder getTypeBuilder() {
           bitField0_ |= 0x00000002;
           onChanged();
           return getTypeFieldBuilder().getBuilder();
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
           if (typeBuilder_ != null) {
             return typeBuilder_.getMessageOrBuilder();
@@ -1255,6 +1844,9 @@ public final class DataPacketProto {
             return type_;
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         */
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> 
             getTypeFieldBuilder() {
@@ -1268,162 +1860,417 @@ public final class DataPacketProto {
           }
           return typeBuilder_;
         }
-        
+
         // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData.Value)
       }
-      
+
       static {
         defaultInstance = new Value(true);
         defaultInstance.initFields();
       }
-      
+
       // @@protoc_insertion_point(class_scope:appmonitoring.FrameData.Value)
     }
-    
+
     public interface VarDataOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
-      
+
       // required string path = 1;
+      /**
+       * <code>required string path = 1;</code>
+       */
       boolean hasPath();
-      String getPath();
-      
+      /**
+       * <code>required string path = 1;</code>
+       */
+      java.lang.String getPath();
+      /**
+       * <code>required string path = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getPathBytes();
+
       // optional .appmonitoring.FrameData.Value data = 2;
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       boolean hasData();
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value getData();
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder getDataOrBuilder();
-      
+
       // optional .appmonitoring.FrameData.Type type = 3;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       boolean hasType();
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType();
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder();
-      
+
       // optional bool isNull = 4;
+      /**
+       * <code>optional bool isNull = 4;</code>
+       */
       boolean hasIsNull();
+      /**
+       * <code>optional bool isNull = 4;</code>
+       */
       boolean getIsNull();
-      
+
       // optional .appmonitoring.FrameData.VarScope varScope = 5;
+      /**
+       * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+       */
       boolean hasVarScope();
+      /**
+       * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+       */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope getVarScope();
+
+      // optional bool asError = 6;
+      /**
+       * <code>optional bool asError = 6;</code>
+       */
+      boolean hasAsError();
+      /**
+       * <code>optional bool asError = 6;</code>
+       */
+      boolean getAsError();
+
+      // optional int64 date = 7;
+      /**
+       * <code>optional int64 date = 7;</code>
+       */
+      boolean hasDate();
+      /**
+       * <code>optional int64 date = 7;</code>
+       */
+      long getDate();
     }
+    /**
+     * Protobuf type {@code appmonitoring.FrameData.VarData}
+     */
     public static final class VarData extends
         com.google.protobuf.GeneratedMessage
         implements VarDataOrBuilder {
       // Use VarData.newBuilder() to construct.
-      private VarData(Builder builder) {
+      private VarData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
+        this.unknownFields = builder.getUnknownFields();
       }
-      private VarData(boolean noInit) {}
-      
+      private VarData(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
       private static final VarData defaultInstance;
       public static VarData getDefaultInstance() {
         return defaultInstance;
       }
-      
+
       public VarData getDefaultInstanceForType() {
         return defaultInstance;
       }
-      
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private VarData(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                bitField0_ |= 0x00000001;
+                path_ = input.readBytes();
+                break;
+              }
+              case 18: {
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder subBuilder = null;
+                if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                  subBuilder = data_.toBuilder();
+                }
+                data_ = input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.PARSER, extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(data_);
+                  data_ = subBuilder.buildPartial();
+                }
+                bitField0_ |= 0x00000002;
+                break;
+              }
+              case 26: {
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder subBuilder = null;
+                if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                  subBuilder = type_.toBuilder();
+                }
+                type_ = input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.PARSER, extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(type_);
+                  type_ = subBuilder.buildPartial();
+                }
+                bitField0_ |= 0x00000004;
+                break;
+              }
+              case 32: {
+                bitField0_ |= 0x00000008;
+                isNull_ = input.readBool();
+                break;
+              }
+              case 40: {
+                int rawValue = input.readEnum();
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(5, rawValue);
+                } else {
+                  bitField0_ |= 0x00000010;
+                  varScope_ = value;
+                }
+                break;
+              }
+              case 48: {
+                bitField0_ |= 0x00000020;
+                asError_ = input.readBool();
+                break;
+              }
+              case 56: {
+                bitField0_ |= 0x00000040;
+                date_ = input.readInt64();
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable;
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder.class);
       }
-      
+
+      public static com.google.protobuf.Parser<VarData> PARSER =
+          new com.google.protobuf.AbstractParser<VarData>() {
+        public VarData parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new VarData(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<VarData> getParserForType() {
+        return PARSER;
+      }
+
       private int bitField0_;
       // required string path = 1;
       public static final int PATH_FIELD_NUMBER = 1;
       private java.lang.Object path_;
+      /**
+       * <code>required string path = 1;</code>
+       */
       public boolean hasPath() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getPath() {
+      /**
+       * <code>required string path = 1;</code>
+       */
+      public java.lang.String getPath() {
         java.lang.Object ref = path_;
-        if (ref instanceof String) {
-          return (String) ref;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
         } else {
           com.google.protobuf.ByteString bs = 
               (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
             path_ = s;
           }
           return s;
         }
       }
-      private com.google.protobuf.ByteString getPathBytes() {
+      /**
+       * <code>required string path = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPathBytes() {
         java.lang.Object ref = path_;
-        if (ref instanceof String) {
+        if (ref instanceof java.lang.String) {
           com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           path_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      
+
       // optional .appmonitoring.FrameData.Value data = 2;
       public static final int DATA_FIELD_NUMBER = 2;
       private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value data_;
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       public boolean hasData() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value getData() {
         return data_;
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder getDataOrBuilder() {
         return data_;
       }
-      
+
       // optional .appmonitoring.FrameData.Type type = 3;
       public static final int TYPE_FIELD_NUMBER = 3;
       private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_;
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
         return type_;
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
         return type_;
       }
-      
+
       // optional bool isNull = 4;
       public static final int ISNULL_FIELD_NUMBER = 4;
       private boolean isNull_;
+      /**
+       * <code>optional bool isNull = 4;</code>
+       */
       public boolean hasIsNull() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
+      /**
+       * <code>optional bool isNull = 4;</code>
+       */
       public boolean getIsNull() {
         return isNull_;
       }
-      
+
       // optional .appmonitoring.FrameData.VarScope varScope = 5;
       public static final int VARSCOPE_FIELD_NUMBER = 5;
       private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope varScope_;
+      /**
+       * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+       */
       public boolean hasVarScope() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
+      /**
+       * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope getVarScope() {
         return varScope_;
       }
-      
+
+      // optional bool asError = 6;
+      public static final int ASERROR_FIELD_NUMBER = 6;
+      private boolean asError_;
+      /**
+       * <code>optional bool asError = 6;</code>
+       */
+      public boolean hasAsError() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional bool asError = 6;</code>
+       */
+      public boolean getAsError() {
+        return asError_;
+      }
+
+      // optional int64 date = 7;
+      public static final int DATE_FIELD_NUMBER = 7;
+      private long date_;
+      /**
+       * <code>optional int64 date = 7;</code>
+       */
+      public boolean hasDate() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional int64 date = 7;</code>
+       */
+      public long getDate() {
+        return date_;
+      }
+
       private void initFields() {
         path_ = "";
         data_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance();
         type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
         isNull_ = false;
         varScope_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.PUBLIC;
+        asError_ = false;
+        date_ = 0L;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized != -1) return isInitialized == 1;
-        
+
         if (!hasPath()) {
           memoizedIsInitialized = 0;
           return false;
@@ -1443,7 +2290,7 @@ public final class DataPacketProto {
         memoizedIsInitialized = 1;
         return true;
       }
-      
+
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         getSerializedSize();
@@ -1462,14 +2309,20 @@ public final class DataPacketProto {
         if (((bitField0_ & 0x00000010) == 0x00000010)) {
           output.writeEnum(5, varScope_.getNumber());
         }
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          output.writeBool(6, asError_);
+        }
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          output.writeInt64(7, date_);
+        }
         getUnknownFields().writeTo(output);
       }
-      
+
       private int memoizedSerializedSize = -1;
       public int getSerializedSize() {
         int size = memoizedSerializedSize;
         if (size != -1) return size;
-      
+
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
@@ -1491,98 +2344,95 @@ public final class DataPacketProto {
           size += com.google.protobuf.CodedOutputStream
             .computeEnumSize(5, varScope_.getNumber());
         }
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(6, asError_);
+        }
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt64Size(7, date_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
         return size;
       }
-      
+
       private static final long serialVersionUID = 0L;
       @java.lang.Override
       protected java.lang.Object writeReplace()
           throws java.io.ObjectStreamException {
         return super.writeReplace();
       }
-      
+
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(java.io.InputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
-      
+
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
-      
+
       @java.lang.Override
       protected Builder newBuilderForType(
           com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
       }
+      /**
+       * Protobuf type {@code appmonitoring.FrameData.VarData}
+       */
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
          implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder {
@@ -1590,18 +2440,21 @@ public final class DataPacketProto {
             getDescriptor() {
           return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_descriptor;
         }
-        
+
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable;
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder.class);
         }
-        
+
         // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
-        
-        private Builder(BuilderParent parent) {
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
           super(parent);
           maybeForceBuilderInitialization();
         }
@@ -1614,7 +2467,7 @@ public final class DataPacketProto {
         private static Builder create() {
           return new Builder();
         }
-        
+
         public Builder clear() {
           super.clear();
           path_ = "";
@@ -1635,22 +2488,26 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000008);
           varScope_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.PUBLIC;
           bitField0_ = (bitField0_ & ~0x00000010);
+          asError_ = false;
+          bitField0_ = (bitField0_ & ~0x00000020);
+          date_ = 0L;
+          bitField0_ = (bitField0_ & ~0x00000040);
           return this;
         }
-        
+
         public Builder clone() {
           return create().mergeFrom(buildPartial());
         }
-        
+
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.getDescriptor();
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_VarData_descriptor;
         }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData getDefaultInstanceForType() {
           return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.getDefaultInstance();
         }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData build() {
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData result = buildPartial();
           if (!result.isInitialized()) {
@@ -1658,17 +2515,7 @@ public final class DataPacketProto {
           }
           return result;
         }
-        
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
+
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData buildPartial() {
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData(this);
           int from_bitField0_ = bitField0_;
@@ -1701,11 +2548,19 @@ public final class DataPacketProto {
             to_bitField0_ |= 0x00000010;
           }
           result.varScope_ = varScope_;
+          if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+            to_bitField0_ |= 0x00000020;
+          }
+          result.asError_ = asError_;
+          if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+            to_bitField0_ |= 0x00000040;
+          }
+          result.date_ = date_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
         }
-        
+
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData) {
             return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData)other);
@@ -1714,11 +2569,13 @@ public final class DataPacketProto {
             return this;
           }
         }
-        
+
         public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData other) {
           if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.getDefaultInstance()) return this;
           if (other.hasPath()) {
-            setPath(other.getPath());
+            bitField0_ |= 0x00000001;
+            path_ = other.path_;
+            onChanged();
           }
           if (other.hasData()) {
             mergeData(other.getData());
@@ -1732,10 +2589,16 @@ public final class DataPacketProto {
           if (other.hasVarScope()) {
             setVarScope(other.getVarScope());
           }
+          if (other.hasAsError()) {
+            setAsError(other.getAsError());
+          }
+          if (other.hasDate()) {
+            setDate(other.getDate());
+          }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
-        
+
         public final boolean isInitialized() {
           if (!hasPath()) {
             
@@ -1755,91 +2618,69 @@ public final class DataPacketProto {
           }
           return true;
         }
-        
+
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              default: {
-                if (!parseUnknownField(input, unknownFields,
-                                       extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                }
-                break;
-              }
-              case 10: {
-                bitField0_ |= 0x00000001;
-                path_ = input.readBytes();
-                break;
-              }
-              case 18: {
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder subBuilder = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.newBuilder();
-                if (hasData()) {
-                  subBuilder.mergeFrom(getData());
-                }
-                input.readMessage(subBuilder, extensionRegistry);
-                setData(subBuilder.buildPartial());
-                break;
-              }
-              case 26: {
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder subBuilder = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.newBuilder();
-                if (hasType()) {
-                  subBuilder.mergeFrom(getType());
-                }
-                input.readMessage(subBuilder, extensionRegistry);
-                setType(subBuilder.buildPartial());
-                break;
-              }
-              case 32: {
-                bitField0_ |= 0x00000008;
-                isNull_ = input.readBool();
-                break;
-              }
-              case 40: {
-                int rawValue = input.readEnum();
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.valueOf(rawValue);
-                if (value == null) {
-                  unknownFields.mergeVarintField(5, rawValue);
-                } else {
-                  bitField0_ |= 0x00000010;
-                  varScope_ = value;
-                }
-                break;
-              }
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
             }
           }
+          return this;
         }
-        
         private int bitField0_;
-        
+
         // required string path = 1;
         private java.lang.Object path_ = "";
+        /**
+         * <code>required string path = 1;</code>
+         */
         public boolean hasPath() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public String getPath() {
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public java.lang.String getPath() {
           java.lang.Object ref = path_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             path_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setPath(String value) {
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getPathBytes() {
+          java.lang.Object ref = path_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            path_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public Builder setPath(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -1848,25 +2689,42 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string path = 1;</code>
+         */
         public Builder clearPath() {
           bitField0_ = (bitField0_ & ~0x00000001);
           path_ = getDefaultInstance().getPath();
           onChanged();
           return this;
         }
-        void setPath(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public Builder setPathBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
           path_ = value;
           onChanged();
+          return this;
         }
-        
+
         // optional .appmonitoring.FrameData.Value data = 2;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value data_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder> dataBuilder_;
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public boolean hasData() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value getData() {
           if (dataBuilder_ == null) {
             return data_;
@@ -1874,6 +2732,9 @@ public final class DataPacketProto {
             return dataBuilder_.getMessage();
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public Builder setData(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value value) {
           if (dataBuilder_ == null) {
             if (value == null) {
@@ -1887,6 +2748,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public Builder setData(
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder builderForValue) {
           if (dataBuilder_ == null) {
@@ -1898,6 +2762,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public Builder mergeData(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value value) {
           if (dataBuilder_ == null) {
             if (((bitField0_ & 0x00000002) == 0x00000002) &&
@@ -1914,6 +2781,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000002;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public Builder clearData() {
           if (dataBuilder_ == null) {
             data_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance();
@@ -1924,11 +2794,17 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder getDataBuilder() {
           bitField0_ |= 0x00000002;
           onChanged();
           return getDataFieldBuilder().getBuilder();
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder getDataOrBuilder() {
           if (dataBuilder_ != null) {
             return dataBuilder_.getMessageOrBuilder();
@@ -1936,6 +2812,9 @@ public final class DataPacketProto {
             return data_;
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Value data = 2;</code>
+         */
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.ValueOrBuilder> 
             getDataFieldBuilder() {
@@ -1949,14 +2828,20 @@ public final class DataPacketProto {
           }
           return dataBuilder_;
         }
-        
+
         // optional .appmonitoring.FrameData.Type type = 3;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> typeBuilder_;
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public boolean hasType() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
           if (typeBuilder_ == null) {
             return type_;
@@ -1964,6 +2849,9 @@ public final class DataPacketProto {
             return typeBuilder_.getMessage();
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public Builder setType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
           if (typeBuilder_ == null) {
             if (value == null) {
@@ -1977,6 +2865,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000004;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public Builder setType(
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder builderForValue) {
           if (typeBuilder_ == null) {
@@ -1988,6 +2879,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000004;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public Builder mergeType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
           if (typeBuilder_ == null) {
             if (((bitField0_ & 0x00000004) == 0x00000004) &&
@@ -2004,6 +2898,9 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000004;
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public Builder clearType() {
           if (typeBuilder_ == null) {
             type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
@@ -2014,11 +2911,17 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000004);
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder getTypeBuilder() {
           bitField0_ |= 0x00000004;
           onChanged();
           return getTypeFieldBuilder().getBuilder();
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
           if (typeBuilder_ != null) {
             return typeBuilder_.getMessageOrBuilder();
@@ -2026,6 +2929,9 @@ public final class DataPacketProto {
             return type_;
           }
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.Type type = 3;</code>
+         */
         private com.google.protobuf.SingleFieldBuilder<
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> 
             getTypeFieldBuilder() {
@@ -2039,36 +2945,57 @@ public final class DataPacketProto {
           }
           return typeBuilder_;
         }
-        
+
         // optional bool isNull = 4;
         private boolean isNull_ ;
+        /**
+         * <code>optional bool isNull = 4;</code>
+         */
         public boolean hasIsNull() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
+        /**
+         * <code>optional bool isNull = 4;</code>
+         */
         public boolean getIsNull() {
           return isNull_;
         }
+        /**
+         * <code>optional bool isNull = 4;</code>
+         */
         public Builder setIsNull(boolean value) {
           bitField0_ |= 0x00000008;
           isNull_ = value;
           onChanged();
           return this;
         }
+        /**
+         * <code>optional bool isNull = 4;</code>
+         */
         public Builder clearIsNull() {
           bitField0_ = (bitField0_ & ~0x00000008);
           isNull_ = false;
           onChanged();
           return this;
         }
-        
+
         // optional .appmonitoring.FrameData.VarScope varScope = 5;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope varScope_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.PUBLIC;
+        /**
+         * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+         */
         public boolean hasVarScope() {
           return ((bitField0_ & 0x00000010) == 0x00000010);
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+         */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope getVarScope() {
           return varScope_;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+         */
         public Builder setVarScope(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope value) {
           if (value == null) {
             throw new NullPointerException();
@@ -2078,55 +3005,759 @@ public final class DataPacketProto {
           onChanged();
           return this;
         }
+        /**
+         * <code>optional .appmonitoring.FrameData.VarScope varScope = 5;</code>
+         */
         public Builder clearVarScope() {
           bitField0_ = (bitField0_ & ~0x00000010);
           varScope_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope.PUBLIC;
           onChanged();
           return this;
         }
-        
+
+        // optional bool asError = 6;
+        private boolean asError_ ;
+        /**
+         * <code>optional bool asError = 6;</code>
+         */
+        public boolean hasAsError() {
+          return ((bitField0_ & 0x00000020) == 0x00000020);
+        }
+        /**
+         * <code>optional bool asError = 6;</code>
+         */
+        public boolean getAsError() {
+          return asError_;
+        }
+        /**
+         * <code>optional bool asError = 6;</code>
+         */
+        public Builder setAsError(boolean value) {
+          bitField0_ |= 0x00000020;
+          asError_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional bool asError = 6;</code>
+         */
+        public Builder clearAsError() {
+          bitField0_ = (bitField0_ & ~0x00000020);
+          asError_ = false;
+          onChanged();
+          return this;
+        }
+
+        // optional int64 date = 7;
+        private long date_ ;
+        /**
+         * <code>optional int64 date = 7;</code>
+         */
+        public boolean hasDate() {
+          return ((bitField0_ & 0x00000040) == 0x00000040);
+        }
+        /**
+         * <code>optional int64 date = 7;</code>
+         */
+        public long getDate() {
+          return date_;
+        }
+        /**
+         * <code>optional int64 date = 7;</code>
+         */
+        public Builder setDate(long value) {
+          bitField0_ |= 0x00000040;
+          date_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional int64 date = 7;</code>
+         */
+        public Builder clearDate() {
+          bitField0_ = (bitField0_ & ~0x00000040);
+          date_ = 0L;
+          onChanged();
+          return this;
+        }
+
         // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData.VarData)
       }
-      
+
       static {
         defaultInstance = new VarData(true);
         defaultInstance.initFields();
       }
-      
+
       // @@protoc_insertion_point(class_scope:appmonitoring.FrameData.VarData)
     }
-    
+
+    public interface RequestDataOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+
+      // required string path = 1;
+      /**
+       * <code>required string path = 1;</code>
+       */
+      boolean hasPath();
+      /**
+       * <code>required string path = 1;</code>
+       */
+      java.lang.String getPath();
+      /**
+       * <code>required string path = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getPathBytes();
+
+      // required .appmonitoring.FrameData.Mode mode = 2;
+      /**
+       * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+       */
+      boolean hasMode();
+      /**
+       * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+       */
+      ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode getMode();
+    }
+    /**
+     * Protobuf type {@code appmonitoring.FrameData.RequestData}
+     */
+    public static final class RequestData extends
+        com.google.protobuf.GeneratedMessage
+        implements RequestDataOrBuilder {
+      // Use RequestData.newBuilder() to construct.
+      private RequestData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+        this.unknownFields = builder.getUnknownFields();
+      }
+      private RequestData(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+      private static final RequestData defaultInstance;
+      public static RequestData getDefaultInstance() {
+        return defaultInstance;
+      }
+
+      public RequestData getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private RequestData(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                bitField0_ |= 0x00000001;
+                path_ = input.readBytes();
+                break;
+              }
+              case 16: {
+                int rawValue = input.readEnum();
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(2, rawValue);
+                } else {
+                  bitField0_ |= 0x00000002;
+                  mode_ = value;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_RequestData_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_RequestData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder.class);
+      }
+
+      public static com.google.protobuf.Parser<RequestData> PARSER =
+          new com.google.protobuf.AbstractParser<RequestData>() {
+        public RequestData parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new RequestData(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<RequestData> getParserForType() {
+        return PARSER;
+      }
+
+      private int bitField0_;
+      // required string path = 1;
+      public static final int PATH_FIELD_NUMBER = 1;
+      private java.lang.Object path_;
+      /**
+       * <code>required string path = 1;</code>
+       */
+      public boolean hasPath() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string path = 1;</code>
+       */
+      public java.lang.String getPath() {
+        java.lang.Object ref = path_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            path_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>required string path = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPathBytes() {
+        java.lang.Object ref = path_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          path_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      // required .appmonitoring.FrameData.Mode mode = 2;
+      public static final int MODE_FIELD_NUMBER = 2;
+      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode mode_;
+      /**
+       * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+       */
+      public boolean hasMode() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode getMode() {
+        return mode_;
+      }
+
+      private void initFields() {
+        path_ = "";
+        mode_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode.QUERY;
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+
+        if (!hasPath()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasMode()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeBytes(1, getPathBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeEnum(2, mode_.getNumber());
+        }
+        getUnknownFields().writeTo(output);
+      }
+
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(1, getPathBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(2, mode_.getNumber());
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code appmonitoring.FrameData.RequestData}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_RequestData_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_RequestData_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder.class);
+        }
+
+        // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+
+        public Builder clear() {
+          super.clear();
+          path_ = "";
+          bitField0_ = (bitField0_ & ~0x00000001);
+          mode_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode.QUERY;
+          bitField0_ = (bitField0_ & ~0x00000002);
+          return this;
+        }
+
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_RequestData_descriptor;
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData getDefaultInstanceForType() {
+          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.getDefaultInstance();
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData build() {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData buildPartial() {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.path_ = path_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.mode_ = mode_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData) {
+            return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData other) {
+          if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.getDefaultInstance()) return this;
+          if (other.hasPath()) {
+            bitField0_ |= 0x00000001;
+            path_ = other.path_;
+            onChanged();
+          }
+          if (other.hasMode()) {
+            setMode(other.getMode());
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          if (!hasPath()) {
+            
+            return false;
+          }
+          if (!hasMode()) {
+            
+            return false;
+          }
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        // required string path = 1;
+        private java.lang.Object path_ = "";
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public boolean hasPath() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public java.lang.String getPath() {
+          java.lang.Object ref = path_;
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            path_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getPathBytes() {
+          java.lang.Object ref = path_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            path_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public Builder setPath(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+          path_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public Builder clearPath() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          path_ = getDefaultInstance().getPath();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required string path = 1;</code>
+         */
+        public Builder setPathBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+          path_ = value;
+          onChanged();
+          return this;
+        }
+
+        // required .appmonitoring.FrameData.Mode mode = 2;
+        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode mode_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode.QUERY;
+        /**
+         * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+         */
+        public boolean hasMode() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        /**
+         * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+         */
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode getMode() {
+          return mode_;
+        }
+        /**
+         * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+         */
+        public Builder setMode(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          bitField0_ |= 0x00000002;
+          mode_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required .appmonitoring.FrameData.Mode mode = 2;</code>
+         */
+        public Builder clearMode() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          mode_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Mode.QUERY;
+          onChanged();
+          return this;
+        }
+
+        // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData.RequestData)
+      }
+
+      static {
+        defaultInstance = new RequestData(true);
+        defaultInstance.initFields();
+      }
+
+      // @@protoc_insertion_point(class_scope:appmonitoring.FrameData.RequestData)
+    }
+
     // repeated .appmonitoring.FrameData.VarData varData = 1;
     public static final int VARDATA_FIELD_NUMBER = 1;
     private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> varData_;
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> getVarDataList() {
       return varData_;
     }
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     public java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder> 
         getVarDataOrBuilderList() {
       return varData_;
     }
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     public int getVarDataCount() {
       return varData_.size();
     }
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData getVarData(int index) {
       return varData_.get(index);
     }
+    /**
+     * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+     */
     public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder getVarDataOrBuilder(
         int index) {
       return varData_.get(index);
     }
-    
+
+    // repeated .appmonitoring.FrameData.RequestData requestedData = 2;
+    public static final int REQUESTEDDATA_FIELD_NUMBER = 2;
+    private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> requestedData_;
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> getRequestedDataList() {
+      return requestedData_;
+    }
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    public java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder> 
+        getRequestedDataOrBuilderList() {
+      return requestedData_;
+    }
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    public int getRequestedDataCount() {
+      return requestedData_.size();
+    }
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData getRequestedData(int index) {
+      return requestedData_.get(index);
+    }
+    /**
+     * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+     */
+    public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder getRequestedDataOrBuilder(
+        int index) {
+      return requestedData_.get(index);
+    }
+
     private void initFields() {
       varData_ = java.util.Collections.emptyList();
+      requestedData_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       for (int i = 0; i < getVarDataCount(); i++) {
         if (!getVarData(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      for (int i = 0; i < getRequestedDataCount(); i++) {
+        if (!getRequestedData(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -2134,118 +3765,114 @@ public final class DataPacketProto {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
       for (int i = 0; i < varData_.size(); i++) {
         output.writeMessage(1, varData_.get(i));
       }
+      for (int i = 0; i < requestedData_.size(); i++) {
+        output.writeMessage(2, requestedData_.get(i));
+      }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       for (int i = 0; i < varData_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, varData_.get(i));
       }
+      for (int i = 0; i < requestedData_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, requestedData_.get(i));
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code appmonitoring.FrameData}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameDataOrBuilder {
@@ -2253,30 +3880,34 @@ public final class DataPacketProto {
           getDescriptor() {
         return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_fieldAccessorTable;
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.class, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Builder.class);
       }
-      
+
       // Construct using ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getVarDataFieldBuilder();
+          getRequestedDataFieldBuilder();
         }
       }
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (varDataBuilder_ == null) {
@@ -2285,22 +3916,28 @@ public final class DataPacketProto {
         } else {
           varDataBuilder_.clear();
         }
+        if (requestedDataBuilder_ == null) {
+          requestedData_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          requestedDataBuilder_.clear();
+        }
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.getDescriptor();
+        return ca.etsmtl.octets.appmonitoring.DataPacketProto.internal_static_appmonitoring_FrameData_descriptor;
       }
-      
+
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData getDefaultInstanceForType() {
         return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.getDefaultInstance();
       }
-      
+
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData build() {
         ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData result = buildPartial();
         if (!result.isInitialized()) {
@@ -2308,17 +3945,7 @@ public final class DataPacketProto {
         }
         return result;
       }
-      
-      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData buildPartial() {
         ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData result = new ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData(this);
         int from_bitField0_ = bitField0_;
@@ -2331,10 +3958,19 @@ public final class DataPacketProto {
         } else {
           result.varData_ = varDataBuilder_.build();
         }
+        if (requestedDataBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            requestedData_ = java.util.Collections.unmodifiableList(requestedData_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.requestedData_ = requestedData_;
+        } else {
+          result.requestedData_ = requestedDataBuilder_.build();
+        }
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData) {
           return mergeFrom((ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData)other);
@@ -2343,7 +3979,7 @@ public final class DataPacketProto {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData other) {
         if (other == ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.getDefaultInstance()) return this;
         if (varDataBuilder_ == null) {
@@ -2372,10 +4008,36 @@ public final class DataPacketProto {
             }
           }
         }
+        if (requestedDataBuilder_ == null) {
+          if (!other.requestedData_.isEmpty()) {
+            if (requestedData_.isEmpty()) {
+              requestedData_ = other.requestedData_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureRequestedDataIsMutable();
+              requestedData_.addAll(other.requestedData_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.requestedData_.isEmpty()) {
+            if (requestedDataBuilder_.isEmpty()) {
+              requestedDataBuilder_.dispose();
+              requestedDataBuilder_ = null;
+              requestedData_ = other.requestedData_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              requestedDataBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getRequestedDataFieldBuilder() : null;
+            } else {
+              requestedDataBuilder_.addAllMessages(other.requestedData_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         for (int i = 0; i < getVarDataCount(); i++) {
           if (!getVarData(i).isInitialized()) {
@@ -2383,44 +4045,34 @@ public final class DataPacketProto {
             return false;
           }
         }
+        for (int i = 0; i < getRequestedDataCount(); i++) {
+          if (!getRequestedData(i).isInitialized()) {
+            
+            return false;
+          }
+        }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder subBuilder = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addVarData(subBuilder.buildPartial());
-              break;
-            }
+        ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // repeated .appmonitoring.FrameData.VarData varData = 1;
       private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> varData_ =
         java.util.Collections.emptyList();
@@ -2430,10 +4082,13 @@ public final class DataPacketProto {
           bitField0_ |= 0x00000001;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder> varDataBuilder_;
-      
+
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> getVarDataList() {
         if (varDataBuilder_ == null) {
           return java.util.Collections.unmodifiableList(varData_);
@@ -2441,6 +4096,9 @@ public final class DataPacketProto {
           return varDataBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public int getVarDataCount() {
         if (varDataBuilder_ == null) {
           return varData_.size();
@@ -2448,6 +4106,9 @@ public final class DataPacketProto {
           return varDataBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData getVarData(int index) {
         if (varDataBuilder_ == null) {
           return varData_.get(index);
@@ -2455,6 +4116,9 @@ public final class DataPacketProto {
           return varDataBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder setVarData(
           int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData value) {
         if (varDataBuilder_ == null) {
@@ -2469,6 +4133,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder setVarData(
           int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder builderForValue) {
         if (varDataBuilder_ == null) {
@@ -2480,6 +4147,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder addVarData(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData value) {
         if (varDataBuilder_ == null) {
           if (value == null) {
@@ -2493,6 +4163,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder addVarData(
           int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData value) {
         if (varDataBuilder_ == null) {
@@ -2507,6 +4180,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder addVarData(
           ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder builderForValue) {
         if (varDataBuilder_ == null) {
@@ -2518,6 +4194,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder addVarData(
           int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder builderForValue) {
         if (varDataBuilder_ == null) {
@@ -2529,6 +4208,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder addAllVarData(
           java.lang.Iterable<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData> values) {
         if (varDataBuilder_ == null) {
@@ -2540,6 +4222,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder clearVarData() {
         if (varDataBuilder_ == null) {
           varData_ = java.util.Collections.emptyList();
@@ -2550,6 +4235,9 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public Builder removeVarData(int index) {
         if (varDataBuilder_ == null) {
           ensureVarDataIsMutable();
@@ -2560,10 +4248,16 @@ public final class DataPacketProto {
         }
         return this;
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder getVarDataBuilder(
           int index) {
         return getVarDataFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder getVarDataOrBuilder(
           int index) {
         if (varDataBuilder_ == null) {
@@ -2571,6 +4265,9 @@ public final class DataPacketProto {
           return varDataBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarDataOrBuilder> 
            getVarDataOrBuilderList() {
         if (varDataBuilder_ != null) {
@@ -2579,15 +4276,24 @@ public final class DataPacketProto {
           return java.util.Collections.unmodifiableList(varData_);
         }
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder addVarDataBuilder() {
         return getVarDataFieldBuilder().addBuilder(
             ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.getDefaultInstance());
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder addVarDataBuilder(
           int index) {
         return getVarDataFieldBuilder().addBuilder(
             index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.getDefaultInstance());
       }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarData varData = 1;</code>
+       */
       public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder> 
            getVarDataBuilderList() {
         return getVarDataFieldBuilder().getBuilderList();
@@ -2606,18 +4312,258 @@ public final class DataPacketProto {
         }
         return varDataBuilder_;
       }
-      
+
+      // repeated .appmonitoring.FrameData.RequestData requestedData = 2;
+      private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> requestedData_ =
+        java.util.Collections.emptyList();
+      private void ensureRequestedDataIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          requestedData_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData>(requestedData_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder> requestedDataBuilder_;
+
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> getRequestedDataList() {
+        if (requestedDataBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(requestedData_);
+        } else {
+          return requestedDataBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public int getRequestedDataCount() {
+        if (requestedDataBuilder_ == null) {
+          return requestedData_.size();
+        } else {
+          return requestedDataBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData getRequestedData(int index) {
+        if (requestedDataBuilder_ == null) {
+          return requestedData_.get(index);
+        } else {
+          return requestedDataBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder setRequestedData(
+          int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData value) {
+        if (requestedDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRequestedDataIsMutable();
+          requestedData_.set(index, value);
+          onChanged();
+        } else {
+          requestedDataBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder setRequestedData(
+          int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder builderForValue) {
+        if (requestedDataBuilder_ == null) {
+          ensureRequestedDataIsMutable();
+          requestedData_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          requestedDataBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder addRequestedData(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData value) {
+        if (requestedDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRequestedDataIsMutable();
+          requestedData_.add(value);
+          onChanged();
+        } else {
+          requestedDataBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder addRequestedData(
+          int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData value) {
+        if (requestedDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRequestedDataIsMutable();
+          requestedData_.add(index, value);
+          onChanged();
+        } else {
+          requestedDataBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder addRequestedData(
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder builderForValue) {
+        if (requestedDataBuilder_ == null) {
+          ensureRequestedDataIsMutable();
+          requestedData_.add(builderForValue.build());
+          onChanged();
+        } else {
+          requestedDataBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder addRequestedData(
+          int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder builderForValue) {
+        if (requestedDataBuilder_ == null) {
+          ensureRequestedDataIsMutable();
+          requestedData_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          requestedDataBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder addAllRequestedData(
+          java.lang.Iterable<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData> values) {
+        if (requestedDataBuilder_ == null) {
+          ensureRequestedDataIsMutable();
+          super.addAll(values, requestedData_);
+          onChanged();
+        } else {
+          requestedDataBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder clearRequestedData() {
+        if (requestedDataBuilder_ == null) {
+          requestedData_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          requestedDataBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public Builder removeRequestedData(int index) {
+        if (requestedDataBuilder_ == null) {
+          ensureRequestedDataIsMutable();
+          requestedData_.remove(index);
+          onChanged();
+        } else {
+          requestedDataBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder getRequestedDataBuilder(
+          int index) {
+        return getRequestedDataFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder getRequestedDataOrBuilder(
+          int index) {
+        if (requestedDataBuilder_ == null) {
+          return requestedData_.get(index);  } else {
+          return requestedDataBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public java.util.List<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder> 
+           getRequestedDataOrBuilderList() {
+        if (requestedDataBuilder_ != null) {
+          return requestedDataBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(requestedData_);
+        }
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder addRequestedDataBuilder() {
+        return getRequestedDataFieldBuilder().addBuilder(
+            ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder addRequestedDataBuilder(
+          int index) {
+        return getRequestedDataFieldBuilder().addBuilder(
+            index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.RequestData requestedData = 2;</code>
+       */
+      public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder> 
+           getRequestedDataBuilderList() {
+        return getRequestedDataFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder> 
+          getRequestedDataFieldBuilder() {
+        if (requestedDataBuilder_ == null) {
+          requestedDataBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestDataOrBuilder>(
+                  requestedData_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          requestedData_ = null;
+        }
+        return requestedDataBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData)
     }
-    
+
     static {
       defaultInstance = new FrameData(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:appmonitoring.FrameData)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_appmonitoring_FrameData_descriptor;
   private static
@@ -2638,7 +4584,12 @@ public final class DataPacketProto {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable;
-  
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_appmonitoring_FrameData_RequestData_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_appmonitoring_FrameData_RequestData_fieldAccessorTable;
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -2647,23 +4598,28 @@ public final class DataPacketProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025DataPacketProto.proto\022\rappmonitoring\"\256" +
-      "\004\n\tFrameData\0221\n\007varData\030\001 \003(\0132 .appmonit" +
-      "oring.FrameData.VarData\032\247\001\n\004Type\022\014\n\004name" +
-      "\030\001 \002(\t\022\021\n\tclassPath\030\002 \001(\t\022<\n\nobjectType\030" +
-      "\003 \001(\0162(.appmonitoring.FrameData.Type.Obj" +
-      "ectType\"@\n\nObjectType\022\t\n\005CLASS\020\001\022\010\n\004ENUM" +
-      "\020\002\022\r\n\tINTERFACE\020\003\022\016\n\nANNOTATION\020\004\032C\n\005Val" +
-      "ue\022\r\n\005value\030\001 \002(\t\022+\n\004type\030\002 \001(\0132\035.appmon" +
-      "itoring.FrameData.Type\032\267\001\n\007VarData\022\014\n\004pa" +
-      "th\030\001 \002(\t\022,\n\004data\030\002 \001(\0132\036.appmonitoring.F",
-      "rameData.Value\022+\n\004type\030\003 \001(\0132\035.appmonito" +
-      "ring.FrameData.Type\022\016\n\006isNull\030\004 \001(\010\0223\n\010v" +
-      "arScope\030\005 \001(\0162!.appmonitoring.FrameData." +
-      "VarScope\"E\n\010VarScope\022\n\n\006PUBLIC\020\001\022\r\n\tPROT" +
-      "ECTED\020\002\022\013\n\007PRIVATE\020\003\022\021\n\rPACKAGE_LOCAL\020\004B" +
-      "1\n\036ca.etsmtl.octets.appmonitoringB\017DataP" +
-      "acketProto"
+      "\n\025DataPacketProto.proto\022\rappmonitoring\"\205" +
+      "\006\n\tFrameData\0221\n\007varData\030\001 \003(\0132 .appmonit" +
+      "oring.FrameData.VarData\022;\n\rrequestedData" +
+      "\030\002 \003(\0132$.appmonitoring.FrameData.Request" +
+      "Data\032\247\001\n\004Type\022\014\n\004name\030\001 \002(\t\022\021\n\tclassPath" +
+      "\030\002 \001(\t\022<\n\nobjectType\030\003 \001(\0162(.appmonitori" +
+      "ng.FrameData.Type.ObjectType\"@\n\nObjectTy" +
+      "pe\022\t\n\005CLASS\020\001\022\010\n\004ENUM\020\002\022\r\n\tINTERFACE\020\003\022\016" +
+      "\n\nANNOTATION\020\004\032C\n\005Value\022\r\n\005value\030\001 \002(\t\022+" +
+      "\n\004type\030\002 \001(\0132\035.appmonitoring.FrameData.T",
+      "ype\032\326\001\n\007VarData\022\014\n\004path\030\001 \002(\t\022,\n\004data\030\002 " +
+      "\001(\0132\036.appmonitoring.FrameData.Value\022+\n\004t" +
+      "ype\030\003 \001(\0132\035.appmonitoring.FrameData.Type" +
+      "\022\016\n\006isNull\030\004 \001(\010\0223\n\010varScope\030\005 \001(\0162!.app" +
+      "monitoring.FrameData.VarScope\022\017\n\007asError" +
+      "\030\006 \001(\010\022\014\n\004date\030\007 \001(\003\032H\n\013RequestData\022\014\n\004p" +
+      "ath\030\001 \002(\t\022+\n\004mode\030\002 \002(\0162\035.appmonitoring." +
+      "FrameData.Mode\"E\n\010VarScope\022\n\n\006PUBLIC\020\001\022\r" +
+      "\n\tPROTECTED\020\002\022\013\n\007PRIVATE\020\003\022\021\n\rPACKAGE_LO" +
+      "CAL\020\004\"/\n\004Mode\022\t\n\005QUERY\020\001\022\014\n\010REGISTER\020\002\022\016",
+      "\n\nUNREGISTER\020\003B1\n\036ca.etsmtl.octets.appmo" +
+      "nitoringB\017DataPacketProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2675,33 +4631,31 @@ public final class DataPacketProto {
           internal_static_appmonitoring_FrameData_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_descriptor,
-              new java.lang.String[] { "VarData", },
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.class,
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Builder.class);
+              new java.lang.String[] { "VarData", "RequestedData", });
           internal_static_appmonitoring_FrameData_Type_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(0);
           internal_static_appmonitoring_FrameData_Type_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_Type_descriptor,
-              new java.lang.String[] { "Name", "ClassPath", "ObjectType", },
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.class,
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder.class);
+              new java.lang.String[] { "Name", "ClassPath", "ObjectType", });
           internal_static_appmonitoring_FrameData_Value_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(1);
           internal_static_appmonitoring_FrameData_Value_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_Value_descriptor,
-              new java.lang.String[] { "Value", "Type", },
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.class,
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.Builder.class);
+              new java.lang.String[] { "Value", "Type", });
           internal_static_appmonitoring_FrameData_VarData_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(2);
           internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_VarData_descriptor,
-              new java.lang.String[] { "Path", "Data", "Type", "IsNull", "VarScope", },
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.class,
-              ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData.Builder.class);
+              new java.lang.String[] { "Path", "Data", "Type", "IsNull", "VarScope", "AsError", "Date", });
+          internal_static_appmonitoring_FrameData_RequestData_descriptor =
+            internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(3);
+          internal_static_appmonitoring_FrameData_RequestData_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_appmonitoring_FrameData_RequestData_descriptor,
+              new java.lang.String[] { "Path", "Mode", });
           return null;
         }
       };
@@ -2710,6 +4664,6 @@ public final class DataPacketProto {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

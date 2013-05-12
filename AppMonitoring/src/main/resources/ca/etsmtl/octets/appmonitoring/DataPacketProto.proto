@@ -38,10 +38,18 @@ message FrameData {
       optional bool isNull = 4;
       optional VarScope varScope = 5;
       optional bool asError = 6;
+      optional int64 date = 7;
+   }
+
+   enum Mode {
+      QUERY = 1;
+      REGISTER = 2;
+      UNREGISTER = 3;
    }
 
    message RequestData {
-      required string path;
+      required string path = 1;
+      required Mode mode = 2;
    }
 
    repeated VarData varData = 1;

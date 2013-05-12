@@ -1,6 +1,7 @@
 package ca.etsmtl.octets.appmonitoring;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,15 +10,20 @@ import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData;
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData;
+
 class ClientData implements Runnable, IClientConnection {
    private static final Logger LOGGER = Logger.getLogger(ClientData.class);
 
+   private final ReentrantLock mWriterMutex = new ReentrantLock();
+   private final ReentrantLock mMonitorListMutex = new ReentrantLock();
+
    private IConnectionHolder connectionHolder;
 
-   private Socket mClient;
-
-   private BufferedReader mReader;
-   private OutputStream mWriter;
+   private Socket socket;
+   private InputStream inputStream;
+   private OutputStream outputStream;
    
    private Hashtable<String, ObjectHolder> mMonitorObject = new Hashtable<String, ObjectHolder>();
    private Hashtable<String, MonitoredObject> mRootList;
@@ -25,46 +31,32 @@ class ClientData implements Runnable, IClientConnection {
    private Thread mThread;
    private Boolean mCanRun = true;
 
-   private ReentrantLock mWriterMutex = new ReentrantLock();
-   private ReentrantLock mMonitorListMutex = new ReentrantLock();
-
    private MonitoredObject.WizeUpdater mWizeUpdater = new MonitoredObject.WizeUpdater();
    
    private int refreshRate = 50; // pms
 
-   private final DataPacketProto.FrameData.VarData.Builder varDataBuilder = DataPacketProto.FrameData.VarData.newBuilder();
+   private final VarData.Builder varDataBuilder = VarData.newBuilder();
    private final DataPacketProto.FrameData.Type.Builder typeBuilder = DataPacketProto.FrameData.Type.newBuilder();
    private final DataPacketProto.FrameData.Value.Builder valueBuilder = DataPacketProto.FrameData.Value.newBuilder();
+
+   @Autowired
+   private ClientConnectionHolder clientConnectionHolder;
 
    public ClientData(IConnectionHolder connectionHolder, Socket iClient, Hashtable<String, MonitoredObject> iRootList) throws IOException {
       LOGGER.info(iClient.getInetAddress().getHostName() +  " : Initialing connection");
 
       this.connectionHolder = connectionHolder;
 
-      mClient = iClient;
+      socket = iClient;
       mRootList = iRootList;
 
-      mReader = new BufferedReader(new InputStreamReader(mClient.getInputStream()));
-      mWriter = mClient.getOutputStream();
+      inputStream = socket.getInputStream();
+      outputStream = socket.getOutputStream();
 
       mThread = new Thread(this);
       mThread.start();
 
-      mUpdater = new Thread(new Runnable() {
-         @Override
-         public void run() {
-            while(mCanRun) {
-               UpdateClient();
-               try {
-                  Thread.sleep(refreshRate);
-               } catch (InterruptedException e) {
-                  e.printStackTrace();
-               }
-            }
-         }
-      });
-      mUpdater.setName(iClient.getInetAddress().getHostName() + " object monitor.");
-      mUpdater.start();
+      clientConnectionHolder.registerClient(this);
 
       LOGGER.info(iClient.getInetAddress().getHostName() + " : connection initialized.");
 
@@ -113,7 +105,7 @@ class ClientData implements Runnable, IClientConnection {
                   varDataBuilder.setData(valueBuilder.build());
                }
 
-               varDataBuilder.build().writeTo(mWriter);
+               varDataBuilder.build().writeTo(outputStream);
 
                wHolder.setRequestUpdate(false);  
             }
@@ -142,7 +134,7 @@ class ClientData implements Runnable, IClientConnection {
          //wData += ":Visibility:" + wObj.getVisibility();
          //mWriter.write(wData);
          //mWriter.newLine();
-         mWriter.flush();   
+         outputStream.flush();
       }
       catch(IOException e) {
          close();
@@ -158,8 +150,8 @@ class ClientData implements Runnable, IClientConnection {
       {
          try
          {
-            if(mReader.ready()) {
-               String wLine = mReader.readLine();
+            if(inputStream.ready()) {
+               String wLine = inputStream.readLine();
                if(wLine.startsWith(">ObjectRequest:") && wLine.toUpperCase().indexOf(cPath) != -1 )
                {
                   String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
@@ -210,15 +202,33 @@ class ClientData implements Runnable, IClientConnection {
       
       //Close
       try {
-         if(mReader != null)
-            mReader.close();
+         if(inputStream != null)
+            inputStream.close();
          if(mWriter != null)
             mWriter.close();
       } catch (IOException e) { }
 
       if(connectionHolder != null) connectionHolder.unRegisterClient(this);
 
-      LOGGER.info(mClient.getInetAddress().getHostName() + " : disconnected.");
+      LOGGER.info(socket.getInetAddress().getHostName() + " : disconnected.");
+   }
+
+   public void readFrameData() throws IOException {
+      DataPacketProto.FrameData frameData = FrameData.parseFrom(inputStream);
+      for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+         switch (requestData.getMode()) {
+            case QUERY:
+
+               break;
+            case REGISTER:
+
+               break;
+            case UNREGISTER:
+
+               break;
+         }
+      }
+
    }
 
    @Override
@@ -233,5 +243,6 @@ class ClientData implements Runnable, IClientConnection {
 
    public void close() {
       mCanRun = false;
+      clientConnectionHolder.unRegisterClient(this);
    }
 }
