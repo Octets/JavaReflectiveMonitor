@@ -17,15 +17,15 @@ class ClientData implements Runnable, IClientConnection {
    private static final Logger LOGGER = Logger.getLogger(ClientData.class);
 
    private final ReentrantLock mWriterMutex = new ReentrantLock();
-   private final ReentrantLock mMonitorListMutex = new ReentrantLock();
+   private final ReentrantLock monitorListMutex = new ReentrantLock();
 
    private IConnectionHolder connectionHolder;
 
    private Socket socket;
-   private InputStream inputStream;
+   private BufferedInputStream inputStream;
    private OutputStream outputStream;
    
-   private Hashtable<String, ObjectHolder> mMonitorObject = new Hashtable<String, ObjectHolder>();
+   private Hashtable<String, ObjectHolder> monitorList = new Hashtable<String, ObjectHolder>();
    private Hashtable<String, MonitoredObject> mRootList;
 
    private Thread mThread;
@@ -50,7 +50,7 @@ class ClientData implements Runnable, IClientConnection {
       socket = iClient;
       mRootList = iRootList;
 
-      inputStream = socket.getInputStream();
+      inputStream = new BufferedInputStream(socket.getInputStream());
       outputStream = socket.getOutputStream();
 
       mThread = new Thread(this);
@@ -61,7 +61,7 @@ class ClientData implements Runnable, IClientConnection {
       LOGGER.info(iClient.getInetAddress().getHostName() + " : connection initialized.");
 
       for (MonitoredObject wObj : mRootList.values()) {
-         UpdateObject(wObj);
+         updateObject(wObj);
       }
 
 
@@ -72,13 +72,13 @@ class ClientData implements Runnable, IClientConnection {
    public void triggerUpdate() {
 
       mWriterMutex.lock();
-      mMonitorListMutex.lock();
-      for (ObjectHolder wHolder : mMonitorObject.values()) {
+      monitorListMutex.lock();
+      for (ObjectHolder wHolder : monitorList.values()) {
          wHolder.getObjectSpy().registerForUpdate(mWizeUpdater);
       }
       
       mWizeUpdater.executeUpdate();
-      for (ObjectHolder wHolder : mMonitorObject.values()) {
+      for (ObjectHolder wHolder : monitorList.values()) {
          try
          {
             if(wHolder.CheckForUpdate()) {
@@ -117,10 +117,11 @@ class ClientData implements Runnable, IClientConnection {
             close();
          }
       }
-      mMonitorListMutex.unlock();
+      monitorListMutex.unlock();
       mWriterMutex.unlock();
    }
-   private void UpdateObject(MonitoredObject wObj) {
+
+   private void updateObject(MonitoredObject wObj) {
       mWriterMutex.lock();
       try
       {
@@ -139,53 +140,29 @@ class ClientData implements Runnable, IClientConnection {
       catch(IOException e) {
          close();
       }
-      
       mWriterMutex.unlock();
    }
 
-   //>ObjectRequest:PATH:[content]
+   private void updateFieldsObject(MonitoredObject monitoredObject) {
+      for(String field : monitoredObject.getFieldsName()) {
+         MonitoredObject monitoredField = MonitoredObject.ObjectNavigation(monitoredObject.mChildren,field,monitoredObject);
+         if(monitoredField != null) {
+            updateObject(monitoredField);
+         }
+      }
+   }
+
    @Override
    public void run() {
       while(mCanRun)
       {
          try
          {
-            if(inputStream.ready()) {
-               String wLine = inputStream.readLine();
-               if(wLine.startsWith(">ObjectRequest:") && wLine.toUpperCase().indexOf(cPath) != -1 )
-               {
-                  String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
-                  
-                  MonitoredObject wObj = MonitoredObject.ObjectNavigation(mRootList, wPath, null);
-                  if(wObj != null)
-                  {
-                     UpdateObject(wObj);
-                     for (String wField : wObj.mFieldNames) {
-                        MonitoredObject wTemp = MonitoredObject.ObjectNavigation(wObj.mChildren, wField, wObj);
-                        if(wTemp != null)
-                        UpdateObject(wTemp);
-                     }
-                  }
+            if(inputStream.available() != 0) {
+               FrameData frameData = DataPacketProto.FrameData.parseFrom(inputStream);
+               for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+                  runRequestData(requestData);
                }
-               else if(wLine.startsWith(">RMonitorObject:") && wLine.toUpperCase().indexOf(cPath) != -1) {
-                  String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
-                  mMonitorListMutex.lock();
-                  if(!mMonitorObject.containsKey(wPath)) {
-                    MonitoredObject wObj = MonitoredObject.ObjectNavigation(mRootList, wPath, null);
-                    if(wObj != null) {
-                       mMonitorObject.put(wPath, new ObjectHolder(wObj));
-                    }
-                  }
-                  mMonitorListMutex.unlock();
-               }
-               else if(wLine.startsWith(">URMonitorObject:") && wLine.toUpperCase().indexOf(cPath) != -1) {
-                  String wPath = wLine.substring(wLine.toUpperCase().indexOf(cPath)+cPath.length());
-                  mMonitorListMutex.lock();
-                  if(mMonitorObject.containsKey(wPath))
-                     mMonitorObject.remove(wPath);
-                  mMonitorListMutex.unlock();
-               }
-               UpdateClient();
             }
             else {
                Thread.sleep(refreshRate);
@@ -204,31 +181,43 @@ class ClientData implements Runnable, IClientConnection {
       try {
          if(inputStream != null)
             inputStream.close();
-         if(mWriter != null)
-            mWriter.close();
-      } catch (IOException e) { }
+         if(outputStream != null)
+            outputStream.close();
+      } catch (IOException e) {
+         LOGGER.debug("Error closing stream.");
+      }
 
       if(connectionHolder != null) connectionHolder.unRegisterClient(this);
 
       LOGGER.info(socket.getInetAddress().getHostName() + " : disconnected.");
    }
 
-   public void readFrameData() throws IOException {
-      DataPacketProto.FrameData frameData = FrameData.parseFrom(inputStream);
-      for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+   public void runRequestData(FrameData.RequestData requestData) throws IOException {
+      MonitoredObject monitoredObject = MonitoredObject.ObjectNavigation(mRootList,requestData.getPath(),null);
+      if(monitoredObject != null) {
          switch (requestData.getMode()) {
             case QUERY:
-
+               updateObject(monitoredObject);
+               updateFieldsObject(monitoredObject);
                break;
             case REGISTER:
-
+               monitorListMutex.lock();
+               if(!monitorList.contains(requestData.getPath())) {
+                  monitorList.put(requestData.getPath(),new ObjectHolder(monitoredObject));
+               }
+               monitorListMutex.unlock();
                break;
             case UNREGISTER:
-
+               monitorListMutex.lock();
+               if(monitorList.contains(requestData.getPath())) {
+                  monitorList.remove(requestData.getPath());
+               }
+               monitorListMutex.unlock();
                break;
          }
+      } else {
+         LOGGER.debug("Null object for " + requestData.getPath());
       }
-
    }
 
    @Override
