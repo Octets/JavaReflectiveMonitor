@@ -24,11 +24,19 @@ message FrameData {
       optional Type type = 2;
    }
 
-   enum VarScope {
+   enum VarModifier {
       PUBLIC = 1;
       PROTECTED = 2;
       PRIVATE = 3;
-      PACKAGE_LOCAL = 4;
+      ABSTRACT = 4;
+      FINAL = 5;
+      INTERFACE = 6;
+      STATIC = 7;
+      NATIVE = 8;
+      SYNCHRONIZED = 9;
+      STRICT = 10;
+      VOLATILE = 11;
+      TRANSIENT = 12;
    }
 
    message VarData {
@@ -43,7 +51,7 @@ message FrameData {
 
    enum Mode {
       QUERY = 1;
-      REGISTER = 2;
+      RelseEGISTER = 2;
       UNREGISTER = 3;
    }
 

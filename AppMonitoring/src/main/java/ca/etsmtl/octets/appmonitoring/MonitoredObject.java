@@ -7,6 +7,8 @@ import java.lang.reflect.Modifier;
 import java.security.InvalidParameterException;
 import java.util.*;
 
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope;
+
 class MonitoredObject {
    private final static Logger LOGGER = Logger.getLogger(MonitoredObject.class);
 
@@ -40,6 +42,38 @@ class MonitoredObject {
             mFieldNames.add(field.getName());
          }  
       }
+      VarScope[] varScope = getVarScope(mClass.getModifiers());
+   }
+
+   private VarScope[] getVarScope(int modifier) {
+      List<VarScope> varScopeList = new ArrayList<VarScope>();
+      if(Modifier.isPublic(modifier)) {
+         varScopeList.add(VarScope.PUBLIC);
+      } if(Modifier.isProtected(modifier)){
+         varScopeList.add(VarScope.PROTECTED);
+      } if(Modifier.isPrivate(modifier)) {
+         varScopeList.add(VarScope.PRIVATE);
+      } if (Modifier.isAbstract(modifier)) {
+
+      } if (Modifier.isFinal(modifier)) {
+
+      } if( Modifier.isInterface(modifier)) {
+
+      } if( Modifier.isStatic(modifier)) {
+
+      } if( Modifier.isNative(modifier)) {
+
+      } if( Modifier.isSynchronized(modifier)) {
+
+      } if( Modifier.isStrict(modifier)) {
+
+      } if( Modifier.isVolatile(modifier)) {
+
+      } if( Modifier.isTransient(modifier)) {
+
+      }
+      VarScope[] varScopes = new VarScope[varScopeList.size()];
+      return varScopeList.toArray(varScopes);
    }
    
    public String getTypeName() {
@@ -115,7 +149,7 @@ class MonitoredObject {
    
    public static MonitoredObject ObjectNavigation(Hashtable<String, MonitoredObject> iDict, String iPath, MonitoredObject iSender) {
       String[] wList = iPath.split("\\.");
-      if(iPath.isEmpty() || iPath == null)
+      if(iPath.isEmpty())
          throw new InvalidParameterException("Path invalid");
       
       if(wList.length >1) {
