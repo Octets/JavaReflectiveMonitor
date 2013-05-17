@@ -44,14 +44,15 @@ message FrameData {
       optional Value data = 2;
       optional Type type = 3;
       optional bool isNull = 4;
-      optional VarScope varScope = 5;
+      optional VarModifier classModifier = 5;
       optional bool asError = 6;
       optional int64 date = 7;
+      optional VarModifier valueModifier = 8;
    }
 
    enum Mode {
       QUERY = 1;
-      RelseEGISTER = 2;
+      REGISTER = 2;
       UNREGISTER = 3;
    }
 

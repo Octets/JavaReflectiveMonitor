@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-@Service
-public class ClientConnectionHolder implements Runnable {
-   private final static Logger logger = Logger.getLogger(ClientConnectionHolder.class);
+class ClientHolder implements Runnable, IConnectionHolder {
+   private final static Logger logger = Logger.getLogger(ClientHolder.class);
    private final static int NUMBER_OF_SAMPLE = 20;
 
    private final List<IClientConnection> connectionList = new ArrayList<IClientConnection>();
@@ -19,20 +18,21 @@ public class ClientConnectionHolder implements Runnable {
 
    StopWatch stopWatch = new StopWatch();
 
-   public ClientConnectionHolder() {
+   public ClientHolder() {
 
    }
 
-   void registerClient(IClientConnection clientConnection) {
-      if(!connectionList.contains(clientConnection))
-         connectionList.add(clientConnection);
+   @Override
+   public void registerClient(IClientConnection remoteClient) {
+      if(!connectionList.contains(remoteClient))
+         connectionList.add(remoteClient);
    }
 
-   void unRegisterClient(IClientConnection clientConnection) {
-      if(connectionList.contains(clientConnection))
-         connectionList.remove(clientConnection);
+   @Override
+   public void unRegisterClient(IClientConnection remoteClient) {
+      if(connectionList.contains(remoteClient))
+         connectionList.remove(remoteClient);
    }
-
 
    @Override
    public void run() {
@@ -63,7 +63,8 @@ public class ClientConnectionHolder implements Runnable {
       return sums / valueList.length;
    }
 
-   public void close() {
+   @Override
+   public void closeConnections() {
       running = false;
    }
 }

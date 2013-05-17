@@ -1,7 +1,7 @@
 package ca.etsmtl.octets.appmonitoring;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,8 +18,6 @@ class ClientData implements Runnable, IClientConnection {
 
    private final ReentrantLock mWriterMutex = new ReentrantLock();
    private final ReentrantLock monitorListMutex = new ReentrantLock();
-
-   private IConnectionHolder connectionHolder;
 
    private Socket socket;
    private BufferedInputStream inputStream;
@@ -39,12 +37,10 @@ class ClientData implements Runnable, IClientConnection {
    private final DataPacketProto.FrameData.Type.Builder typeBuilder = DataPacketProto.FrameData.Type.newBuilder();
    private final DataPacketProto.FrameData.Value.Builder valueBuilder = DataPacketProto.FrameData.Value.newBuilder();
 
-   @Autowired
-   private ClientConnectionHolder clientConnectionHolder;
+   private IConnectionHolder connectionHolder;
 
    public ClientData(IConnectionHolder connectionHolder, Socket iClient, Hashtable<String, MonitoredObject> iRootList) throws IOException {
       LOGGER.info(iClient.getInetAddress().getHostName() +  " : Initialing connection");
-
       this.connectionHolder = connectionHolder;
 
       socket = iClient;
@@ -56,7 +52,7 @@ class ClientData implements Runnable, IClientConnection {
       mThread = new Thread(this);
       mThread.start();
 
-      clientConnectionHolder.registerClient(this);
+      connectionHolder.registerClient(this);
 
       LOGGER.info(iClient.getInetAddress().getHostName() + " : connection initialized.");
 
@@ -154,19 +150,21 @@ class ClientData implements Runnable, IClientConnection {
 
    @Override
    public void run() {
+      StopWatch stopWatch = new StopWatch();
       while(mCanRun)
       {
          try
          {
-            if(inputStream.available() != 0) {
-               FrameData frameData = DataPacketProto.FrameData.parseFrom(inputStream);
-               for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
-                  runRequestData(requestData);
-               }
+            stopWatch.start();
+            readFromInputStream();
+            writeBufferOutputStream();
+            stopWatch.stop();
+            long timeRemaining = refreshRate - stopWatch.getTime();
+            stopWatch.reset();
+            if(timeRemaining > 0) {
+               Thread.sleep(timeRemaining);
             }
-            else {
-               Thread.sleep(refreshRate);
-            }   
+
          }
          catch(InterruptedException e) {
             e.printStackTrace();
@@ -192,8 +190,21 @@ class ClientData implements Runnable, IClientConnection {
       LOGGER.info(socket.getInetAddress().getHostName() + " : disconnected.");
    }
 
+   private void readFromInputStream() throws IOException {
+      if(inputStream.available() != 0) {
+         FrameData frameData = DataPacketProto.FrameData.parseFrom(inputStream);
+         for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+            runRequestData(requestData);
+         }
+      }
+   }
+
+   private void writeBufferOutputStream() throws IOException {
+
+   }
+
    public void runRequestData(FrameData.RequestData requestData) throws IOException {
-      MonitoredObject monitoredObject = MonitoredObject.ObjectNavigation(mRootList,requestData.getPath(),null);
+      MonitoredObject monitoredObject = MonitoredObject.ObjectNavigation(mRootList, requestData.getPath(), null);
       if(monitoredObject != null) {
          switch (requestData.getMode()) {
             case QUERY:
@@ -232,6 +243,13 @@ class ClientData implements Runnable, IClientConnection {
 
    public void close() {
       mCanRun = false;
-      clientConnectionHolder.unRegisterClient(this);
+      connectionHolder.unRegisterClient(this);
+      if(mThread != null && mThread.isAlive()) {
+         try {
+            mThread.join();
+         } catch (InterruptedException e) {
+            LOGGER.error("Error closing ClientData Thread",e);
+         }
+      }
    }
 }

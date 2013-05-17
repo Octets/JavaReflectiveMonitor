@@ -7,7 +7,7 @@ import java.lang.reflect.Modifier;
 import java.security.InvalidParameterException;
 import java.util.*;
 
-import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarScope;
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier;
 
 class MonitoredObject {
    private final static Logger LOGGER = Logger.getLogger(MonitoredObject.class);
@@ -25,9 +25,13 @@ class MonitoredObject {
    protected String mName;
    
    protected MonitoredObject mParent;
+
+   protected VarModifier[] classModifiers;
+   protected VarModifier[] valueModifiers;
    
-   public MonitoredObject(Object iWatched, String iName, String iPath, String iVisibility, MonitoredObject iParent)
+   public MonitoredObject(Object iWatched, String iName, String iPath,VarModifier[] valueModifiers , MonitoredObject iParent)
    {
+      this.valueModifiers = valueModifiers;
       mParent = iParent;
       mName = iName;
       mPath = iPath;
@@ -42,37 +46,39 @@ class MonitoredObject {
             mFieldNames.add(field.getName());
          }  
       }
-      VarScope[] varScope = getVarScope(mClass.getModifiers());
+      classModifiers = getVarModifiers(mClass.getModifiers());
    }
 
-   private VarScope[] getVarScope(int modifier) {
-      List<VarScope> varScopeList = new ArrayList<VarScope>();
+   private static VarModifier[] getVarModifiers(int modifier) {
+      List<VarModifier> varScopeList = new ArrayList<VarModifier>();
       if(Modifier.isPublic(modifier)) {
-         varScopeList.add(VarScope.PUBLIC);
-      } if(Modifier.isProtected(modifier)){
-         varScopeList.add(VarScope.PROTECTED);
-      } if(Modifier.isPrivate(modifier)) {
-         varScopeList.add(VarScope.PRIVATE);
-      } if (Modifier.isAbstract(modifier)) {
-
-      } if (Modifier.isFinal(modifier)) {
-
-      } if( Modifier.isInterface(modifier)) {
-
-      } if( Modifier.isStatic(modifier)) {
-
-      } if( Modifier.isNative(modifier)) {
-
-      } if( Modifier.isSynchronized(modifier)) {
-
-      } if( Modifier.isStrict(modifier)) {
-
-      } if( Modifier.isVolatile(modifier)) {
-
-      } if( Modifier.isTransient(modifier)) {
-
+         varScopeList.add(VarModifier.PUBLIC);
+      } else if(Modifier.isProtected(modifier)){
+         varScopeList.add(VarModifier.PROTECTED);
+      } else if(Modifier.isPrivate(modifier)) {
+         varScopeList.add(VarModifier.PRIVATE);
       }
-      VarScope[] varScopes = new VarScope[varScopeList.size()];
+
+      if (Modifier.isAbstract(modifier)) {
+         varScopeList.add(VarModifier.ABSTRACT);
+      } if (Modifier.isFinal(modifier)) {
+         varScopeList.add(VarModifier.FINAL);
+      } if( Modifier.isInterface(modifier)) {
+         varScopeList.add(VarModifier.INTERFACE);
+      } if( Modifier.isStatic(modifier)) {
+         varScopeList.add(VarModifier.STATIC);
+      } if( Modifier.isNative(modifier)) {
+         varScopeList.add(VarModifier.NATIVE);
+      } if( Modifier.isSynchronized(modifier)) {
+         varScopeList.add(VarModifier.SYNCHRONIZED);
+      } if( Modifier.isStrict(modifier)) {
+         varScopeList.add(VarModifier.STRICT);
+      } if( Modifier.isVolatile(modifier)) {
+         varScopeList.add(VarModifier.VOLATILE);
+      } if( Modifier.isTransient(modifier)) {
+         varScopeList.add(VarModifier.TRANSIENT);
+      }
+      VarModifier[] varScopes = new VarModifier[varScopeList.size()];
       return varScopeList.toArray(varScopes);
    }
    
@@ -117,7 +123,7 @@ class MonitoredObject {
          wReturn = mObject.toString();
       }
       catch (ConcurrentModificationException e) {
-         
+         LOGGER.warn("ConcurrentModificationException", e);
       }
       return wReturn;
    }
@@ -128,9 +134,7 @@ class MonitoredObject {
       if(input.getSuperclass() != null && input.equals(Object.class)) {
          wFields.addAll(listFields(input.getSuperclass()));
       }
-      for (Field field : input.getDeclaredFields()) {
-         wFields.add(field);
-      }
+      Collections.addAll(wFields, input.getDeclaredFields());
       
       return wFields;
    }
@@ -171,16 +175,10 @@ class MonitoredObject {
             
          Object wObject = iSender.getFieldObject(iPath);
          if(wObject != null) {
+
+            VarModifier[] modifiers = getVarModifiers(iSender.mFields.get(iPath).getModifiers());
             
-            String wModif = "NONE";
-            if(Modifier.isPrivate(iSender.mFields.get(iPath).getModifiers()))
-               wModif = "PRIVATE";
-            else if(Modifier.isPublic(iSender.mFields.get(iPath).getModifiers()))
-               wModif = "PUBLIC";
-            else if(Modifier.isProtected(iSender.mFields.get(iPath).getModifiers()))
-               wModif = "PROTECTED";
-            
-            MonitoredObject wTemp = new MonitoredObject(iSender.getFieldObject(iPath),iPath,wPath, wModif,iSender);
+            MonitoredObject wTemp = new MonitoredObject(iSender.getFieldObject(iPath),iPath,wPath,modifiers,iSender);
             iSender.mChildren.put(iPath, wTemp);
             return wTemp;
          }
@@ -211,8 +209,8 @@ class MonitoredObject {
        */
       public void executeUpdate() {
          Collections.sort(mObjectList, mSorter);
-         for(int i = 0; i < mObjectList.size(); ++i) {
-            mObjectList.get(i).updateFromParent();
+         for (MonitoredObject aMObjectList : mObjectList) {
+            aMObjectList.updateFromParent();
          }
          mObjectList.clear();
       }
