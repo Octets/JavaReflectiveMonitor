@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URLEncoder;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,8 +15,8 @@ import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData;
 class ClientData implements Runnable, IClientConnection {
    private static final Logger LOGGER = Logger.getLogger(ClientData.class);
 
-   private final ReentrantLock mWriterMutex = new ReentrantLock();
    private final ReentrantLock monitorListMutex = new ReentrantLock();
+   private final ReentrantLock frameDataMutex = new ReentrantLock();
 
    private Socket socket;
    private BufferedInputStream inputStream;
@@ -33,9 +32,7 @@ class ClientData implements Runnable, IClientConnection {
    
    private int refreshRate = 50; // pms
 
-   private final VarData.Builder varDataBuilder = VarData.newBuilder();
-   private final DataPacketProto.FrameData.Type.Builder typeBuilder = DataPacketProto.FrameData.Type.newBuilder();
-   private final DataPacketProto.FrameData.Value.Builder valueBuilder = DataPacketProto.FrameData.Value.newBuilder();
+   private final FrameData.Builder frameData = FrameData.newBuilder();
 
    private IConnectionHolder connectionHolder;
 
@@ -59,84 +56,86 @@ class ClientData implements Runnable, IClientConnection {
       for (MonitoredObject wObj : mRootList.values()) {
          updateObject(wObj);
       }
-
-
    }
 
-   //>ObjectData:Path:[content]:Type:[content]:Value:[content]:Visibility:[content]
    @Override
    public void triggerUpdate() {
+      final VarData.Builder varDataBuilder = VarData.newBuilder();
+      final FrameData.Type.Builder typeBuilder = FrameData.Type.newBuilder();
+      final FrameData.Value.Builder valueBuilder = FrameData.Value.newBuilder();
 
-      mWriterMutex.lock();
       monitorListMutex.lock();
       for (ObjectHolder wHolder : monitorList.values()) {
-         wHolder.getObjectSpy().registerForUpdate(mWizeUpdater);
+         wHolder.getMonitoredObject().registerForUpdate(mWizeUpdater);
       }
       
       mWizeUpdater.executeUpdate();
-      for (ObjectHolder wHolder : monitorList.values()) {
+      for (ObjectHolder objectHolder : monitorList.values()) {
          try
          {
-            if(wHolder.CheckForUpdate()) {
-               String wPath = wHolder.getName();
-               if(!wHolder.getPath().isEmpty())
-                  wPath = wHolder.getPath() + "." + wPath;
+            if(objectHolder.CheckForUpdate()) {
+               String wPath = objectHolder.getName();
+               if(!objectHolder.getPath().isEmpty())
+                  wPath = objectHolder.getPath() + "." + wPath;
 
                typeBuilder.clear();
-               typeBuilder.setName(wHolder.getType());
+               typeBuilder.setName(objectHolder.getType());
 
                varDataBuilder.clear();
                varDataBuilder.setPath(wPath);
                varDataBuilder.setType(typeBuilder.build());
 
-               String value = wHolder.getStringValue();
+               String value = objectHolder.getStringValue();
 
+               valueBuilder.clear();
                if(value == null) {
-                  varDataBuilder.setIsNull(true);
+                  valueBuilder.setIsNull(true);
                } else {
-                  varDataBuilder.setIsNull(false);
+                  valueBuilder.setIsNull(false);
 
-                  valueBuilder.clear();
                   valueBuilder.setValue(value);
                   varDataBuilder.setData(valueBuilder.build());
                }
 
-               varDataBuilder.build().writeTo(outputStream);
+               objectHolder.setRequestUpdate(false);
 
-               wHolder.setRequestUpdate(false);  
+               frameDataMutex.lock();
+               frameData.addVarData(varDataBuilder);
+               frameDataMutex.unlock();
+
             }
          }
          catch(ConcurrentModificationException e) {
             LOGGER.debug("ConcurrentModificationException",e);
          }
-         catch(IOException e){
-            close();
-         }
       }
       monitorListMutex.unlock();
-      mWriterMutex.unlock();
    }
 
-   private void updateObject(MonitoredObject wObj) {
-      mWriterMutex.lock();
-      try
-      {
-         String wPath = wObj.mName;
-         if(!wObj.mPath.isEmpty())
-            wPath = wObj.mPath + "." + wPath;
-         
-         String wData = ">ObjectData:Path:" + wPath;
-         wData += ":Type:" + wObj.getTypeName();
-         wData += ":Value:"+ URLEncoder.encode(wObj.toString(), "UTF-8");
-         //wData += ":Visibility:" + wObj.getVisibility();
-         //mWriter.write(wData);
-         //mWriter.newLine();
-         outputStream.flush();
+   private void updateObject(MonitoredObject monitoredObject) {
+      final FrameData.Value.Builder valueBuilder = FrameData.Value.newBuilder();
+      final VarData.Builder varDataBuilder = VarData.newBuilder();
+      final FrameData.Type.Builder typeBuilder = FrameData.Type.newBuilder();
+
+      String path = monitoredObject.mName;
+      if(!monitoredObject.mPath.isEmpty())
+         path = monitoredObject.mPath + "." + path;
+
+      typeBuilder.setName(monitoredObject.getTypeName());
+      for(FrameData.VarModifier modifier : MonitoredObject.getVarModifiers(monitoredObject.getClass().getModifiers())) {
+         typeBuilder.addModifiers(modifier);
       }
-      catch(IOException e) {
-         close();
-      }
-      mWriterMutex.unlock();
+
+      varDataBuilder.setType(typeBuilder.build());
+      varDataBuilder.setPath(path);
+
+      valueBuilder.setValue(monitoredObject.getStringValue());
+
+      varDataBuilder.setData(valueBuilder);
+
+      frameDataMutex.lock();
+      frameData.addVarData(varDataBuilder.build());
+      frameDataMutex.unlock();
    }
 
    private void updateFieldsObject(MonitoredObject monitoredObject) {

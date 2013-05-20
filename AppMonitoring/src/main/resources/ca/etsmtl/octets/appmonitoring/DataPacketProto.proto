@@ -5,25 +5,6 @@ option java_outer_classname = "DataPacketProto";
 
 message FrameData {
 
-   message Type {
-
-      enum ObjectType {
-         CLASS = 1;
-         ENUM = 2;
-         INTERFACE = 3;
-         ANNOTATION = 4;
-      }
-
-      required string name = 1;
-      optional string classPath = 2;
-      optional ObjectType objectType = 3;
-   }
-
-   message Value {
-      required string value = 1;
-      optional Type type = 2;
-   }
-
    enum VarModifier {
       PUBLIC = 1;
       PROTECTED = 2;
@@ -39,15 +20,26 @@ message FrameData {
       TRANSIENT = 12;
    }
 
+
+   message Type {
+      required string name = 1;
+      optional string classPath = 2;
+      repeated VarModifier modifiers = 3;
+   }
+
+   message Value {
+      required string value = 1;
+      optional bool isNull = 2;
+   }
+
    message VarData {
       required string path = 1;
       optional Value data = 2;
       optional Type type = 3;
-      optional bool isNull = 4;
-      optional VarModifier classModifier = 5;
-      optional bool asError = 6;
-      optional int64 date = 7;
-      optional VarModifier valueModifier = 8;
+      optional VarModifier classModifier = 4;
+      optional bool asError = 5;
+      optional int64 date = 6;
+      optional VarModifier valueModifier = 7;
    }
 
    enum Mode {

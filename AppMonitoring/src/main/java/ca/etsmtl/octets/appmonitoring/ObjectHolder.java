@@ -71,7 +71,7 @@ class ObjectHolder {
    public String getType() {
       return mSource.getTypeName();
    }
-   public MonitoredObject getObjectSpy() {
+   public MonitoredObject getMonitoredObject() {
       return mSource;
    }
 

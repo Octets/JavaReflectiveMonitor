@@ -469,15 +469,19 @@ public final class DataPacketProto {
       com.google.protobuf.ByteString
           getClassPathBytes();
 
-      // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
+      // repeated .appmonitoring.FrameData.VarModifier modifiers = 3;
       /**
-       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
        */
-      boolean hasObjectType();
+      java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> getModifiersList();
       /**
-       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
        */
-      ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType();
+      int getModifiersCount();
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+       */
+      ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getModifiers(int index);
     }
     /**
      * Protobuf type {@code appmonitoring.FrameData.Type}
@@ -542,13 +546,35 @@ public final class DataPacketProto {
               }
               case 24: {
                 int rawValue = input.readEnum();
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.valueOf(rawValue);
+                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.valueOf(rawValue);
                 if (value == null) {
                   unknownFields.mergeVarintField(3, rawValue);
                 } else {
-                  bitField0_ |= 0x00000004;
-                  objectType_ = value;
+                  if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                    modifiers_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier>();
+                    mutable_bitField0_ |= 0x00000004;
+                  }
+                  modifiers_.add(value);
                 }
+                break;
+              }
+              case 26: {
+                int length = input.readRawVarint32();
+                int oldLimit = input.pushLimit(length);
+                while(input.getBytesUntilLimit() > 0) {
+                  int rawValue = input.readEnum();
+                  ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.valueOf(rawValue);
+                  if (value == null) {
+                    unknownFields.mergeVarintField(3, rawValue);
+                  } else {
+                    if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                      modifiers_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier>();
+                      mutable_bitField0_ |= 0x00000004;
+                    }
+                    modifiers_.add(value);
+                  }
+                }
+                input.popLimit(oldLimit);
                 break;
               }
             }
@@ -559,6 +585,9 @@ public final class DataPacketProto {
           throw new com.google.protobuf.InvalidProtocolBufferException(
               e.getMessage()).setUnfinishedMessage(this);
         } finally {
+          if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            modifiers_ = java.util.Collections.unmodifiableList(modifiers_);
+          }
           this.unknownFields = unknownFields.build();
           makeExtensionsImmutable();
         }
@@ -588,106 +617,6 @@ public final class DataPacketProto {
       @java.lang.Override
       public com.google.protobuf.Parser<Type> getParserForType() {
         return PARSER;
-      }
-
-      /**
-       * Protobuf enum {@code appmonitoring.FrameData.Type.ObjectType}
-       */
-      public enum ObjectType
-          implements com.google.protobuf.ProtocolMessageEnum {
-        /**
-         * <code>CLASS = 1;</code>
-         */
-        CLASS(0, 1),
-        /**
-         * <code>ENUM = 2;</code>
-         */
-        ENUM(1, 2),
-        /**
-         * <code>INTERFACE = 3;</code>
-         */
-        INTERFACE(2, 3),
-        /**
-         * <code>ANNOTATION = 4;</code>
-         */
-        ANNOTATION(3, 4),
-        ;
-
-        /**
-         * <code>CLASS = 1;</code>
-         */
-        public static final int CLASS_VALUE = 1;
-        /**
-         * <code>ENUM = 2;</code>
-         */
-        public static final int ENUM_VALUE = 2;
-        /**
-         * <code>INTERFACE = 3;</code>
-         */
-        public static final int INTERFACE_VALUE = 3;
-        /**
-         * <code>ANNOTATION = 4;</code>
-         */
-        public static final int ANNOTATION_VALUE = 4;
-
-
-        public final int getNumber() { return value; }
-
-        public static ObjectType valueOf(int value) {
-          switch (value) {
-            case 1: return CLASS;
-            case 2: return ENUM;
-            case 3: return INTERFACE;
-            case 4: return ANNOTATION;
-            default: return null;
-          }
-        }
-
-        public static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
-            internalGetValueMap() {
-          return internalValueMap;
-        }
-        private static com.google.protobuf.Internal.EnumLiteMap<ObjectType>
-            internalValueMap =
-              new com.google.protobuf.Internal.EnumLiteMap<ObjectType>() {
-                public ObjectType findValueByNumber(int number) {
-                  return ObjectType.valueOf(number);
-                }
-              };
-
-        public final com.google.protobuf.Descriptors.EnumValueDescriptor
-            getValueDescriptor() {
-          return getDescriptor().getValues().get(index);
-        }
-        public final com.google.protobuf.Descriptors.EnumDescriptor
-            getDescriptorForType() {
-          return getDescriptor();
-        }
-        public static final com.google.protobuf.Descriptors.EnumDescriptor
-            getDescriptor() {
-          return ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDescriptor().getEnumTypes().get(0);
-        }
-
-        private static final ObjectType[] VALUES = values();
-
-        public static ObjectType valueOf(
-            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-          if (desc.getType() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException(
-              "EnumValueDescriptor is not for this type.");
-          }
-          return VALUES[desc.getIndex()];
-        }
-
-        private final int index;
-        private final int value;
-
-        private ObjectType(int index, int value) {
-          this.index = index;
-          this.value = value;
-        }
-
-        // @@protoc_insertion_point(enum_scope:appmonitoring.FrameData.Type.ObjectType)
       }
 
       private int bitField0_;
@@ -777,26 +706,32 @@ public final class DataPacketProto {
         }
       }
 
-      // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
-      public static final int OBJECTTYPE_FIELD_NUMBER = 3;
-      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType objectType_;
+      // repeated .appmonitoring.FrameData.VarModifier modifiers = 3;
+      public static final int MODIFIERS_FIELD_NUMBER = 3;
+      private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> modifiers_;
       /**
-       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
        */
-      public boolean hasObjectType() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+      public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> getModifiersList() {
+        return modifiers_;
       }
       /**
-       * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
        */
-      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType() {
-        return objectType_;
+      public int getModifiersCount() {
+        return modifiers_.size();
+      }
+      /**
+       * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+       */
+      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getModifiers(int index) {
+        return modifiers_.get(index);
       }
 
       private void initFields() {
         name_ = "";
         classPath_ = "";
-        objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
+        modifiers_ = java.util.Collections.emptyList();
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -820,8 +755,8 @@ public final class DataPacketProto {
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           output.writeBytes(2, getClassPathBytes());
         }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          output.writeEnum(3, objectType_.getNumber());
+        for (int i = 0; i < modifiers_.size(); i++) {
+          output.writeEnum(3, modifiers_.get(i).getNumber());
         }
         getUnknownFields().writeTo(output);
       }
@@ -840,9 +775,14 @@ public final class DataPacketProto {
           size += com.google.protobuf.CodedOutputStream
             .computeBytesSize(2, getClassPathBytes());
         }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(3, objectType_.getNumber());
+        {
+          int dataSize = 0;
+          for (int i = 0; i < modifiers_.size(); i++) {
+            dataSize += com.google.protobuf.CodedOutputStream
+              .computeEnumSizeNoTag(modifiers_.get(i).getNumber());
+          }
+          size += dataSize;
+          size += 1 * modifiers_.size();
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -964,7 +904,7 @@ public final class DataPacketProto {
           bitField0_ = (bitField0_ & ~0x00000001);
           classPath_ = "";
           bitField0_ = (bitField0_ & ~0x00000002);
-          objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
+          modifiers_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
           return this;
         }
@@ -1002,10 +942,11 @@ public final class DataPacketProto {
             to_bitField0_ |= 0x00000002;
           }
           result.classPath_ = classPath_;
-          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-            to_bitField0_ |= 0x00000004;
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            modifiers_ = java.util.Collections.unmodifiableList(modifiers_);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
-          result.objectType_ = objectType_;
+          result.modifiers_ = modifiers_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -1032,8 +973,15 @@ public final class DataPacketProto {
             classPath_ = other.classPath_;
             onChanged();
           }
-          if (other.hasObjectType()) {
-            setObjectType(other.getObjectType());
+          if (!other.modifiers_.isEmpty()) {
+            if (modifiers_.isEmpty()) {
+              modifiers_ = other.modifiers_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureModifiersIsMutable();
+              modifiers_.addAll(other.modifiers_);
+            }
+            onChanged();
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -1214,38 +1162,74 @@ public final class DataPacketProto {
           return this;
         }
 
-        // optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
-        /**
-         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
-         */
-        public boolean hasObjectType() {
-          return ((bitField0_ & 0x00000004) == 0x00000004);
+        // repeated .appmonitoring.FrameData.VarModifier modifiers = 3;
+        private java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> modifiers_ =
+          java.util.Collections.emptyList();
+        private void ensureModifiersIsMutable() {
+          if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+            modifiers_ = new java.util.ArrayList<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier>(modifiers_);
+            bitField0_ |= 0x00000004;
+          }
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
          */
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType getObjectType() {
-          return objectType_;
+        public java.util.List<ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> getModifiersList() {
+          return java.util.Collections.unmodifiableList(modifiers_);
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
          */
-        public Builder setObjectType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType value) {
+        public int getModifiersCount() {
+          return modifiers_.size();
+        }
+        /**
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+         */
+        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getModifiers(int index) {
+          return modifiers_.get(index);
+        }
+        /**
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+         */
+        public Builder setModifiers(
+            int index, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value) {
           if (value == null) {
             throw new NullPointerException();
           }
-          bitField0_ |= 0x00000004;
-          objectType_ = value;
+          ensureModifiersIsMutable();
+          modifiers_.set(index, value);
           onChanged();
           return this;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type.ObjectType objectType = 3;</code>
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
          */
-        public Builder clearObjectType() {
+        public Builder addModifiers(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureModifiersIsMutable();
+          modifiers_.add(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+         */
+        public Builder addAllModifiers(
+            java.lang.Iterable<? extends ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier> values) {
+          ensureModifiersIsMutable();
+          super.addAll(values, modifiers_);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated .appmonitoring.FrameData.VarModifier modifiers = 3;</code>
+         */
+        public Builder clearModifiers() {
+          modifiers_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
-          objectType_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.ObjectType.CLASS;
           onChanged();
           return this;
         }
@@ -1279,19 +1263,15 @@ public final class DataPacketProto {
       com.google.protobuf.ByteString
           getValueBytes();
 
-      // optional .appmonitoring.FrameData.Type type = 2;
+      // optional bool isNull = 2;
       /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       * <code>optional bool isNull = 2;</code>
        */
-      boolean hasType();
+      boolean hasIsNull();
       /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       * <code>optional bool isNull = 2;</code>
        */
-      ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType();
-      /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-       */
-      ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder();
+      boolean getIsNull();
     }
     /**
      * Protobuf type {@code appmonitoring.FrameData.Value}
@@ -1349,17 +1329,9 @@ public final class DataPacketProto {
                 value_ = input.readBytes();
                 break;
               }
-              case 18: {
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder subBuilder = null;
-                if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                  subBuilder = type_.toBuilder();
-                }
-                type_ = input.readMessage(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.PARSER, extensionRegistry);
-                if (subBuilder != null) {
-                  subBuilder.mergeFrom(type_);
-                  type_ = subBuilder.buildPartial();
-                }
+              case 16: {
                 bitField0_ |= 0x00000002;
+                isNull_ = input.readBool();
                 break;
               }
             }
@@ -1445,31 +1417,25 @@ public final class DataPacketProto {
         }
       }
 
-      // optional .appmonitoring.FrameData.Type type = 2;
-      public static final int TYPE_FIELD_NUMBER = 2;
-      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_;
+      // optional bool isNull = 2;
+      public static final int ISNULL_FIELD_NUMBER = 2;
+      private boolean isNull_;
       /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       * <code>optional bool isNull = 2;</code>
        */
-      public boolean hasType() {
+      public boolean hasIsNull() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+       * <code>optional bool isNull = 2;</code>
        */
-      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
-        return type_;
-      }
-      /**
-       * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-       */
-      public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
-        return type_;
+      public boolean getIsNull() {
+        return isNull_;
       }
 
       private void initFields() {
         value_ = "";
-        type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
+        isNull_ = false;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -1479,12 +1445,6 @@ public final class DataPacketProto {
         if (!hasValue()) {
           memoizedIsInitialized = 0;
           return false;
-        }
-        if (hasType()) {
-          if (!getType().isInitialized()) {
-            memoizedIsInitialized = 0;
-            return false;
-          }
         }
         memoizedIsInitialized = 1;
         return true;
@@ -1497,7 +1457,7 @@ public final class DataPacketProto {
           output.writeBytes(1, getValueBytes());
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeMessage(2, type_);
+          output.writeBool(2, isNull_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -1514,7 +1474,7 @@ public final class DataPacketProto {
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(2, type_);
+            .computeBoolSize(2, isNull_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -1624,7 +1584,6 @@ public final class DataPacketProto {
         }
         private void maybeForceBuilderInitialization() {
           if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            getTypeFieldBuilder();
           }
         }
         private static Builder create() {
@@ -1635,11 +1594,7 @@ public final class DataPacketProto {
           super.clear();
           value_ = "";
           bitField0_ = (bitField0_ & ~0x00000001);
-          if (typeBuilder_ == null) {
-            type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
-          } else {
-            typeBuilder_.clear();
-          }
+          isNull_ = false;
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
@@ -1676,11 +1631,7 @@ public final class DataPacketProto {
           if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
             to_bitField0_ |= 0x00000002;
           }
-          if (typeBuilder_ == null) {
-            result.type_ = type_;
-          } else {
-            result.type_ = typeBuilder_.build();
-          }
+          result.isNull_ = isNull_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -1702,8 +1653,8 @@ public final class DataPacketProto {
             value_ = other.value_;
             onChanged();
           }
-          if (other.hasType()) {
-            mergeType(other.getType());
+          if (other.hasIsNull()) {
+            setIsNull(other.getIsNull());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -1713,12 +1664,6 @@ public final class DataPacketProto {
           if (!hasValue()) {
             
             return false;
-          }
-          if (hasType()) {
-            if (!getType().isInitialized()) {
-              
-              return false;
-            }
           }
           return true;
         }
@@ -1816,121 +1761,37 @@ public final class DataPacketProto {
           return this;
         }
 
-        // optional .appmonitoring.FrameData.Type type = 2;
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
-        private com.google.protobuf.SingleFieldBuilder<
-            ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> typeBuilder_;
+        // optional bool isNull = 2;
+        private boolean isNull_ ;
         /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         * <code>optional bool isNull = 2;</code>
          */
-        public boolean hasType() {
+        public boolean hasIsNull() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         * <code>optional bool isNull = 2;</code>
          */
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type getType() {
-          if (typeBuilder_ == null) {
-            return type_;
-          } else {
-            return typeBuilder_.getMessage();
-          }
+        public boolean getIsNull() {
+          return isNull_;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         * <code>optional bool isNull = 2;</code>
          */
-        public Builder setType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
-          if (typeBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            type_ = value;
-            onChanged();
-          } else {
-            typeBuilder_.setMessage(value);
-          }
+        public Builder setIsNull(boolean value) {
           bitField0_ |= 0x00000002;
-          return this;
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-         */
-        public Builder setType(
-            ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder builderForValue) {
-          if (typeBuilder_ == null) {
-            type_ = builderForValue.build();
-            onChanged();
-          } else {
-            typeBuilder_.setMessage(builderForValue.build());
-          }
-          bitField0_ |= 0x00000002;
-          return this;
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-         */
-        public Builder mergeType(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type value) {
-          if (typeBuilder_ == null) {
-            if (((bitField0_ & 0x00000002) == 0x00000002) &&
-                type_ != ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance()) {
-              type_ =
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.newBuilder(type_).mergeFrom(value).buildPartial();
-            } else {
-              type_ = value;
-            }
-            onChanged();
-          } else {
-            typeBuilder_.mergeFrom(value);
-          }
-          bitField0_ |= 0x00000002;
-          return this;
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-         */
-        public Builder clearType() {
-          if (typeBuilder_ == null) {
-            type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
-            onChanged();
-          } else {
-            typeBuilder_.clear();
-          }
-          bitField0_ = (bitField0_ & ~0x00000002);
-          return this;
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-         */
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder getTypeBuilder() {
-          bitField0_ |= 0x00000002;
+          isNull_ = value;
           onChanged();
-          return getTypeFieldBuilder().getBuilder();
+          return this;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
+         * <code>optional bool isNull = 2;</code>
          */
-        public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder() {
-          if (typeBuilder_ != null) {
-            return typeBuilder_.getMessageOrBuilder();
-          } else {
-            return type_;
-          }
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.Type type = 2;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilder<
-            ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder> 
-            getTypeFieldBuilder() {
-          if (typeBuilder_ == null) {
-            typeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-                ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.Builder, ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder>(
-                    type_,
-                    getParentForChildren(),
-                    isClean());
-            type_ = null;
-          }
-          return typeBuilder_;
+        public Builder clearIsNull() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          isNull_ = false;
+          onChanged();
+          return this;
         }
 
         // @@protoc_insertion_point(builder_scope:appmonitoring.FrameData.Value)
@@ -1990,53 +1851,43 @@ public final class DataPacketProto {
        */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.TypeOrBuilder getTypeOrBuilder();
 
-      // optional bool isNull = 4;
+      // optional .appmonitoring.FrameData.VarModifier classModifier = 4;
       /**
-       * <code>optional bool isNull = 4;</code>
-       */
-      boolean hasIsNull();
-      /**
-       * <code>optional bool isNull = 4;</code>
-       */
-      boolean getIsNull();
-
-      // optional .appmonitoring.FrameData.VarModifier classModifier = 5;
-      /**
-       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
        */
       boolean hasClassModifier();
       /**
-       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
        */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getClassModifier();
 
-      // optional bool asError = 6;
+      // optional bool asError = 5;
       /**
-       * <code>optional bool asError = 6;</code>
+       * <code>optional bool asError = 5;</code>
        */
       boolean hasAsError();
       /**
-       * <code>optional bool asError = 6;</code>
+       * <code>optional bool asError = 5;</code>
        */
       boolean getAsError();
 
-      // optional int64 date = 7;
+      // optional int64 date = 6;
       /**
-       * <code>optional int64 date = 7;</code>
+       * <code>optional int64 date = 6;</code>
        */
       boolean hasDate();
       /**
-       * <code>optional int64 date = 7;</code>
+       * <code>optional int64 date = 6;</code>
        */
       long getDate();
 
-      // optional .appmonitoring.FrameData.VarModifier valueModifier = 8;
+      // optional .appmonitoring.FrameData.VarModifier valueModifier = 7;
       /**
-       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
        */
       boolean hasValueModifier();
       /**
-       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
        */
       ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getValueModifier();
     }
@@ -2123,38 +1974,33 @@ public final class DataPacketProto {
                 break;
               }
               case 32: {
-                bitField0_ |= 0x00000008;
-                isNull_ = input.readBool();
-                break;
-              }
-              case 40: {
                 int rawValue = input.readEnum();
                 ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.valueOf(rawValue);
                 if (value == null) {
-                  unknownFields.mergeVarintField(5, rawValue);
+                  unknownFields.mergeVarintField(4, rawValue);
                 } else {
-                  bitField0_ |= 0x00000010;
+                  bitField0_ |= 0x00000008;
                   classModifier_ = value;
                 }
                 break;
               }
-              case 48: {
-                bitField0_ |= 0x00000020;
+              case 40: {
+                bitField0_ |= 0x00000010;
                 asError_ = input.readBool();
                 break;
               }
-              case 56: {
-                bitField0_ |= 0x00000040;
+              case 48: {
+                bitField0_ |= 0x00000020;
                 date_ = input.readInt64();
                 break;
               }
-              case 64: {
+              case 56: {
                 int rawValue = input.readEnum();
                 ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.valueOf(rawValue);
                 if (value == null) {
-                  unknownFields.mergeVarintField(8, rawValue);
+                  unknownFields.mergeVarintField(7, rawValue);
                 } else {
-                  bitField0_ |= 0x00000080;
+                  bitField0_ |= 0x00000040;
                   valueModifier_ = value;
                 }
                 break;
@@ -2286,81 +2132,65 @@ public final class DataPacketProto {
         return type_;
       }
 
-      // optional bool isNull = 4;
-      public static final int ISNULL_FIELD_NUMBER = 4;
-      private boolean isNull_;
+      // optional .appmonitoring.FrameData.VarModifier classModifier = 4;
+      public static final int CLASSMODIFIER_FIELD_NUMBER = 4;
+      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier classModifier_;
       /**
-       * <code>optional bool isNull = 4;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
        */
-      public boolean hasIsNull() {
+      public boolean hasClassModifier() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional bool isNull = 4;</code>
-       */
-      public boolean getIsNull() {
-        return isNull_;
-      }
-
-      // optional .appmonitoring.FrameData.VarModifier classModifier = 5;
-      public static final int CLASSMODIFIER_FIELD_NUMBER = 5;
-      private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier classModifier_;
-      /**
-       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
-       */
-      public boolean hasClassModifier() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      /**
-       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
        */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getClassModifier() {
         return classModifier_;
       }
 
-      // optional bool asError = 6;
-      public static final int ASERROR_FIELD_NUMBER = 6;
+      // optional bool asError = 5;
+      public static final int ASERROR_FIELD_NUMBER = 5;
       private boolean asError_;
       /**
-       * <code>optional bool asError = 6;</code>
+       * <code>optional bool asError = 5;</code>
        */
       public boolean hasAsError() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional bool asError = 6;</code>
+       * <code>optional bool asError = 5;</code>
        */
       public boolean getAsError() {
         return asError_;
       }
 
-      // optional int64 date = 7;
-      public static final int DATE_FIELD_NUMBER = 7;
+      // optional int64 date = 6;
+      public static final int DATE_FIELD_NUMBER = 6;
       private long date_;
       /**
-       * <code>optional int64 date = 7;</code>
+       * <code>optional int64 date = 6;</code>
        */
       public boolean hasDate() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional int64 date = 7;</code>
+       * <code>optional int64 date = 6;</code>
        */
       public long getDate() {
         return date_;
       }
 
-      // optional .appmonitoring.FrameData.VarModifier valueModifier = 8;
-      public static final int VALUEMODIFIER_FIELD_NUMBER = 8;
+      // optional .appmonitoring.FrameData.VarModifier valueModifier = 7;
+      public static final int VALUEMODIFIER_FIELD_NUMBER = 7;
       private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier valueModifier_;
       /**
-       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
        */
       public boolean hasValueModifier() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
-       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+       * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
        */
       public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getValueModifier() {
         return valueModifier_;
@@ -2370,7 +2200,6 @@ public final class DataPacketProto {
         path_ = "";
         data_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Value.getDefaultInstance();
         type_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.Type.getDefaultInstance();
-        isNull_ = false;
         classModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
         asError_ = false;
         date_ = 0L;
@@ -2414,19 +2243,16 @@ public final class DataPacketProto {
           output.writeMessage(3, type_);
         }
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          output.writeBool(4, isNull_);
+          output.writeEnum(4, classModifier_.getNumber());
         }
         if (((bitField0_ & 0x00000010) == 0x00000010)) {
-          output.writeEnum(5, classModifier_.getNumber());
+          output.writeBool(5, asError_);
         }
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
-          output.writeBool(6, asError_);
+          output.writeInt64(6, date_);
         }
         if (((bitField0_ & 0x00000040) == 0x00000040)) {
-          output.writeInt64(7, date_);
-        }
-        if (((bitField0_ & 0x00000080) == 0x00000080)) {
-          output.writeEnum(8, valueModifier_.getNumber());
+          output.writeEnum(7, valueModifier_.getNumber());
         }
         getUnknownFields().writeTo(output);
       }
@@ -2451,23 +2277,19 @@ public final class DataPacketProto {
         }
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBoolSize(4, isNull_);
+            .computeEnumSize(4, classModifier_.getNumber());
         }
         if (((bitField0_ & 0x00000010) == 0x00000010)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(5, classModifier_.getNumber());
+            .computeBoolSize(5, asError_);
         }
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBoolSize(6, asError_);
+            .computeInt64Size(6, date_);
         }
         if (((bitField0_ & 0x00000040) == 0x00000040)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeInt64Size(7, date_);
-        }
-        if (((bitField0_ & 0x00000080) == 0x00000080)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(8, valueModifier_.getNumber());
+            .computeEnumSize(7, valueModifier_.getNumber());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -2601,16 +2423,14 @@ public final class DataPacketProto {
             typeBuilder_.clear();
           }
           bitField0_ = (bitField0_ & ~0x00000004);
-          isNull_ = false;
-          bitField0_ = (bitField0_ & ~0x00000008);
           classModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000008);
           asError_ = false;
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000010);
           date_ = 0L;
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000020);
           valueModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
-          bitField0_ = (bitField0_ & ~0x00000080);
+          bitField0_ = (bitField0_ & ~0x00000040);
           return this;
         }
 
@@ -2662,21 +2482,17 @@ public final class DataPacketProto {
           if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
             to_bitField0_ |= 0x00000008;
           }
-          result.isNull_ = isNull_;
+          result.classModifier_ = classModifier_;
           if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
             to_bitField0_ |= 0x00000010;
           }
-          result.classModifier_ = classModifier_;
+          result.asError_ = asError_;
           if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
             to_bitField0_ |= 0x00000020;
           }
-          result.asError_ = asError_;
+          result.date_ = date_;
           if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
             to_bitField0_ |= 0x00000040;
-          }
-          result.date_ = date_;
-          if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
-            to_bitField0_ |= 0x00000080;
           }
           result.valueModifier_ = valueModifier_;
           result.bitField0_ = to_bitField0_;
@@ -2705,9 +2521,6 @@ public final class DataPacketProto {
           }
           if (other.hasType()) {
             mergeType(other.getType());
-          }
-          if (other.hasIsNull()) {
-            setIsNull(other.getIsNull());
           }
           if (other.hasClassModifier()) {
             setClassModifier(other.getClassModifier());
@@ -3072,172 +2885,139 @@ public final class DataPacketProto {
           return typeBuilder_;
         }
 
-        // optional bool isNull = 4;
-        private boolean isNull_ ;
+        // optional .appmonitoring.FrameData.VarModifier classModifier = 4;
+        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier classModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
         /**
-         * <code>optional bool isNull = 4;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
          */
-        public boolean hasIsNull() {
+        public boolean hasClassModifier() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
         /**
-         * <code>optional bool isNull = 4;</code>
-         */
-        public boolean getIsNull() {
-          return isNull_;
-        }
-        /**
-         * <code>optional bool isNull = 4;</code>
-         */
-        public Builder setIsNull(boolean value) {
-          bitField0_ |= 0x00000008;
-          isNull_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>optional bool isNull = 4;</code>
-         */
-        public Builder clearIsNull() {
-          bitField0_ = (bitField0_ & ~0x00000008);
-          isNull_ = false;
-          onChanged();
-          return this;
-        }
-
-        // optional .appmonitoring.FrameData.VarModifier classModifier = 5;
-        private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier classModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
-        /**
-         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
-         */
-        public boolean hasClassModifier() {
-          return ((bitField0_ & 0x00000010) == 0x00000010);
-        }
-        /**
-         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
          */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getClassModifier() {
           return classModifier_;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
          */
         public Builder setClassModifier(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value) {
           if (value == null) {
             throw new NullPointerException();
           }
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000008;
           classModifier_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 5;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier classModifier = 4;</code>
          */
         public Builder clearClassModifier() {
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000008);
           classModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
           onChanged();
           return this;
         }
 
-        // optional bool asError = 6;
+        // optional bool asError = 5;
         private boolean asError_ ;
         /**
-         * <code>optional bool asError = 6;</code>
+         * <code>optional bool asError = 5;</code>
          */
         public boolean hasAsError() {
-          return ((bitField0_ & 0x00000020) == 0x00000020);
+          return ((bitField0_ & 0x00000010) == 0x00000010);
         }
         /**
-         * <code>optional bool asError = 6;</code>
+         * <code>optional bool asError = 5;</code>
          */
         public boolean getAsError() {
           return asError_;
         }
         /**
-         * <code>optional bool asError = 6;</code>
+         * <code>optional bool asError = 5;</code>
          */
         public Builder setAsError(boolean value) {
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000010;
           asError_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>optional bool asError = 6;</code>
+         * <code>optional bool asError = 5;</code>
          */
         public Builder clearAsError() {
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000010);
           asError_ = false;
           onChanged();
           return this;
         }
 
-        // optional int64 date = 7;
+        // optional int64 date = 6;
         private long date_ ;
         /**
-         * <code>optional int64 date = 7;</code>
+         * <code>optional int64 date = 6;</code>
          */
         public boolean hasDate() {
-          return ((bitField0_ & 0x00000040) == 0x00000040);
+          return ((bitField0_ & 0x00000020) == 0x00000020);
         }
         /**
-         * <code>optional int64 date = 7;</code>
+         * <code>optional int64 date = 6;</code>
          */
         public long getDate() {
           return date_;
         }
         /**
-         * <code>optional int64 date = 7;</code>
+         * <code>optional int64 date = 6;</code>
          */
         public Builder setDate(long value) {
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000020;
           date_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>optional int64 date = 7;</code>
+         * <code>optional int64 date = 6;</code>
          */
         public Builder clearDate() {
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000020);
           date_ = 0L;
           onChanged();
           return this;
         }
 
-        // optional .appmonitoring.FrameData.VarModifier valueModifier = 8;
+        // optional .appmonitoring.FrameData.VarModifier valueModifier = 7;
         private ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier valueModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
          */
         public boolean hasValueModifier() {
-          return ((bitField0_ & 0x00000080) == 0x00000080);
+          return ((bitField0_ & 0x00000040) == 0x00000040);
         }
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
          */
         public ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier getValueModifier() {
           return valueModifier_;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
          */
         public Builder setValueModifier(ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier value) {
           if (value == null) {
             throw new NullPointerException();
           }
-          bitField0_ |= 0x00000080;
+          bitField0_ |= 0x00000040;
           valueModifier_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 8;</code>
+         * <code>optional .appmonitoring.FrameData.VarModifier valueModifier = 7;</code>
          */
         public Builder clearValueModifier() {
-          bitField0_ = (bitField0_ & ~0x00000080);
+          bitField0_ = (bitField0_ & ~0x00000040);
           valueModifier_ = ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifier.PUBLIC;
           onChanged();
           return this;
@@ -4760,33 +4540,30 @@ public final class DataPacketProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025DataPacketProto.proto\022\rappmonitoring\"\266" +
-      "\007\n\tFrameData\0221\n\007varData\030\001 \003(\0132 .appmonit" +
+      "\n\025DataPacketProto.proto\022\rappmonitoring\"\301" +
+      "\006\n\tFrameData\0221\n\007varData\030\001 \003(\0132 .appmonit" +
       "oring.FrameData.VarData\022;\n\rrequestedData" +
       "\030\002 \003(\0132$.appmonitoring.FrameData.Request" +
-      "Data\032\247\001\n\004Type\022\014\n\004name\030\001 \002(\t\022\021\n\tclassPath" +
-      "\030\002 \001(\t\022<\n\nobjectType\030\003 \001(\0162(.appmonitori" +
-      "ng.FrameData.Type.ObjectType\"@\n\nObjectTy" +
-      "pe\022\t\n\005CLASS\020\001\022\010\n\004ENUM\020\002\022\r\n\tINTERFACE\020\003\022\016" +
-      "\n\nANNOTATION\020\004\032C\n\005Value\022\r\n\005value\030\001 \002(\t\022+" +
-      "\n\004type\030\002 \001(\0132\035.appmonitoring.FrameData.T",
-      "ype\032\233\002\n\007VarData\022\014\n\004path\030\001 \002(\t\022,\n\004data\030\002 " +
-      "\001(\0132\036.appmonitoring.FrameData.Value\022+\n\004t" +
-      "ype\030\003 \001(\0132\035.appmonitoring.FrameData.Type" +
-      "\022\016\n\006isNull\030\004 \001(\010\022;\n\rclassModifier\030\005 \001(\0162" +
-      "$.appmonitoring.FrameData.VarModifier\022\017\n" +
-      "\007asError\030\006 \001(\010\022\014\n\004date\030\007 \001(\003\022;\n\rvalueMod" +
-      "ifier\030\010 \001(\0162$.appmonitoring.FrameData.Va" +
-      "rModifier\032H\n\013RequestData\022\014\n\004path\030\001 \002(\t\022+" +
-      "\n\004mode\030\002 \002(\0162\035.appmonitoring.FrameData.M" +
-      "ode\"\260\001\n\013VarModifier\022\n\n\006PUBLIC\020\001\022\r\n\tPROTE",
-      "CTED\020\002\022\013\n\007PRIVATE\020\003\022\014\n\010ABSTRACT\020\004\022\t\n\005FIN" +
-      "AL\020\005\022\r\n\tINTERFACE\020\006\022\n\n\006STATIC\020\007\022\n\n\006NATIV" +
-      "E\020\010\022\020\n\014SYNCHRONIZED\020\t\022\n\n\006STRICT\020\n\022\014\n\010VOL" +
-      "ATILE\020\013\022\r\n\tTRANSIENT\020\014\"/\n\004Mode\022\t\n\005QUERY\020" +
-      "\001\022\014\n\010REGISTER\020\002\022\016\n\nUNREGISTER\020\003B1\n\036ca.et" +
-      "smtl.octets.appmonitoringB\017DataPacketPro" +
-      "to"
+      "Data\032`\n\004Type\022\014\n\004name\030\001 \002(\t\022\021\n\tclassPath\030" +
+      "\002 \001(\t\0227\n\tmodifiers\030\003 \003(\0162$.appmonitoring" +
+      ".FrameData.VarModifier\032&\n\005Value\022\r\n\005value" +
+      "\030\001 \002(\t\022\016\n\006isNull\030\002 \001(\010\032\213\002\n\007VarData\022\014\n\004pa" +
+      "th\030\001 \002(\t\022,\n\004data\030\002 \001(\0132\036.appmonitoring.F" +
+      "rameData.Value\022+\n\004type\030\003 \001(\0132\035.appmonito",
+      "ring.FrameData.Type\022;\n\rclassModifier\030\004 \001" +
+      "(\0162$.appmonitoring.FrameData.VarModifier" +
+      "\022\017\n\007asError\030\005 \001(\010\022\014\n\004date\030\006 \001(\003\022;\n\rvalue" +
+      "Modifier\030\007 \001(\0162$.appmonitoring.FrameData" +
+      ".VarModifier\032H\n\013RequestData\022\014\n\004path\030\001 \002(" +
+      "\t\022+\n\004mode\030\002 \002(\0162\035.appmonitoring.FrameDat" +
+      "a.Mode\"\260\001\n\013VarModifier\022\n\n\006PUBLIC\020\001\022\r\n\tPR" +
+      "OTECTED\020\002\022\013\n\007PRIVATE\020\003\022\014\n\010ABSTRACT\020\004\022\t\n\005" +
+      "FINAL\020\005\022\r\n\tINTERFACE\020\006\022\n\n\006STATIC\020\007\022\n\n\006NA" +
+      "TIVE\020\010\022\020\n\014SYNCHRONIZED\020\t\022\n\n\006STRICT\020\n\022\014\n\010",
+      "VOLATILE\020\013\022\r\n\tTRANSIENT\020\014\"/\n\004Mode\022\t\n\005QUE" +
+      "RY\020\001\022\014\n\010REGISTER\020\002\022\016\n\nUNREGISTER\020\003B1\n\036ca" +
+      ".etsmtl.octets.appmonitoringB\017DataPacket" +
+      "Proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4804,19 +4581,19 @@ public final class DataPacketProto {
           internal_static_appmonitoring_FrameData_Type_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_Type_descriptor,
-              new java.lang.String[] { "Name", "ClassPath", "ObjectType", });
+              new java.lang.String[] { "Name", "ClassPath", "Modifiers", });
           internal_static_appmonitoring_FrameData_Value_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(1);
           internal_static_appmonitoring_FrameData_Value_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_Value_descriptor,
-              new java.lang.String[] { "Value", "Type", });
+              new java.lang.String[] { "Value", "IsNull", });
           internal_static_appmonitoring_FrameData_VarData_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(2);
           internal_static_appmonitoring_FrameData_VarData_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_appmonitoring_FrameData_VarData_descriptor,
-              new java.lang.String[] { "Path", "Data", "Type", "IsNull", "ClassModifier", "AsError", "Date", "ValueModifier", });
+              new java.lang.String[] { "Path", "Data", "Type", "ClassModifier", "AsError", "Date", "ValueModifier", });
           internal_static_appmonitoring_FrameData_RequestData_descriptor =
             internal_static_appmonitoring_FrameData_descriptor.getNestedTypes().get(3);
           internal_static_appmonitoring_FrameData_RequestData_fieldAccessorTable = new
