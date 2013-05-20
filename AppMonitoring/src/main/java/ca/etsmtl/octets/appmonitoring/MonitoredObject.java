@@ -49,7 +49,7 @@ class MonitoredObject {
       classModifiers = getVarModifiers(mClass.getModifiers());
    }
 
-   public static VarModifier[] getVarModifiers(int modifier) {
+   private static VarModifier[] getVarModifiers(int modifier) {
       List<VarModifier> varScopeList = new ArrayList<VarModifier>();
       if(Modifier.isPublic(modifier)) {
          varScopeList.add(VarModifier.PUBLIC);
@@ -84,6 +84,14 @@ class MonitoredObject {
    
    public String getTypeName() {
       return mClass.getName();
+   }
+
+   VarModifier[] getValueModifiers() {
+      return valueModifiers;
+   }
+
+   VarModifier[] getClassModifiers() {
+      return classModifiers;
    }
 
    public String getStringValue() {

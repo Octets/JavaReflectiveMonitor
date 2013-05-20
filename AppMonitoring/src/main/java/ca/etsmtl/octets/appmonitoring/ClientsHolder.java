@@ -2,23 +2,24 @@ package ca.etsmtl.octets.appmonitoring;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-class ClientHolder implements Runnable, IConnectionHolder {
-   private final static Logger logger = Logger.getLogger(ClientHolder.class);
+class ClientsHolder implements Runnable, IConnectionHolder {
+   private final static Logger logger = Logger.getLogger(ClientsHolder.class);
    private final static int NUMBER_OF_SAMPLE = 20;
 
    private final List<IClientConnection> connectionList = new ArrayList<IClientConnection>();
    private final Deque<Long> updateAverage = new ConcurrentLinkedDeque<Long>();
 
+   private long executionTime = 1000; //ms
+
    private boolean running = false;
 
    StopWatch stopWatch = new StopWatch();
 
-   public ClientHolder() {
+   public ClientsHolder() {
 
    }
 
@@ -35,7 +36,17 @@ class ClientHolder implements Runnable, IConnectionHolder {
    }
 
    @Override
-   public void run() {
+   public long getExecutionTime() {
+      return executionTime;
+   }
+
+   @Override
+   public void setExecutionTime(long time) {
+      executionTime = time;
+   }
+
+   @Override
+   public void run(){
       running = true;
       while(running) {
          stopWatch.start();
@@ -43,11 +54,21 @@ class ClientHolder implements Runnable, IConnectionHolder {
             clientConnection.triggerUpdate();
          }
          stopWatch.stop();
-         updateAverage.add(stopWatch.getNanoTime());
+         long runTime = stopWatch.getTime();
+         updateAverage.add(runTime);
          stopWatch.reset();
 
-         //Every 2s frame
-         if(Calendar.getInstance().getTimeInMillis() % 2000 == 0) {
+         long remainingTime = executionTime - runTime;
+
+         if(remainingTime > 0) {
+            try {
+               Thread.sleep(remainingTime);
+            } catch (InterruptedException e) {
+               logger.warn("Interrupted", e);
+            }
+         }
+
+         if(updateAverage.size() >= NUMBER_OF_SAMPLE) {
             logger.debug("Average update time : " + computeAverage() + " ms");
          }
       }
@@ -60,6 +81,7 @@ class ClientHolder implements Runnable, IConnectionHolder {
          sums += value;
       }
 
+      updateAverage.clear();
       return sums / valueList.length;
    }
 

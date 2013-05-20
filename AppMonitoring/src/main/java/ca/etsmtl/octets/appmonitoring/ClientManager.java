@@ -10,7 +10,7 @@ public class ClientManager implements Runnable {
    public final static int SERVER_PORT = 12012;
    public final static int WAIT_TIME = 500;
 
-   private IConnectionHolder connectionHolder;
+   private final IConnectionHolder connectionHolder = new ClientsHolder();
 
    private final Hashtable<String, MonitoredObject> mToBeWatch = new Hashtable<String, MonitoredObject>();
 
@@ -18,7 +18,6 @@ public class ClientManager implements Runnable {
    private ServerSocket mServerSocket = null;
 
    public ClientManager() throws IOException {
-      connectionHolder = new ClientHolder();
       mServerSocket = new ServerSocket(SERVER_PORT);
    }
 

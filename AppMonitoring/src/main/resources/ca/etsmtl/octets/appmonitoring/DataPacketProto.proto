@@ -24,7 +24,6 @@ message FrameData {
    message Type {
       required string name = 1;
       optional string classPath = 2;
-      repeated VarModifier modifiers = 3;
    }
 
    message Value {
@@ -36,10 +35,10 @@ message FrameData {
       required string path = 1;
       optional Value data = 2;
       optional Type type = 3;
-      optional VarModifier classModifier = 4;
+      repeated VarModifier classModifier = 4;
       optional bool asError = 5;
       optional int64 date = 6;
-      optional VarModifier valueModifier = 7;
+      repeated VarModifier valueModifier = 7;
    }
 
    enum Mode {

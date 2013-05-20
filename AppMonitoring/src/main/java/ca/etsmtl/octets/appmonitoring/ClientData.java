@@ -32,7 +32,7 @@ class ClientData implements Runnable, IClientConnection {
    
    private int refreshRate = 50; // pms
 
-   private final FrameData.Builder frameData = FrameData.newBuilder();
+   private final FrameData.Builder frameDataBuilder = FrameData.newBuilder();
 
    private IConnectionHolder connectionHolder;
 
@@ -100,9 +100,8 @@ class ClientData implements Runnable, IClientConnection {
                objectHolder.setRequestUpdate(false);
 
                frameDataMutex.lock();
-               frameData.addVarData(varDataBuilder);
+               frameDataBuilder.addVarData(varDataBuilder);
                frameDataMutex.unlock();
-
             }
          }
          catch(ConcurrentModificationException e) {
@@ -122,8 +121,13 @@ class ClientData implements Runnable, IClientConnection {
          path = monitoredObject.mPath + "." + path;
 
       typeBuilder.setName(monitoredObject.getTypeName());
-      for(FrameData.VarModifier modifier : MonitoredObject.getVarModifiers(monitoredObject.getClass().getModifiers())) {
-         typeBuilder.addModifiers(modifier);
+
+      for(FrameData.VarModifier modifier : monitoredObject.getValueModifiers()) {
+         varDataBuilder.addValueModifier(modifier);
+      }
+
+      for (FrameData.VarModifier modifier : monitoredObject.getClassModifiers()) {
+         varDataBuilder.addClassModifier(modifier);
       }
 
       varDataBuilder.setType(typeBuilder.build());
@@ -134,7 +138,7 @@ class ClientData implements Runnable, IClientConnection {
       varDataBuilder.setData(valueBuilder);
 
       frameDataMutex.lock();
-      frameData.addVarData(varDataBuilder.build());
+      frameDataBuilder.addVarData(varDataBuilder.build());
       frameDataMutex.unlock();
    }
 
@@ -199,7 +203,16 @@ class ClientData implements Runnable, IClientConnection {
    }
 
    private void writeBufferOutputStream() throws IOException {
+      frameDataMutex.lock();
+      final FrameData frameData = this.frameDataBuilder.build();
+      this.frameDataBuilder.clear();
+      frameDataMutex.unlock();
 
+      try {
+         frameData.writeTo(outputStream);
+      } catch (IOException e) {
+         LOGGER.error("Error writing FrameData.");
+      }
    }
 
    public void runRequestData(FrameData.RequestData requestData) throws IOException {
