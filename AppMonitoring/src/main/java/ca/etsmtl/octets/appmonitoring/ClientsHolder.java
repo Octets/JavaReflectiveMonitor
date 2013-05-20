@@ -4,14 +4,13 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 class ClientsHolder implements Runnable, IConnectionHolder {
    private final static Logger logger = Logger.getLogger(ClientsHolder.class);
    private final static int NUMBER_OF_SAMPLE = 20;
 
    private final List<IClientConnection> connectionList = new ArrayList<IClientConnection>();
-   private final Deque<Long> updateAverage = new ConcurrentLinkedDeque<Long>();
+   private final Deque<Long> updateAverage = new ArrayDeque<Long>();
 
    private long executionTime = 1000; //ms
 

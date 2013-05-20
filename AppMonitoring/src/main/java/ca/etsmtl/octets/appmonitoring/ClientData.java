@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Calendar;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
@@ -97,6 +98,7 @@ class ClientData implements Runnable, IClientConnection {
                   varDataBuilder.setData(valueBuilder.build());
                }
 
+               varDataBuilder.setDate(Calendar.getInstance().getTime().getTime());
                objectHolder.setRequestUpdate(false);
 
                frameDataMutex.lock();
@@ -136,6 +138,7 @@ class ClientData implements Runnable, IClientConnection {
       valueBuilder.setValue(monitoredObject.getStringValue());
 
       varDataBuilder.setData(valueBuilder);
+      varDataBuilder.setDate(Calendar.getInstance().getTime().getTime());
 
       frameDataMutex.lock();
       frameDataBuilder.addVarData(varDataBuilder.build());
