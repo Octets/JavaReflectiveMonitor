@@ -12,22 +12,22 @@ import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarModifi
 class MonitoredObject {
    private final static Logger LOGGER = Logger.getLogger(MonitoredObject.class);
 
-   protected Class<?> mClass = null;
-   protected Object mObject = null;
-   
-   protected final Hashtable<String, Field> mFields = new Hashtable<String, Field>();
-   
-   protected final Hashtable<String, MonitoredObject> mChildren = new Hashtable<String, MonitoredObject>();
-   
-   protected Vector<String> mFieldNames = new Vector<String>();
-   
+   private Class<?> mClass = null;
+   private Object mObject = null;
+
+   private final Hashtable<String, Field> mFields = new Hashtable<>();
+
+   protected final Hashtable<String, MonitoredObject> mChildren = new Hashtable<>();
+
+   private Vector<String> mFieldNames = new Vector<>();
+
    protected String mPath;
    protected String mName;
-   
-   protected MonitoredObject mParent;
 
-   protected VarModifier[] classModifiers;
-   protected VarModifier[] valueModifiers;
+   private MonitoredObject mParent;
+
+   private VarModifier[] classModifiers;
+   private VarModifier[] valueModifiers;
    
    public MonitoredObject(Object iWatched, String iName, String iPath,VarModifier[] valueModifiers , MonitoredObject iParent)
    {
@@ -50,7 +50,7 @@ class MonitoredObject {
    }
 
    private static VarModifier[] getVarModifiers(int modifier) {
-      List<VarModifier> varScopeList = new ArrayList<VarModifier>();
+      List<VarModifier> varScopeList = new ArrayList<>();
       if(Modifier.isPublic(modifier)) {
          varScopeList.add(VarModifier.PUBLIC);
       } else if(Modifier.isProtected(modifier)){
@@ -105,7 +105,7 @@ class MonitoredObject {
       return wReturn;
    }
    
-   public Object getFieldObject(String fieldName)
+   Object getFieldObject(String fieldName)
    {
       try {
          Field field = mFields.get(fieldName);
@@ -138,7 +138,7 @@ class MonitoredObject {
    
    private List<Field> listFields(Class<?> input)
    {
-      List<Field> wFields = new ArrayList<Field>();
+      List<Field> wFields = new ArrayList<>();
       if(input.getSuperclass() != null && input.equals(Object.class)) {
          wFields.addAll(listFields(input.getSuperclass()));
       }
@@ -147,13 +147,13 @@ class MonitoredObject {
       return wFields;
    }
    
-   public void updateFromParent() {
+   void updateFromParent() {
       if(mParent != null) {
          mObject = mParent.getFieldObject(mName);
       }
    }
    
-   public void registerForUpdate(WizeUpdater iUpdater) {
+   public void registerForUpdate(AutoUpdater iUpdater) {
       if(mParent != null)
          mParent.registerForUpdate(iUpdater);
       iUpdater.requestUpdate(this);
@@ -195,9 +195,9 @@ class MonitoredObject {
       return null;
    }
    
-   public static class WizeUpdater {
+   public static class AutoUpdater {
       
-      public List<MonitoredObject> mObjectList = new Vector<MonitoredObject>();
+      public List<MonitoredObject> mObjectList = new Vector<>();
       
       private final static Comparator<MonitoredObject> mSorter = new Comparator<MonitoredObject>() {
          @Override

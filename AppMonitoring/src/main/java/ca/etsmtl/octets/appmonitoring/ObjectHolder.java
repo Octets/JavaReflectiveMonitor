@@ -32,7 +32,7 @@ class ObjectHolder {
          containError = true;
          errorLock.unlock();
       }
-      mRequestUpdate = true;
+      setRequestUpdate(true);
    }
    
    public Boolean CheckForUpdate() {

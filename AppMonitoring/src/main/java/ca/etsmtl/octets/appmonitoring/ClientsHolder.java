@@ -9,14 +9,14 @@ class ClientsHolder implements Runnable, IConnectionHolder {
    private final static Logger logger = Logger.getLogger(ClientsHolder.class);
    private final static int NUMBER_OF_SAMPLE = 20;
 
-   private final List<IClientConnection> connectionList = new ArrayList<IClientConnection>();
-   private final Deque<Long> updateAverage = new ArrayDeque<Long>();
+   private final List<IClientConnection> connectionList = new ArrayList<>();
+   private final Deque<Long> updateAverage = new ArrayDeque<>();
 
    private long executionTime = 1000; //ms
 
    private boolean running = false;
 
-   StopWatch stopWatch = new StopWatch();
+   private StopWatch stopWatch = new StopWatch();
 
    public ClientsHolder() {
 

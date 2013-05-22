@@ -23,13 +23,13 @@ class ClientData implements Runnable, IClientConnection {
    private BufferedInputStream inputStream;
    private OutputStream outputStream;
    
-   private Hashtable<String, ObjectHolder> monitorList = new Hashtable<String, ObjectHolder>();
+   private Hashtable<String, ObjectHolder> monitorList = new Hashtable<>();
    private Hashtable<String, MonitoredObject> mRootList;
 
    private Thread mThread;
    private Boolean mCanRun = true;
 
-   private MonitoredObject.WizeUpdater mWizeUpdater = new MonitoredObject.WizeUpdater();
+   private MonitoredObject.AutoUpdater autoUpdater = new MonitoredObject.AutoUpdater();
    
    private int refreshRate = 50; // pms
 
@@ -67,10 +67,10 @@ class ClientData implements Runnable, IClientConnection {
 
       monitorListMutex.lock();
       for (ObjectHolder wHolder : monitorList.values()) {
-         wHolder.getMonitoredObject().registerForUpdate(mWizeUpdater);
+         wHolder.getMonitoredObject().registerForUpdate(autoUpdater);
       }
       
-      mWizeUpdater.executeUpdate();
+      autoUpdater.executeUpdate();
       for (ObjectHolder objectHolder : monitorList.values()) {
          try
          {
@@ -172,10 +172,7 @@ class ClientData implements Runnable, IClientConnection {
             }
 
          }
-         catch(InterruptedException e) {
-            e.printStackTrace();
-            close();
-         } catch (IOException e) {
+         catch(InterruptedException | IOException e) {
             e.printStackTrace();
             close();
          }
@@ -214,11 +211,12 @@ class ClientData implements Runnable, IClientConnection {
       try {
          frameData.writeTo(outputStream);
       } catch (IOException e) {
-         LOGGER.error("Error writing FrameData.");
+         LOGGER.error("Error writing FrameData.",e);
+         throw e;
       }
    }
 
-   public void runRequestData(FrameData.RequestData requestData) throws IOException {
+   void runRequestData(FrameData.RequestData requestData) {
       MonitoredObject monitoredObject = MonitoredObject.ObjectNavigation(mRootList, requestData.getPath(), null);
       if(monitoredObject != null) {
          switch (requestData.getMode()) {

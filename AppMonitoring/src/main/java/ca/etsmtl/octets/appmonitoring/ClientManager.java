@@ -8,11 +8,11 @@ import java.util.*;
 
 public class ClientManager implements Runnable {
    public final static int SERVER_PORT = 12012;
-   public final static int WAIT_TIME = 500;
+   private final static int WAIT_TIME = 500;
 
    private final IConnectionHolder connectionHolder = new ClientsHolder();
 
-   private final Hashtable<String, MonitoredObject> mToBeWatch = new Hashtable<String, MonitoredObject>();
+   private final Hashtable<String, MonitoredObject> mToBeWatch = new Hashtable<>();
 
    private Boolean mCanRun = false;
    private ServerSocket mServerSocket = null;
