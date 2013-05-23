@@ -8,18 +8,7 @@
     <artifactId>VisualMonitor</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
-        <dependency>
-            <groupId>org.swinglabs</groupId>
-            <artifactId>swingx-core</artifactId>
-            <version>1.6.2-2</version>
-        </dependency>
-        <dependency>
-            <groupId>ca.etsmtl.octets</groupId>
-            <artifactId>AppMonitoring</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -28,10 +17,9 @@
             <optional>false</optional>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
+            <groupId>ca.etsmtl.octets</groupId>
+            <artifactId>AppMonitoring</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 </project>
