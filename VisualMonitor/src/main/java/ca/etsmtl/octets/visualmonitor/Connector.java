@@ -1,5 +1,6 @@
-package ca.etsmtl.octets.appmonitoring;
+package ca.etsmtl.octets.visualmonitor;
 
+import ca.etsmtl.octets.appmonitoring.DataPacketProto;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.log4j.Logger;
 
@@ -10,12 +11,16 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Vector;
+
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData;
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData;
 
 public class Connector implements Runnable {
-
    private static final Logger logger = Logger.getLogger(Connector.class);
 
-   private DataPacketProto.FrameData frameData;
+   public final List<IListenFrame> listenerList = new Vector<>();
 
    private BufferedInputStream bufferedInputStream;
    private OutputStream outputStream;
@@ -25,7 +30,7 @@ public class Connector implements Runnable {
 
    private long updateSpeed = 1000; //ms
 
-   public void connect(String hostname, int port) throws UnknownHostException, IOException {
+   public void connect(String hostname, int port) throws IOException {
       socket = new Socket(hostname,port);
       bufferedInputStream = new BufferedInputStream(socket.getInputStream());
 
@@ -73,14 +78,19 @@ public class Connector implements Runnable {
 
    public void readFromClient() throws IOException {
       if(bufferedInputStream.available() > 0) {
-         frameData = DataPacketProto.FrameData.parseFrom(bufferedInputStream);
-         Collections.sort(frameData.getVarDataList(),new Comparator<DataPacketProto.FrameData.VarData>() {
+         FrameData frameData = FrameData.parseFrom(bufferedInputStream);
+         Collections.sort(frameData.getVarDataList(),new Comparator<VarData>() {
             @Override
-            public int compare(DataPacketProto.FrameData.VarData o1, DataPacketProto.FrameData.VarData o2) {
+            public int compare(VarData o1, VarData o2) {
                return (int)(o2.getDate() - o1.getDate());
             }
          });
 
+         for(VarData varData : frameData.getVarDataList()) {
+            for (IListenFrame listenFrame : listenerList) {
+               listenFrame.OnFrameReaded(varData);
+            }
+         }
       }
    }
 
@@ -93,6 +103,7 @@ public class Connector implements Runnable {
    }
 
    private void close() {
+      running = false;
       try {
          bufferedInputStream.close();
       } catch (IOException e) {
@@ -111,6 +122,6 @@ public class Connector implements Runnable {
    }
 
    public interface IListenFrame {
-      void OnFrameReaded(DataPacketProto.FrameData.VarData varData);
+      void OnFrameReaded(VarData varData);
    }
 }

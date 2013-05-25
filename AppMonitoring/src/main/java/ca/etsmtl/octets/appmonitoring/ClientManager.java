@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.*;
 
-public class ClientManager implements Runnable {
+public final class ClientManager implements Runnable {
    public final static int SERVER_PORT = 12012;
    private final static int WAIT_TIME = 500;
 
