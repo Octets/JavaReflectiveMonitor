@@ -31,8 +31,10 @@ public class Connector implements Runnable {
    private long updateSpeed = 1000; //ms
 
    public void connect(String hostname, int port) throws IOException {
+      logger.debug("Initializing connection with " + hostname + " on port " + port);
       socket = new Socket(hostname,port);
       bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+      logger.debug("Connection initialized.");
 
       if(socket.isConnected()) {
          new Thread(this).run();

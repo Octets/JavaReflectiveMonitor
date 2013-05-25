@@ -33,17 +33,17 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
     <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="-1.0" prefHeight="-1.0" vgrow="SOMETIMES" />
     </rowConstraints>
   </GridPane>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="NEVER" />
     <RowConstraints maxHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
   </rowConstraints>
-  <GridPane prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+  <GridPane prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
     <children>
       <FlowPane fx:id="varFlow" alignment="CENTER_LEFT" columnHalignment="LEFT" prefHeight="-1.0" prefWidth="-1.0" rowValignment="TOP" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="NEVER">
         <children>
@@ -58,9 +58,9 @@
           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
         </padding>
       </FlowPane>
-      <ScrollPane id="ScrollPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" pannable="false" prefViewportHeight="399.0" prefViewportWidth="640.0" vbarPolicy="NEVER" visible="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <ScrollPane id="ScrollPane" focusTraversable="false" hbarPolicy="AS_NEEDED" pannable="true" vbarPolicy="AS_NEEDED" visible="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
         <content>
-          <TableView fx:id="tblVar" prefHeight="-1.0" prefWidth="-1.0">
+          <TableView fx:id="tblVar" editable="false" maxWidth="-1.0" mouseTransparent="false" pickOnBounds="false" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="false">
             <columns>
               <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" resizable="false" text="" fx:id="tbcVisibility" />
               <TableColumn minWidth="75.0" prefWidth="200.0" text="Name" fx:id="tbcName" />
@@ -73,11 +73,11 @@
       </ScrollPane>
     </children>
     <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="-1.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
       <RowConstraints fillHeight="false" minHeight="-1.0" prefHeight="-1.0" vgrow="NEVER" />
-      <RowConstraints maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
+      <RowConstraints fillHeight="true" maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
     </rowConstraints>
   </GridPane>
 </GridPane>

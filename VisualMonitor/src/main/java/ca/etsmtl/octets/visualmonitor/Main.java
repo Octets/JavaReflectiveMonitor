@@ -5,8 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 public class Main extends Application {
+   private final static Logger logger = Logger.getLogger(Main.class);
+
 
    @Override
    public void start(Stage primaryStage) throws Exception {
@@ -15,6 +18,7 @@ public class Main extends Application {
       primaryStage.setScene(new Scene(root, 640, 480));
 
       primaryStage.show();
+      logger.debug("MainForm started.");
    }
 
 
