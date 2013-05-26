@@ -21,7 +21,7 @@ class ClientData implements Runnable, IClientConnection {
 
    private Socket socket;
    private BufferedInputStream inputStream;
-   private OutputStream outputStream;
+   private DataOutputStream dateDataOutputStream;
    
    private Hashtable<String, ObjectHolder> monitorList = new Hashtable<>();
    private Hashtable<String, MonitoredObject> mRootList;
@@ -45,7 +45,7 @@ class ClientData implements Runnable, IClientConnection {
       mRootList = iRootList;
 
       inputStream = new BufferedInputStream(socket.getInputStream());
-      outputStream = socket.getOutputStream();
+      dateDataOutputStream = new DataOutputStream(socket.getOutputStream());
 
       mThread = new Thread(this);
       mThread.start();
@@ -124,12 +124,16 @@ class ClientData implements Runnable, IClientConnection {
 
       typeBuilder.setName(monitoredObject.getTypeName());
 
-      for(FrameData.VarModifier modifier : monitoredObject.getValueModifiers()) {
-         varDataBuilder.addValueModifier(modifier);
+      if(monitoredObject.getValueModifiers() != null) {
+         for(FrameData.VarModifier modifier : monitoredObject.getValueModifiers()) {
+            varDataBuilder.addValueModifier(modifier);
+         }
       }
 
-      for (FrameData.VarModifier modifier : monitoredObject.getClassModifiers()) {
-         varDataBuilder.addClassModifier(modifier);
+      if(monitoredObject.getClassModifiers() != null) {
+         for (FrameData.VarModifier modifier : monitoredObject.getClassModifiers()) {
+            varDataBuilder.addClassModifier(modifier);
+         }
       }
 
       varDataBuilder.setType(typeBuilder.build());
@@ -182,8 +186,8 @@ class ClientData implements Runnable, IClientConnection {
       try {
          if(inputStream != null)
             inputStream.close();
-         if(outputStream != null)
-            outputStream.close();
+         if(dateDataOutputStream != null)
+            dateDataOutputStream.close();
       } catch (IOException e) {
          LOGGER.debug("Error closing stream.");
       }
@@ -209,7 +213,12 @@ class ClientData implements Runnable, IClientConnection {
       frameDataMutex.unlock();
 
       try {
-         frameData.writeTo(outputStream);
+         if(frameData.getVarDataList().size() > 0) {
+            byte[] bytes = frameData.toByteArray();
+            dateDataOutputStream.writeInt(bytes.length);
+            dateDataOutputStream.write(bytes);
+            dateDataOutputStream.flush();
+         }
       } catch (IOException e) {
          LOGGER.error("Error writing FrameData.",e);
          throw e;

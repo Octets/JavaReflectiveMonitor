@@ -11,16 +11,16 @@
 <?import javafx.scene.layout.GridPane?>
 <!--<?import ca.etsmtl.octets.appmonitoring.ClientManager?>-->
 
-<GridPane alignment="CENTER" gridLinesVisible="true" hgap="0.0" prefHeight="480.0" prefWidth="640.0" vgap="0.0" xmlns:fx="http://javafx.com/fxml" fx:controller="ca.etsmtl.octets.visualmonitor.Controller">
+<GridPane fx:id="mainGrid" alignment="CENTER" gridLinesVisible="true" hgap="0.0" prefHeight="480.0" prefWidth="640.0" vgap="0.0" xmlns:fx="http://javafx.com/fxml" fx:controller="ca.etsmtl.octets.visualmonitor.Controller">
   <GridPane focusTraversable="false" gridLinesVisible="false" hgap="10.0" opacity="1.0" vgap="10.0" visible="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
     <children>
-      <TextField fx:id="txtHostname" prefWidth="-1.0" promptText="localhost" GridPane.columnIndex="0" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" />
+      <TextField fx:id="txtHostname" prefWidth="-1.0" promptText="Address" text="localhost" GridPane.columnIndex="0" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" />
       <TextField fx:id="txtPort" prefWidth="70.0" promptText="12012" GridPane.columnIndex="1" GridPane.rowIndex="0">
         <!--<promptText>
             <ClientManager fx:constant="SERVER_PORT" />
           </promptText>-->
       </TextField>
-      <Button fx:id="btnConnect" alignment="CENTER_RIGHT" cache="false" contentDisplay="LEFT" defaultButton="false" mnemonicParsing="false" onAction="#onConnect" text="Connect" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+      <Button fx:id="btnConnect" alignment="CENTER_RIGHT" cache="false" contentDisplay="LEFT" defaultButton="false" mnemonicParsing="false" onAction="#onConnectionClick" text="Connect" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
       <ProgressIndicator fx:id="loadingConnection" cache="true" cacheHint="DEFAULT" focusTraversable="false" opacity="0.0" progress="-0.03" visible="true" GridPane.columnIndex="2" GridPane.rowIndex="0" />
     </children>
     <columnConstraints>
@@ -36,13 +36,6 @@
       <RowConstraints minHeight="-1.0" prefHeight="-1.0" vgrow="SOMETIMES" />
     </rowConstraints>
   </GridPane>
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="NEVER" />
-    <RowConstraints maxHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
-  </rowConstraints>
   <GridPane prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
     <children>
       <FlowPane fx:id="varFlow" alignment="CENTER_LEFT" columnHalignment="LEFT" prefHeight="-1.0" prefWidth="-1.0" rowValignment="TOP" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="NEVER">
@@ -58,19 +51,15 @@
           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
         </padding>
       </FlowPane>
-      <ScrollPane id="ScrollPane" focusTraversable="false" hbarPolicy="AS_NEEDED" pannable="true" vbarPolicy="AS_NEEDED" visible="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <content>
-          <TableView fx:id="tblVar" editable="false" maxWidth="-1.0" mouseTransparent="false" pickOnBounds="false" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="false">
-            <columns>
-              <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" resizable="false" text="" fx:id="tbcVisibility" />
-              <TableColumn minWidth="75.0" prefWidth="200.0" text="Name" fx:id="tbcName" />
-              <TableColumn minWidth="70.0" prefWidth="200.0" text="Value" fx:id="tbcValue" />
-              <TableColumn prefWidth="75.0" text="Mode" fx:id="tbcMode" />
-              <TableColumn minWidth="50.0" prefWidth="200.0" text="Path" fx:id="tbcPath" />
-            </columns>
-          </TableView>
-        </content>
-      </ScrollPane>
+      <TableView fx:id="tblVar" editable="false" maxWidth="-1.0" mouseTransparent="false" pickOnBounds="false" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="false" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" resizable="false" text="" fx:id="tbcVisibility" />
+          <TableColumn minWidth="75.0" prefWidth="200.0" text="Name" fx:id="tbcName" />
+          <TableColumn minWidth="70.0" prefWidth="200.0" text="Value" fx:id="tbcValue" />
+          <TableColumn prefWidth="75.0" text="Mode" fx:id="tbcMode" />
+          <TableColumn minWidth="50.0" prefWidth="200.0" text="Path" fx:id="tbcPath" />
+        </columns>
+      </TableView>
     </children>
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="-1.0" prefWidth="100.0" />
@@ -80,4 +69,11 @@
       <RowConstraints fillHeight="true" maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
     </rowConstraints>
   </GridPane>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="-1.0" prefHeight="-1.0" vgrow="ALWAYS" />
+  </rowConstraints>
 </GridPane>

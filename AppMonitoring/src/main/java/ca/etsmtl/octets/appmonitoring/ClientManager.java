@@ -1,5 +1,7 @@
 package ca.etsmtl.octets.appmonitoring;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,6 +9,7 @@ import java.net.SocketTimeoutException;
 import java.util.*;
 
 public final class ClientManager implements Runnable {
+   private static final Logger logger = Logger.getLogger(ClientManager.class);
    public final static int SERVER_PORT = 12012;
    private final static int WAIT_TIME = 500;
 
@@ -24,9 +27,11 @@ public final class ClientManager implements Runnable {
    @Override
    public void run() {
       mCanRun = true;
+      logger.info("Initializing server socket.");
       while(mCanRun) {
          try {
             mServerSocket.setSoTimeout(WAIT_TIME);
+
             Socket wClient = mServerSocket.accept();
             
             ClientData client = new ClientData(connectionHolder,wClient, mToBeWatch);

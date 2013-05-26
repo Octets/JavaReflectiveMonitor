@@ -1,44 +1,168 @@
 package ca.etsmtl.octets.visualmonitor;
 
 import ca.etsmtl.octets.appmonitoring.ClientManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class Controller {
    private static final Logger logger = Logger.getLogger(Controller.class);
-
+   private final DisplayMapper displayMapper = new DisplayMapper();
    public Button btnConnect;
    public TextField txtHostname;
    public TextField txtPort;
    public ProgressIndicator loadingConnection;
-
+   public GridPane mainGrid;
+   public TableView<TableRowVar> tblVar;
+   public TableColumn<String, TableRowVar> tbcVisibility;
+   public TableColumn<String, TableRowVar> tbcName;
+   public TableColumn<String, TableRowVar> tbcValue;
+   public TableColumn<String, TableRowVar> tbcMode;
+   public TableColumn<String, TableRowVar> tbcPath;
    private Connector connector = new Connector();
 
-   public void onConnect() {
-      loadingConnection.setOpacity(1d);
-      String hostname;
-      int port;
+   public void onConnectionClick() {
+      btnConnect.setDisable(true);
+      if(connector.getStates() == Connector.States.DISCONNECTED) {
+         loadingConnection.setOpacity(1d);
+         String hostname = null;
+         int port;
 
-      if(txtHostname.getText().isEmpty()) {
-         hostname = txtHostname.getPromptText();
+         if(!txtHostname.getText().isEmpty()) {
+            hostname = txtHostname.getText();
+         }
+         if(txtPort.getText().isEmpty()) {
+            port = ClientManager.SERVER_PORT;
+         } else {
+            port = Integer.parseInt(txtPort.getText());
+         }
+         try {
+            if(hostname != null) {
+               connector.connect(hostname,port,this);
+            }
+         } catch (IOException e) {
+            logger.error("Fail to initiate connection.",e);
+         } finally {
+            loadingConnection.setOpacity(0d);
+         }
+         updateBtnConnectText();
+         btnConnect.setDisable(false);
       } else {
-         hostname = txtHostname.getText();
+         Runnable futureTask = new Runnable() {
+            @Override
+            public void run() {
+               updateBtnConnectText();
+               btnConnect.setDisable(false);
+            }
+         };
+         connector.disconnect(futureTask);
       }
-      if(txtPort.getText().isEmpty()) {
-         port = ClientManager.SERVER_PORT;
+   }
+
+   public void onTableClicked(ActionEvent actionEvent) {
+
+   }
+
+   public void updateTableLayout() {
+      displayMapper.updateTableContent(this);
+   }
+
+   private void updateBtnConnectText() {
+      if(connector.getStates() == Connector.States.CONNECTED) {
+         btnConnect.setText("Disconnect");
       } else {
-         port = Integer.parseInt(txtPort.getText());
+         btnConnect.setText("Connect");
       }
-      try {
-         connector.connect(hostname,port);
-         loadingConnection.setOpacity(0d);
-      } catch (IOException e) {
-         logger.error("Fail to initiate connection.",e);
+   }
+
+   public DisplayMapper getDisplayMapper() {
+      return displayMapper;
+   }
+
+   public static class TableRowVar {
+      private final SimpleStringProperty varName;
+      private final SimpleStringProperty varValue;
+      private final SimpleStringProperty varMode;
+      private final SimpleStringProperty varPath;
+      private final SimpleStringProperty varVisibility;
+      public TableRowVar(SimpleStringProperty varName, SimpleStringProperty varValue, SimpleStringProperty varMode, SimpleStringProperty varPath, SimpleStringProperty varVisibility) {
+         this.varName = varName;
+         this.varValue = varValue;
+         this.varMode = varMode;
+         this.varPath = varPath;
+         this.varVisibility = varVisibility;
+      }
+
+      public String getVarName() {
+         return varName.get();
+      }
+
+      public void setVarName(String varName) {
+         this.varName.set(varName);
+      }
+
+      public SimpleStringProperty varNameProperty() {
+         return varName;
+      }
+
+      public String getVarValue() {
+         return varValue.get();
+      }
+
+      public void setVarValue(String varValue) {
+         this.varValue.set(varValue);
+      }
+
+      public SimpleStringProperty varValueProperty() {
+         return varValue;
+      }
+
+      public String getVarMode() {
+         return varMode.get();
+      }
+
+      public void setVarMode(String varMode) {
+         this.varMode.set(varMode);
+      }
+
+      public SimpleStringProperty varModeProperty() {
+         return varMode;
+      }
+
+      public String getVarPath() {
+         return varPath.get();
+      }
+
+      public void setVarPath(String varPath) {
+         this.varPath.set(varPath);
+      }
+
+      public SimpleStringProperty varPathProperty() {
+         return varPath;
+      }
+
+      public String getVarVisibility() {
+         return varVisibility.get();
+      }
+
+      public void setVarVisibility(String varVisibility) {
+         this.varVisibility.set(varVisibility);
+      }
+
+      public SimpleStringProperty varVisibilityProperty() {
+         return varVisibility;
+      }
+
+      public interface TABLE_PROPERTY {
+         public String NAME = "varName";
+         public String VALUE = "varValue";
+         public String MODE = "varMode";
+         public String PATH = "varPath";
+         public String VISIBILITY = "varVisibility";
       }
    }
 }
