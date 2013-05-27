@@ -20,7 +20,7 @@ class ClientData implements Runnable, IClientConnection {
    private final ReentrantLock frameDataMutex = new ReentrantLock();
 
    private Socket socket;
-   private BufferedInputStream inputStream;
+   private DataInputStream dataInputStream;
    private DataOutputStream dateDataOutputStream;
    
    private Hashtable<String, ObjectHolder> monitorList = new Hashtable<>();
@@ -44,7 +44,7 @@ class ClientData implements Runnable, IClientConnection {
       socket = iClient;
       mRootList = iRootList;
 
-      inputStream = new BufferedInputStream(socket.getInputStream());
+      dataInputStream = new DataInputStream(socket.getInputStream());
       dateDataOutputStream = new DataOutputStream(socket.getOutputStream());
 
       mThread = new Thread(this);
@@ -184,8 +184,8 @@ class ClientData implements Runnable, IClientConnection {
       
       //Close
       try {
-         if(inputStream != null)
-            inputStream.close();
+         if(dataInputStream != null)
+            dataInputStream.close();
          if(dateDataOutputStream != null)
             dateDataOutputStream.close();
       } catch (IOException e) {
@@ -198,10 +198,14 @@ class ClientData implements Runnable, IClientConnection {
    }
 
    private void readFromInputStream() throws IOException {
-      if(inputStream.available() != 0) {
-         FrameData frameData = DataPacketProto.FrameData.parseFrom(inputStream);
-         for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
-            runRequestData(requestData);
+
+      if(dataInputStream.available() != 0) {
+         byte[] toRead = new byte[dataInputStream.readInt()];
+         if(dataInputStream.read(toRead) != -1) {
+            FrameData frameData = DataPacketProto.FrameData.parseFrom(toRead);
+            for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+               runRequestData(requestData);
+            }
          }
       }
    }

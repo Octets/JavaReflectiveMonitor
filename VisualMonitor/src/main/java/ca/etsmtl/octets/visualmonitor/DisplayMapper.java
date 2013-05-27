@@ -56,8 +56,7 @@ public class DisplayMapper implements Connector.IListenFrame {
                @Override
                public void handle(MouseEvent mouseEvent) {
                   if(mouseEvent.getClickCount() > 1) {
-
-                     setCurrentPath(((TableRow<TableRowVar>)mouseEvent.getSource()).getItem().getVarPath());
+                     setCurrentPath(((TableRowVar)((TableRow)mouseEvent.getSource()).getItem()).getVarPath());
                   }
                }
             });
