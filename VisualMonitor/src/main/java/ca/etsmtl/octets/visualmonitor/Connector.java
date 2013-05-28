@@ -11,6 +11,7 @@ import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData;
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData;
 import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData;
 import static ca.etsmtl.octets.visualmonitor.Connector.States.CLOSING;
 import static ca.etsmtl.octets.visualmonitor.Connector.States.CONNECTED;
@@ -19,7 +20,8 @@ import static ca.etsmtl.octets.visualmonitor.Connector.States.DISCONNECTED;
 public class Connector implements Runnable {
    private static final Logger logger = Logger.getLogger(Connector.class);
 
-   private FrameData.Builder frameData = null;
+   private FrameData.Builder frameData = FrameData.newBuilder();
+   private final RequestData.Builder requestedDataBuilder = RequestData.newBuilder();
 
    public final List<IListenFrame> listenerList = new Vector<>();
 
@@ -87,7 +89,9 @@ public class Connector implements Runnable {
 
       if(localFrameData != null) {
          byte[] toWrite = localFrameData.toByteArray();
+         dataOutputStream.writeInt(toWrite.length);
          dataOutputStream.write(toWrite);
+         dataOutputStream.flush();
       }
    }
 
@@ -105,6 +109,15 @@ public class Connector implements Runnable {
             }
          }
       }
+   }
+
+   public void requestPath(String path) {
+      requestedDataBuilder.setPath(path);
+      requestedDataBuilder.setMode(FrameData.Mode.QUERY);
+      lockFrameData.lock();
+      frameData.addRequestedData(requestedDataBuilder.build());
+      lockFrameData.unlock();
+      requestedDataBuilder.clear();
    }
 
    public long getUpdateSpeed() {

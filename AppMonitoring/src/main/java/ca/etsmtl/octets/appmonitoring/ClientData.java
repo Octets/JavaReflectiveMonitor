@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData;
+import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.RequestData;
 import static ca.etsmtl.octets.appmonitoring.DataPacketProto.FrameData.VarData;
 
 class ClientData implements Runnable, IClientConnection {
@@ -21,7 +22,7 @@ class ClientData implements Runnable, IClientConnection {
 
    private Socket socket;
    private DataInputStream dataInputStream;
-   private DataOutputStream dateDataOutputStream;
+   private DataOutputStream dataOutputStream;
    
    private Hashtable<String, ObjectHolder> monitorList = new Hashtable<>();
    private Hashtable<String, MonitoredObject> mRootList;
@@ -45,7 +46,7 @@ class ClientData implements Runnable, IClientConnection {
       mRootList = iRootList;
 
       dataInputStream = new DataInputStream(socket.getInputStream());
-      dateDataOutputStream = new DataOutputStream(socket.getOutputStream());
+      dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
       mThread = new Thread(this);
       mThread.start();
@@ -186,8 +187,8 @@ class ClientData implements Runnable, IClientConnection {
       try {
          if(dataInputStream != null)
             dataInputStream.close();
-         if(dateDataOutputStream != null)
-            dateDataOutputStream.close();
+         if(dataOutputStream != null)
+            dataOutputStream.close();
       } catch (IOException e) {
          LOGGER.debug("Error closing stream.");
       }
@@ -203,7 +204,7 @@ class ClientData implements Runnable, IClientConnection {
          byte[] toRead = new byte[dataInputStream.readInt()];
          if(dataInputStream.read(toRead) != -1) {
             FrameData frameData = DataPacketProto.FrameData.parseFrom(toRead);
-            for(FrameData.RequestData requestData : frameData.getRequestedDataList()) {
+            for(RequestData requestData : frameData.getRequestedDataList()) {
                runRequestData(requestData);
             }
          }
@@ -219,9 +220,9 @@ class ClientData implements Runnable, IClientConnection {
       try {
          if(frameData.getVarDataList().size() > 0) {
             byte[] bytes = frameData.toByteArray();
-            dateDataOutputStream.writeInt(bytes.length);
-            dateDataOutputStream.write(bytes);
-            dateDataOutputStream.flush();
+            dataOutputStream.writeInt(bytes.length);
+            dataOutputStream.write(bytes);
+            dataOutputStream.flush();
          }
       } catch (IOException e) {
          LOGGER.error("Error writing FrameData.",e);
@@ -229,7 +230,7 @@ class ClientData implements Runnable, IClientConnection {
       }
    }
 
-   void runRequestData(FrameData.RequestData requestData) {
+   void runRequestData(RequestData requestData) {
       MonitoredObject monitoredObject = MonitoredObject.ObjectNavigation(mRootList, requestData.getPath(), null);
       if(monitoredObject != null) {
          switch (requestData.getMode()) {

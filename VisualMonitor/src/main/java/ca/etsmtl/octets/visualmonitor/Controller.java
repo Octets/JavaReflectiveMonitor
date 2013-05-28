@@ -4,6 +4,7 @@ import ca.etsmtl.octets.appmonitoring.ClientManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import org.apache.log4j.Logger;
 
@@ -11,7 +12,6 @@ import java.io.IOException;
 
 public class Controller {
    private static final Logger logger = Logger.getLogger(Controller.class);
-   private final DisplayMapper displayMapper = new DisplayMapper();
    public Button btnConnect;
    public TextField txtHostname;
    public TextField txtPort;
@@ -23,7 +23,10 @@ public class Controller {
    public TableColumn<String, TableRowVar> tbcValue;
    public TableColumn<String, TableRowVar> tbcMode;
    public TableColumn<String, TableRowVar> tbcPath;
-   private Connector connector = new Connector();
+   private final Connector connector = new Connector();
+   private final DisplayMapper displayMapper = new DisplayMapper(connector,this);
+   public FlowPane varFlow;
+   public Button btnRoot;
 
    public void onConnectionClick() {
       btnConnect.setDisable(true);
@@ -63,12 +66,8 @@ public class Controller {
       }
    }
 
-   public void onTableClicked(ActionEvent actionEvent) {
-
-   }
-
    public void updateTableLayout() {
-      displayMapper.updateTableContent(this);
+      displayMapper.updateTableContent();
    }
 
    private void updateBtnConnectText() {
@@ -81,6 +80,10 @@ public class Controller {
 
    public DisplayMapper getDisplayMapper() {
       return displayMapper;
+   }
+
+   public void onRootClick() {
+      displayMapper.setCurrentPath("");
    }
 
    public static class TableRowVar {
@@ -163,6 +166,25 @@ public class Controller {
          public String MODE = "varMode";
          public String PATH = "varPath";
          public String VISIBILITY = "varVisibility";
+      }
+   }
+   public static class PathVar {
+      private String path;
+
+      public PathVar(String path) {
+         this.path = path;
+      }
+
+      public String getPath() {
+         return path;
+      }
+      public String getName() {
+         return DisplayMapper.getName(path);
+      }
+
+      @Override
+      public String toString() {
+         return DisplayMapper.getName(path);
       }
    }
 }

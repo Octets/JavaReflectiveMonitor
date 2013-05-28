@@ -40,12 +40,11 @@
     <children>
       <FlowPane fx:id="varFlow" alignment="CENTER_LEFT" columnHalignment="LEFT" prefHeight="-1.0" prefWidth="-1.0" rowValignment="TOP" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="NEVER">
         <children>
-          <Button fx:id="btnRoot" mnemonicParsing="false" text="/">
+          <Button fx:id="btnRoot" mnemonicParsing="false" text="/" onAction="#onRootClick">
             <FlowPane.margin>
               <Insets fx:id="x2" />
             </FlowPane.margin>
           </Button>
-          <ChoiceBox id="btnRoot" fx:id="choiceFirst" FlowPane.margin="$x2" />
         </children>
         <padding>
           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
