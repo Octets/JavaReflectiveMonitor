@@ -31,21 +31,23 @@ message FrameData {
       optional bool isNull = 2;
    }
 
-   message VarData {
-      required string path = 1;
-      optional Value data = 2;
-      optional Type type = 3;
-      repeated VarModifier classModifier = 4;
-      optional bool asError = 5;
-      optional int64 date = 6;
-      repeated VarModifier valueModifier = 7;
-   }
-
    enum Mode {
       QUERY = 1;
       REGISTER = 2;
       UNREGISTER = 3;
    }
+
+   message VarData {
+      required string path = 1;
+      optional Value data = 2;
+      optional Type type = 3;
+      repeated VarModifier classModifier = 4;
+      optional int64 date = 5;
+      repeated VarModifier valueModifier = 6;
+      optional Mode mode = 7;
+   }
+
+
 
    message RequestData {
       required string path = 1;

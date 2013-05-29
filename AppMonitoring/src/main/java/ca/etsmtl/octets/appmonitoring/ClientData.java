@@ -115,7 +115,6 @@ class ClientData implements Runnable, IClientConnection {
    }
 
    private void updateObject(MonitoredObject monitoredObject) {
-      final FrameData.Value.Builder valueBuilder = FrameData.Value.newBuilder();
       final VarData.Builder varDataBuilder = VarData.newBuilder();
       final FrameData.Type.Builder typeBuilder = FrameData.Type.newBuilder();
 
@@ -140,10 +139,10 @@ class ClientData implements Runnable, IClientConnection {
       varDataBuilder.setType(typeBuilder.build());
       varDataBuilder.setPath(path);
 
-      valueBuilder.setValue(monitoredObject.getStringValue());
-
-      varDataBuilder.setData(valueBuilder);
+      varDataBuilder.setData(FrameData.Value.newBuilder().setValue(monitoredObject.getStringValue())
+              .setIsNull(monitoredObject.getStringValue() == null));
       varDataBuilder.setDate(Calendar.getInstance().getTime().getTime());
+
 
       frameDataMutex.lock();
       frameDataBuilder.addVarData(varDataBuilder.build());
