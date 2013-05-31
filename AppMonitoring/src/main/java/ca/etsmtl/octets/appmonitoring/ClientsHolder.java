@@ -12,7 +12,7 @@ class ClientsHolder implements Runnable, IConnectionHolder {
    private final List<IClientConnection> connectionList = new ArrayList<>();
    private final Deque<Long> updateAverage = new ArrayDeque<>();
 
-   private long executionTime = 1000; //ms
+   private long executionTime = 50; //ms
 
    private boolean running = false;
 

@@ -40,7 +40,7 @@
     <children>
       <FlowPane fx:id="varFlow" alignment="CENTER_LEFT" columnHalignment="LEFT" prefHeight="-1.0" prefWidth="-1.0" rowValignment="TOP" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="NEVER">
         <children>
-          <Button fx:id="btnRoot" mnemonicParsing="false" text="/" onAction="#onRootClick">
+          <Button fx:id="btnRoot" mnemonicParsing="false" onAction="#onRootClick" text="/">
             <FlowPane.margin>
               <Insets fx:id="x2" />
             </FlowPane.margin>
@@ -55,6 +55,7 @@
           <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" resizable="false" text="" fx:id="tbcVisibility" />
           <TableColumn minWidth="75.0" prefWidth="200.0" text="Name" fx:id="tbcName" />
           <TableColumn minWidth="70.0" prefWidth="200.0" text="Value" fx:id="tbcValue" />
+          <TableColumn prefWidth="75.0" text="Type" fx:id="tbcType" />
           <TableColumn prefWidth="75.0" text="Mode" fx:id="tbcMode" />
           <TableColumn minWidth="50.0" prefWidth="200.0" text="Path" fx:id="tbcPath" />
         </columns>

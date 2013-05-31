@@ -3,10 +3,13 @@ package ca.etsmtl.octets.visualmonitor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
@@ -55,6 +58,7 @@ public class DisplayMapper implements Connector.IListenFrame {
       fxController.tbcMode.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.MODE));
       fxController.tbcPath.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.PATH));
       fxController.tbcValue.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.VALUE));
+      fxController.tbcType.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.TYPE));
 
       fxController.tblVar.setItems(displayedData);
 
@@ -132,7 +136,8 @@ public class DisplayMapper implements Connector.IListenFrame {
                new SimpleStringProperty(varData.getData().getValue()),
                new SimpleStringProperty(""),
                new SimpleStringProperty(varData.getPath()),
-               new SimpleStringProperty("")));
+               new SimpleStringProperty(""),
+               new SimpleStringProperty(varData.getType().getName())));
       }
    }
 
@@ -142,7 +147,14 @@ public class DisplayMapper implements Connector.IListenFrame {
       nodes.clear();
       nodes.add(fxController.btnRoot);
       String[] pathList = currentPath.split("\\.");
-      String fullPath = "";
+
+      /*EventHandler<MouseEvent> eventEventHandler = new EventHandler<MouseEvent>() {
+         @Override
+         public void handle(MouseEvent mouseEvent) {
+            setCurrentPath(((PathVar) ((ChoiceBox) mouseEvent.getSource()).getValue()).getPath());
+         }
+      };*/
+
       if(!currentPath.equalsIgnoreCase("") && pathList.length > 0) {
          ChoiceBox<PathVar> choiceRootFirst = new ChoiceBox<>();
          nodes.add(choiceRootFirst);
@@ -153,8 +165,11 @@ public class DisplayMapper implements Connector.IListenFrame {
                choiceRootFirst.setValue(pathVar);
             }
          }
+         //choiceRootFirst.setOnMouseReleased(eventEventHandler);
+         //choiceRootFirst.setOnMouseClicked(eventEventHandler);
       }
 
+      String fullPath;
       if(pathList.length > 0 && !pathList[0].equals("")) {
          fullPath = pathList[0];
          {
@@ -168,6 +183,7 @@ public class DisplayMapper implements Connector.IListenFrame {
             if(choiceBox.getItems().size() > 0) {
                nodes.add(choiceBox);
             }
+            //choiceBox.setOnMouseReleased(eventEventHandler);
          }
          for(int i = 1; i < pathList.length; ++i) {
             fullPath += "." + pathList[i];
@@ -181,6 +197,7 @@ public class DisplayMapper implements Connector.IListenFrame {
             if(choiceBox.getItems().size() > 0) {
                nodes.add(choiceBox);
             }
+            //choiceBox.setOnMouseReleased(eventEventHandler);
          }
       }
    }

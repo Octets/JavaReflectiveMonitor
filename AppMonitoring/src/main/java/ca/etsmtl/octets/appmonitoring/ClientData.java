@@ -32,7 +32,7 @@ class ClientData implements Runnable, IClientConnection {
 
    private MonitoredObject.AutoUpdater autoUpdater = new MonitoredObject.AutoUpdater();
    
-   private int refreshRate = 50; // pms
+   private int refreshRate = 10; // pms
 
    private final FrameData.Builder frameDataBuilder = FrameData.newBuilder();
 

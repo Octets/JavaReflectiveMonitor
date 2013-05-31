@@ -27,6 +27,7 @@ public class Controller {
    private final DisplayMapper displayMapper = new DisplayMapper(connector,this);
    public FlowPane varFlow;
    public Button btnRoot;
+   public TableColumn<String, TableRowVar> tbcType;
 
    public void onConnectionClick() {
       btnConnect.setDisable(true);
@@ -92,12 +93,26 @@ public class Controller {
       private final SimpleStringProperty varMode;
       private final SimpleStringProperty varPath;
       private final SimpleStringProperty varVisibility;
-      public TableRowVar(SimpleStringProperty varName, SimpleStringProperty varValue, SimpleStringProperty varMode, SimpleStringProperty varPath, SimpleStringProperty varVisibility) {
+      private final SimpleStringProperty varType;
+      public TableRowVar(SimpleStringProperty varName, SimpleStringProperty varValue, SimpleStringProperty varMode, SimpleStringProperty varPath, SimpleStringProperty varVisibility, SimpleStringProperty varType) {
          this.varName = varName;
          this.varValue = varValue;
          this.varMode = varMode;
          this.varPath = varPath;
          this.varVisibility = varVisibility;
+         this.varType = varType;
+      }
+
+      public String getVarType() {
+         return varType.get();
+      }
+
+      public SimpleStringProperty varTypeProperty() {
+         return varType;
+      }
+
+      public void setVarType(String varType) {
+         this.varType.set(varType);
       }
 
       public String getVarName() {
@@ -166,6 +181,7 @@ public class Controller {
          public String MODE = "varMode";
          public String PATH = "varPath";
          public String VISIBILITY = "varVisibility";
+         public String TYPE = "varType";
       }
    }
    public static class PathVar {
