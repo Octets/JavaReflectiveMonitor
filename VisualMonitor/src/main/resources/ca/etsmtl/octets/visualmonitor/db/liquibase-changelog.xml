@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="1" author="mdupras">
+        <createTable tableName="type_def">
+            <column name="type_id" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="type_id_primary_key" nullable="false" />
+            </column>
+            <column name="type_classpath" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="var_list">
+            <column name="var_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" primaryKeyName="var_id_primary_key" nullable="false" />
+            </column>
+            <column name="var_path" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type_id" type="int">
+                <constraints foreignKeyName="type_id_primary_key" references="type_def(type_id)" nullable="true" />
+            </column>
+        </createTable>
+        <createTable tableName="var_data">
+            <column name="data_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" foreignKeyName="data_id_primary_key" nullable="false" />
+            </column>
+            <column name="var_id" type="int">
+                <constraints foreignKeyName="var_id_primary_key" references="var_list(var_id)" nullable="false" />
+            </column>
+            <column name="data_value" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="data_time" type="date" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+ </databaseChangeLog>

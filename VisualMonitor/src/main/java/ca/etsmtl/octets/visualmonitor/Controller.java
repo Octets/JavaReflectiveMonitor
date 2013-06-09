@@ -2,13 +2,14 @@ package ca.etsmtl.octets.visualmonitor;
 
 import ca.etsmtl.octets.appmonitoring.ClientManager;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+
+import static ca.etsmtl.octets.visualmonitor.Connector.States.DISCONNECTED;
 
 public class Controller {
    private static final Logger logger = Logger.getLogger(Controller.class);
@@ -23,15 +24,21 @@ public class Controller {
    public TableColumn<String, TableRowVar> tbcValue;
    public TableColumn<String, TableRowVar> tbcMode;
    public TableColumn<String, TableRowVar> tbcPath;
-   private final Connector connector = new Connector();
-   private final DisplayMapper displayMapper = new DisplayMapper(connector,this);
    public FlowPane varFlow;
    public Button btnRoot;
    public TableColumn<String, TableRowVar> tbcType;
 
+   private final Connector connector = new Connector();
+
+   private final DisplayMapper displayMapper = new DisplayMapper(this);
+
+   public Connector getConnector() {
+      return connector;
+   }
+
    public void onConnectionClick() {
       btnConnect.setDisable(true);
-      if(connector.getStates() == Connector.States.DISCONNECTED) {
+      if(connector.getStates() == DISCONNECTED) {
          loadingConnection.setOpacity(1d);
          String hostname = null;
          int port;

@@ -1,15 +1,14 @@
 package ca.etsmtl.octets.visualmonitor;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
@@ -29,15 +28,12 @@ public class DisplayMapper implements Connector.IListenFrame {
    private final List<String> root = new ArrayList<>();
    private final ObservableList<TableRowVar> displayedData = FXCollections.observableArrayList();
 
-   private Connector connector;
-
-   private Controller fxController;
+   private final Controller controller;
 
    private String currentPath = "";
 
-   public DisplayMapper(Connector connector, Controller fxController) {
-      this.fxController = fxController;
-      this.connector = connector;
+   public DisplayMapper(Controller controller) {
+      this.controller = controller;
    }
 
    public static String getName(final String path) {
@@ -51,18 +47,18 @@ public class DisplayMapper implements Connector.IListenFrame {
 
    public void updateTableContent() {
 
-      fxController.tblVar.setEditable(true);
+      controller.tblVar.setEditable(true);
 
-      fxController.tbcVisibility.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.VISIBILITY));
-      fxController.tbcName.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.NAME));
-      fxController.tbcMode.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.MODE));
-      fxController.tbcPath.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.PATH));
-      fxController.tbcValue.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.VALUE));
-      fxController.tbcType.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.TYPE));
+      controller.tbcVisibility.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.VISIBILITY));
+      controller.tbcName.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.NAME));
+      controller.tbcMode.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.MODE));
+      controller.tbcPath.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.PATH));
+      controller.tbcValue.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.VALUE));
+      controller.tbcType.setCellValueFactory(new PropertyValueFactory<String, TableRowVar>(TableRowVar.TABLE_PROPERTY.TYPE));
 
-      fxController.tblVar.setItems(displayedData);
+      controller.tblVar.setItems(displayedData);
 
-      fxController.tblVar.setRowFactory(new Callback<TableView<TableRowVar>, TableRow<TableRowVar>>() {
+      controller.tblVar.setRowFactory(new Callback<TableView<TableRowVar>, TableRow<TableRowVar>>() {
          @Override
          public TableRow<TableRowVar> call(TableView<TableRowVar> tableRowVarTableView) {
             TableRow<TableRowVar> tableRow = new TableRow<>();
@@ -71,7 +67,7 @@ public class DisplayMapper implements Connector.IListenFrame {
                public void handle(MouseEvent mouseEvent) {
                   if(mouseEvent.getClickCount() > 1) {
                      setCurrentPath(((TableRowVar) ((TableRow) mouseEvent.getSource()).getItem()).getVarPath());
-                     connector.requestPath(getCurrentPath());
+                     controller.getConnector().requestPath(getCurrentPath());
                   }
                }
             });
@@ -142,10 +138,10 @@ public class DisplayMapper implements Connector.IListenFrame {
    }
 
    public void updatePathFlowPanel() {
-      ObservableList<Node> nodes = fxController.varFlow.getChildren();
+      ObservableList<Node> nodes = controller.varFlow.getChildren();
 
       nodes.clear();
-      nodes.add(fxController.btnRoot);
+      nodes.add(controller.btnRoot);
       String[] pathList = currentPath.split("\\.");
 
       /*EventHandler<MouseEvent> eventEventHandler = new EventHandler<MouseEvent>() {
@@ -154,6 +150,13 @@ public class DisplayMapper implements Connector.IListenFrame {
             setCurrentPath(((PathVar) ((ChoiceBox) mouseEvent.getSource()).getValue()).getPath());
          }
       };*/
+
+      ChangeListener<PathVar> changeListener = new ChangeListener<PathVar>() {
+         @Override
+         public void changed(ObservableValue<? extends PathVar> observableValue, PathVar pathVar, PathVar pathVar2) {
+            setCurrentPath(observableValue.getValue().getPath());
+         }
+      };
 
       if(!currentPath.equalsIgnoreCase("") && pathList.length > 0) {
          ChoiceBox<PathVar> choiceRootFirst = new ChoiceBox<>();
@@ -165,6 +168,7 @@ public class DisplayMapper implements Connector.IListenFrame {
                choiceRootFirst.setValue(pathVar);
             }
          }
+         choiceRootFirst.getSelectionModel().selectedItemProperty().addListener(changeListener);
          //choiceRootFirst.setOnMouseReleased(eventEventHandler);
          //choiceRootFirst.setOnMouseClicked(eventEventHandler);
       }
@@ -183,20 +187,22 @@ public class DisplayMapper implements Connector.IListenFrame {
             if(choiceBox.getItems().size() > 0) {
                nodes.add(choiceBox);
             }
+            choiceBox.getSelectionModel().selectedItemProperty().addListener(changeListener);
             //choiceBox.setOnMouseReleased(eventEventHandler);
          }
-         for(int i = 1; i < pathList.length; ++i) {
+         for(int i = 1; i < pathList.length -1; ++i) {
             fullPath += "." + pathList[i];
             ChoiceBox<PathVar> choiceBox = new ChoiceBox<>();
             for(PathVar pathVar : getNameFromPath(fullPath)){
                choiceBox.getItems().add(pathVar);
-               if( i < pathList.length && pathVar.getName().equals(pathList[i])) {
+               if(i+1 < pathList.length && pathVar.getName().equals(pathList[i+1])) {
                   choiceBox.setValue(pathVar);
                }
             }
             if(choiceBox.getItems().size() > 0) {
                nodes.add(choiceBox);
             }
+            choiceBox.getSelectionModel().selectedItemProperty().addListener(changeListener);
             //choiceBox.setOnMouseReleased(eventEventHandler);
          }
       }
