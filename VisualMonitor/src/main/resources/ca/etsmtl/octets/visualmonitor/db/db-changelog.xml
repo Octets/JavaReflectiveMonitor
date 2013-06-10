@@ -7,14 +7,9 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-    <preConditions>
-        <dbms type="sqlite"/>
-    </preConditions>
-
     <changeSet id="1" author="mdupras" dbms="sqlite" context="RELEASE">
         <createTable tableName="type_def">
-            <column name="type_id" autoIncrement="true">
+            <column name="type_id" type="bigint">
                 <constraints primaryKey="true" primaryKeyName="type_id_primary_key" nullable="false" />
             </column>
             <column name="type_classpath" type="varchar(255)">
@@ -22,21 +17,21 @@
             </column>
         </createTable>
         <createTable tableName="var_list">
-            <column name="var_id" autoIncrement="true" type="int">
-                <constraints primaryKey="true" primaryKeyName="var_id_primary_key" nullable="false" />
+            <column name="var_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="var_id_primary_key" />
             </column>
             <column name="var_path" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="type_id" type="int">
+            <column name="type_id" type="bigint">
                 <constraints foreignKeyName="type_id_primary_key" references="type_def(type_id)" nullable="true" />
             </column>
         </createTable>
         <createTable tableName="var_data">
-            <column name="data_id" autoIncrement="true" type="int">
-                <constraints primaryKey="true" foreignKeyName="data_id_primary_key" nullable="false" />
+            <column name="data_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="data_id_primary_key" />
             </column>
-            <column name="var_id" type="int">
+            <column name="var_id" type="bigint">
                 <constraints foreignKeyName="var_id_primary_key" references="var_list(var_id)" nullable="false" />
             </column>
             <column name="data_value" type="varchar(255)">

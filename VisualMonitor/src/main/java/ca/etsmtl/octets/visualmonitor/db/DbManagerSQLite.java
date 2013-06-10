@@ -1,30 +1,27 @@
 package ca.etsmtl.octets.visualmonitor.db;
 
 import liquibase.Liquibase;
-import liquibase.changelog.ChangeSet;
+import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.DatabaseChangeLog;
-import liquibase.database.Database;
 import liquibase.database.DatabaseConnection;
 import liquibase.database.core.SQLiteDatabase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
-import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.parser.core.xml.XMLChangeLogSAXParser;
 import liquibase.resource.FileSystemResourceAccessor;
 import org.apache.log4j.Logger;
 
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantLock;
+
+
 
 public class DbManagerSQLite {
 
    private static final Logger logger = Logger.getLogger(DbManagerSQLite.class);
    private static final String DB_PATH = "jdbc:sqlite:data.db";
-
-   private Liquibase liquibase;
 
    private static DbManagerSQLite dbManagerSQLite = null;
    private static ReentrantLock reentrantLock = new ReentrantLock();
@@ -45,46 +42,25 @@ public class DbManagerSQLite {
          Class.forName("org.sqlite.JDBC");
 
          DatabaseConnection databaseConnection = new JdbcConnection(DriverManager.getConnection(DB_PATH));
-
-         DatabaseChangeLog databaseChangeLog = new DatabaseChangeLog(getClass().getResource("dbchangelog.xml").getPath());
-
+         FileSystemResourceAccessor fileSystemResourceAccessor = new FileSystemResourceAccessor();
+         DatabaseChangeLog databaseChangeLog = new XMLChangeLogSAXParser().parse(getClass().getResource("db-changelog.xml").getPath(), new ChangeLogParameters(), fileSystemResourceAccessor);
 
          SQLiteDatabase database = new SQLiteDatabase();
          database.setConnection(databaseConnection);
          database.checkDatabaseChangeLogLockTable();
-         database.checkDatabaseChangeLogTable(true,databaseChangeLog,new String[]{"RElEASE"});
+         database.checkDatabaseChangeLogTable(true,databaseChangeLog,"RELEASE");
+
+         Liquibase liquibase = new Liquibase(databaseChangeLog.getFilePath(), fileSystemResourceAccessor, database);
+         liquibase.update("RELEASE");
          database.commit();
-
-
-         //liquibase = new Liquibase(getClass().getResource("db-changelog.xml").getPath(),new FileSystemResourceAccessor(),databaseConnection);
-         //liquibase.getDatabase().checkDatabaseChangeLogLockTable();
-         //liquibase.getDatabase().checkDatabaseChangeLogTable(true,databaseChangeLog, new String[]{ "RELEASE" });
-         //liquibase.listUnrunChangeSets("RELEASE");
-         //liquibase.update("RELEASE");
-
-//         DatabaseChangeLog databaseChangeLog = new DatabaseChangeLog(getClass().getResource("db-changelog.xml").getPath());
-//
-//         SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
-//         sqLiteDatabase.setConnection(databaseConnection);
-//         sqLiteDatabase.setAutoCommit(true);
-//         sqLiteDatabase.checkDatabaseChangeLogTable(true,databaseChangeLog,null);
-//         sqLiteDatabase.checkDatabaseChangeLogLockTable();
-
-
-
 
       } catch (ClassNotFoundException e) {
          logger.error("Error to initial the DB connection.",e);
-         liquibase = null;
       } catch (LiquibaseException e) {
          logger.error("Error getting liquibase object.",e);
       } catch (SQLException e) {
          logger.error("Error creater databaseConnection", e);
       }
 
-   }
-
-   public Liquibase getLiquibase() {
-      return liquibase;
    }
 }
