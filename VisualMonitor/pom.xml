@@ -35,6 +35,7 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
             <version>3.0.0-rc1</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 

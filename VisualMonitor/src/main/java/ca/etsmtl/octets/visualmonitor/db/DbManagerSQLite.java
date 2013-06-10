@@ -1,21 +1,17 @@
 package ca.etsmtl.octets.visualmonitor.db;
 
 import liquibase.Liquibase;
+import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.DatabaseConnection;
 import liquibase.database.core.SQLiteDatabase;
 import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.CommandLineParsingException;
 import liquibase.exception.LiquibaseException;
-import liquibase.integration.commandline.Main;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.FileSystemResourceAccessor;
 import org.apache.log4j.Logger;
-import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
-import org.sqlite.SQLiteJDBCLoader;
 
-import java.io.IOException;
-import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -33,7 +29,7 @@ public class DbManagerSQLite {
       if(dbManagerSQLite == null) {
          reentrantLock.lock();
          if(dbManagerSQLite == null) {
-            dbManagerSQLite = new DbManagerSQLite();
+            //dbManagerSQLite = new DbManagerSQLite();
          }
          reentrantLock.unlock();
       }
@@ -43,33 +39,22 @@ public class DbManagerSQLite {
    private DbManagerSQLite() {
       try {
          Class.forName("org.sqlite.JDBC");
-         DatabaseConnection databaseConnection = new JdbcConnection(DriverManager.getConnection(DB_PATH));
 
-         liquibase = new Liquibase(getClass().getResource("liquibase-changelog.xml").getPath(), new ClassLoaderResourceAccessor(getClass().getClassLoader()),databaseConnection);
-         liquibase.getDatabase().commit();
-         liquibase.update(null);
+         //DatabaseConnection databaseConnection = new JdbcConnection();
+         SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
+         sqLiteDataSource.setUrl(DB_PATH);
 
-//         SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
-//         sqLiteDataSource.setUrl(DB_PATH);
-//         sqLiteDataSource.getConnection().commit();
-//
-//
-//
-//         SQLiteDatabase database = new SQLiteDatabase();
-//         database.setConnection(databaseConnection);
-//
-//         SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
-//         sqLiteDataSource.
-//
-//
-//         org.sqlite.SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
-//         sqLiteDataSource.setConfig();
-//
-//         Main.main(new String[] {
-//                 "--driver=org.sqlite.JDBC",
-//                 "--url=\"" + DB_PATH +"\"",
-//                 "--changeLogFile="+ this.getClass().getResource("liquibase-changelog.xml").getPath(),
-//                 "migrate"});
+         DatabaseConnection databaseConnection = new JdbcConnection(sqLiteDataSource.getConnection());
+         DatabaseChangeLog databaseChangeLog = new DatabaseChangeLog(getClass().getResource("db-changelog.xml").getPath());
+         databaseConnection.setAutoCommit(true);
+
+         SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
+         sqLiteDatabase.setConnection(databaseConnection);
+         sqLiteDatabase.setAutoCommit(true);
+         sqLiteDatabase.checkDatabaseChangeLogTable(true,databaseChangeLog,null);
+         sqLiteDatabase.checkDatabaseChangeLogLockTable();
+
+
 
 
       } catch (SQLException | ClassNotFoundException e) {
