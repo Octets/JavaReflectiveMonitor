@@ -25,7 +25,7 @@ public class Main extends Application {
 
       primaryStage.show();
       logger.debug("MainForm started.");
-      //DbManagerSQLite.getInstance().getLiquibase();
+      DbManagerSQLite.getInstance();
       //dbManagerSQLite.getLiquibase().getDatabase().requiresUsername();
    }
 
