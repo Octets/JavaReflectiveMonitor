@@ -4,35 +4,33 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <changeSet id="1" author="mdupras" dbms="sqlite" context="RELEASE">
-        <createTable tableName="type_def">
-            <column name="type_id" type="bigint">
-                <constraints primaryKey="true" primaryKeyName="type_id_primary_key" nullable="false" />
+        <createTable tableName="type_definition">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="type_classpath" type="varchar(255)">
+            <column name="classpath" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
         </createTable>
-        <createTable tableName="var_list">
-            <column name="var_id" type="bigint">
-                <constraints primaryKey="true" primaryKeyName="var_id_primary_key" />
+        <createTable tableName="variable">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="var_path" type="varchar(255)">
+            <column name="path" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="type_id" type="bigint">
-                <constraints foreignKeyName="type_id_primary_key" references="type_def(type_id)" nullable="true" />
+                <constraints foreignKeyName="fk_type_id" references="type_definition(type_id)" nullable="true" />
             </column>
         </createTable>
-        <createTable tableName="var_data">
-            <column name="data_id" type="bigint">
-                <constraints primaryKey="true" primaryKeyName="data_id_primary_key" />
+        <createTable tableName="variable_data">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="var_id" type="bigint">
-                <constraints foreignKeyName="var_id_primary_key" references="var_list(var_id)" nullable="false" />
+            <column name="variable_id" type="bigint">
+                <constraints foreignKeyName="fk_variable_id" references="variable(id)" nullable="false" />
             </column>
             <column name="data_value" type="varchar(255)">
                 <constraints nullable="false" />
