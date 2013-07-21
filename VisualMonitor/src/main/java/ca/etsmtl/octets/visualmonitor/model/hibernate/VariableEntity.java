@@ -1,8 +1,7 @@
 package ca.etsmtl.octets.visualmonitor.model.hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * User: maxime
@@ -20,6 +19,11 @@ public class VariableEntity {
 
    @JoinColumn(name = "type_id")
    private DefinitionTypeEntity typeEntity;
+
+   @OneToMany
+   @JoinTable(name = "variable_data", joinColumns =
+   @JoinColumn(name = "variable_id", referencedColumnName = "id", updatable = true))
+   private List<VariableDataEntity> variableDataEntities;
 
    public long getId() {
       return id;
@@ -43,5 +47,13 @@ public class VariableEntity {
 
    public void setTypeEntity(DefinitionTypeEntity typeEntity) {
       this.typeEntity = typeEntity;
+   }
+
+   public List<VariableDataEntity> getVariableDataEntities() {
+      return variableDataEntities;
+   }
+
+   public void setVariableDataEntities(List<VariableDataEntity> variableDataEntities) {
+      this.variableDataEntities = variableDataEntities;
    }
 }
